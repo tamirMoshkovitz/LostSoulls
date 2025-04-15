@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Camera
 {
@@ -14,18 +15,21 @@ namespace Camera
         void Awake()
         {
             _inputActions = new InputSystem_Actions();
+            Cursor.lockState = CursorLockMode.Locked;
         }
 
         void OnEnable()
         {
-            _inputActions.Player.Look.performed += ctx => _lookInput = ctx.ReadValue<Vector2>();
-            _inputActions.Player.Look.canceled += ctx => _lookInput = Vector2.zero;
-            _inputActions.Enable();
+            _inputActions.Player.Enable();
+            _inputActions.Player.Look.performed += OnLookPerformed;
+            _inputActions.Player.Look.canceled += OnLookCanceled;
         }
 
         void OnDisable()
         {
-            _inputActions.Disable();
+            _inputActions.Player.Look.performed -= OnLookPerformed;
+            _inputActions.Player.Look.canceled -= OnLookCanceled;
+            _inputActions.Player.Disable();
         }
 
         void Update()
@@ -38,6 +42,16 @@ namespace Camera
 
             transform.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
             playerBody.Rotate(Vector3.up * mouseX);
+        }
+        
+        private void OnLookPerformed(InputAction.CallbackContext context)
+        {
+            _lookInput = context.ReadValue<Vector2>();
+        }
+
+        private void OnLookCanceled(InputAction.CallbackContext context)
+        {
+            _lookInput = Vector2.zero;
         }
     }
 }

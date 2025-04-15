@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace PlayerMovement
 {
@@ -31,13 +32,16 @@ namespace PlayerMovement
         void OnEnable()
         {
             _inputActions.Player.Enable();
-            _inputActions.Player.Move.performed += ctx => _movementInput = ctx.ReadValue<Vector2>();
-            _inputActions.Player.Move.canceled += ctx => _movementInput = Vector2.zero;
-            _inputActions.Player.Jump.performed += ctx => Jump();
+            _inputActions.Player.Move.performed += OnMovePerformed;
+            _inputActions.Player.Move.canceled += OnMoveCanceled;
+            _inputActions.Player.Jump.performed += OnJumpPerformed;
         }
 
         void OnDisable()
         {
+            _inputActions.Player.Move.performed -= OnMovePerformed;
+            _inputActions.Player.Move.canceled -= OnMoveCanceled;
+            _inputActions.Player.Jump.performed -= OnJumpPerformed;
             _inputActions.Player.Disable();
         }
 
@@ -49,7 +53,7 @@ namespace PlayerMovement
         void HandleMovement()
         {
             // Ground check
-            _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+            _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); //TODO fix this
 
             if (_isGrounded && _velocity.y < 0)
                 _velocity.y = -2f;
@@ -63,10 +67,20 @@ namespace PlayerMovement
             _controller.Move(_velocity * Time.deltaTime);
         }
 
-        void Jump()
+        void OnJumpPerformed(InputAction.CallbackContext context)
         {
             if (_isGrounded)
                 _velocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+        }
+        
+        private void OnMovePerformed(InputAction.CallbackContext context)
+        {
+            _movementInput = context.ReadValue<Vector2>();
+        }
+
+        private void OnMoveCanceled(InputAction.CallbackContext context)
+        {
+            _movementInput = Vector2.zero;
         }
     }
 }
