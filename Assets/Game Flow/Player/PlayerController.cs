@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace PlayerMovement
+namespace Game_Flow.PlayerMovement
 {
     [RequireComponent(typeof(CharacterController))]
     public class PlayerController : MonoBehaviour
