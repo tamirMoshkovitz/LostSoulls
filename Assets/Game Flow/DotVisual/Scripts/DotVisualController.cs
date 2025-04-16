@@ -8,8 +8,11 @@ namespace Game_Flow.DotVisual.Scripts
     {
         [SerializeField] private Transform rayOrigin;
         [SerializeField] private float rayLength = 50f;
+        
         [SerializeField] private LayerMask targetLayers;
+        
         [SerializeField] private GameObject dotPrefab;
+        
         [SerializeField] private Color defaultColor = Color.red;
         [SerializeField] private Color hitColor = Color.green;
         
@@ -24,18 +27,13 @@ namespace Game_Flow.DotVisual.Scripts
                 dotInstance = Instantiate(dotPrefab);
                 dotRenderer = dotInstance.GetComponent<Renderer>();
                 dotRenderer.material.color = defaultColor;
-                Debug.Log("Dot instantiated at Start");
-            }
-            else
-            {
-                Debug.LogError("Dot prefab is not assigned.");
             }
         }
         
         public void Update()
         {
             float sphereRadius = 1f;
-            Debug.DrawRay(rayOrigin.position, rayOrigin.forward * rayLength, Color.red);
+            //Debug.DrawRay(rayOrigin.position, rayOrigin.forward * rayLength, Color.red);
             RaycastHit hit;
             if (Physics.SphereCast(rayOrigin.position, sphereRadius, rayOrigin.forward, out hit, rayLength, targetLayers))
             {

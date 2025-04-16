@@ -37,19 +37,20 @@ namespace Game_Flow.PlayerMovement
                 {
                     lockedTarget = targetingController.CurrentTarget;
                     _isLocked = true;
-                    lockedTarget.Activate(Vector3.left);
-                    Debug.Log("Locked on to target: " + lockedTarget.name);
-                }
-                else
-                {
-                    Debug.Log("No target to lock on to.");
                 }
             }
             else if (context.canceled)
             {
                 lockedTarget = null;
                 _isLocked = false;
-                Debug.Log("Unlocked from target.");
+            }
+        }
+
+        public void Update()
+        {
+            if (_isLocked && lockedTarget != null)
+            {
+                lockedTarget.Activate(Vector3.left);
             }
         }
     }
