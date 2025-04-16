@@ -19,6 +19,9 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                 _impactObject = ImpactObjectFactory.CreateImpactObject(type, _impactObject, this,stats);
             }
         }
+
+        
+        
         
         public void Activate(Vector3 direction)
         {

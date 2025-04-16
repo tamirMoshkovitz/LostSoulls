@@ -6,8 +6,8 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
     public class ImpactObjectStats : ScriptableObject
     {
         public float speed;
+        public float bufferForRaycast;
         public LayerMask impactObjectLayerMask;
         public LayerMask objectBorderLayerMask;
-        
     }
 }
