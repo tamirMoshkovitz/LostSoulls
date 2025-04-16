@@ -20,7 +20,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             }
         }
         
-        void Activate(Vector3 direction)
+        public void Activate(Vector3 direction)
         {
             Vector3 snapped = GetClosestCardinalDirection(direction);
             _impactObject.Impact(snapped);
