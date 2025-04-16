@@ -135,6 +135,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ImpactObject (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3971627485446210462, guid: 7e229da1c0cf54fd79ed763a1d2c9fe8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7113969758810484551, guid: 7e229da1c0cf54fd79ed763a1d2c9fe8, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.9799999
@@ -816,15 +820,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2364308366719294291, guid: 7e229da1c0cf54fd79ed763a1d2c9fe8, type: 3}
       propertyPath: decoratorOrder.Array.size
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3971627485446210462, guid: 7e229da1c0cf54fd79ed763a1d2c9fe8, type: 3}
       propertyPath: m_Name
       value: ImpactObject (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 3971627485446210462, guid: 7e229da1c0cf54fd79ed763a1d2c9fe8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7113969758810484551, guid: 7e229da1c0cf54fd79ed763a1d2c9fe8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.5
+      value: -1.97
       objectReference: {fileID: 0}
     - target: {fileID: 7113969758810484551, guid: 7e229da1c0cf54fd79ed763a1d2c9fe8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -832,7 +840,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7113969758810484551, guid: 7e229da1c0cf54fd79ed763a1d2c9fe8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 4.07
       objectReference: {fileID: 0}
     - target: {fileID: 7113969758810484551, guid: 7e229da1c0cf54fd79ed763a1d2c9fe8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -883,6 +891,10 @@ PrefabInstance:
     - target: {fileID: 3971627485446210462, guid: 7e229da1c0cf54fd79ed763a1d2c9fe8, type: 3}
       propertyPath: m_Name
       value: ImpactObject (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3971627485446210462, guid: 7e229da1c0cf54fd79ed763a1d2c9fe8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7113969758810484551, guid: 7e229da1c0cf54fd79ed763a1d2c9fe8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -945,6 +957,10 @@ PrefabInstance:
     - target: {fileID: 3971627485446210462, guid: 7e229da1c0cf54fd79ed763a1d2c9fe8, type: 3}
       propertyPath: m_Name
       value: ImpactObject (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3971627485446210462, guid: 7e229da1c0cf54fd79ed763a1d2c9fe8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7113969758810484551, guid: 7e229da1c0cf54fd79ed763a1d2c9fe8, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1055,10 +1071,14 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2364308366719294291, guid: 7e229da1c0cf54fd79ed763a1d2c9fe8, type: 3}
       propertyPath: decoratorOrder.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2364308366719294291, guid: 7e229da1c0cf54fd79ed763a1d2c9fe8, type: 3}
       propertyPath: 'decoratorOrder.Array.data[0]'
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2364308366719294291, guid: 7e229da1c0cf54fd79ed763a1d2c9fe8, type: 3}
+      propertyPath: 'decoratorOrder.Array.data[1]'
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3971627485446210462, guid: 7e229da1c0cf54fd79ed763a1d2c9fe8, type: 3}
@@ -1067,7 +1087,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7113969758810484551, guid: 7e229da1c0cf54fd79ed763a1d2c9fe8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.9799999
+      value: -1.97
       objectReference: {fileID: 0}
     - target: {fileID: 7113969758810484551, guid: 7e229da1c0cf54fd79ed763a1d2c9fe8, type: 3}
       propertyPath: m_LocalPosition.y
