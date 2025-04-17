@@ -63,6 +63,7 @@ GameObject:
   - component: {fileID: 6132508372779670732}
   - component: {fileID: 3778244910675281467}
   - component: {fileID: 7130040369046478622}
+  - component: {fileID: 8013832615243397321}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -218,6 +219,20 @@ MonoBehaviour:
   controller: {fileID: 569664042453942489}
   bobSpeed: 14
   bobAmount: 0.05
+--- !u!114 &8013832615243397321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4242328362301462945}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4b9415782a6347daa37b9e8f249ff9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zoomFOV: 30
+  zoomSpeed: 9
 --- !u!1 &7909245872460832563
 GameObject:
   m_ObjectHideFlags: 0
