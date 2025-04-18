@@ -10,9 +10,12 @@ namespace Game_Flow.PlayerMovement
     {
         [SerializeField] private DotVisualController targetingController;
         
+        public static bool IsLockedOn => _isLocked;
+
         private MonoImpactObject lockedTarget;
-        private bool _isLocked = false;
+        private static bool _isLocked = false;
         private InputSystem_Actions _inputActions;
+        private Vector2 _moveInput;
 
         private void OnEnable()
         {
@@ -20,12 +23,16 @@ namespace Game_Flow.PlayerMovement
             _inputActions.Player.Enable();
             _inputActions.Player.Lock.started += OnLock;
             _inputActions.Player.Lock.canceled += OnLock;
+            _inputActions.Player.Move.performed += OnMovePerformed;
+            _inputActions.Player.Move.canceled += OnMoveCanceled;
         }
         
         private void OnDisable()
         {
             _inputActions.Player.Lock.started -= OnLock;
             _inputActions.Player.Lock.canceled -= OnLock;
+            _inputActions.Player.Move.performed -= OnMovePerformed;
+            _inputActions.Player.Move.canceled -= OnMoveCanceled;
             _inputActions.Player.Disable();
         }
 
@@ -45,12 +52,23 @@ namespace Game_Flow.PlayerMovement
                 _isLocked = false;
             }
         }
+        
+        private void OnMovePerformed(InputAction.CallbackContext context)
+        {
+            _moveInput = context.ReadValue<Vector2>();
+        }
+
+        private void OnMoveCanceled(InputAction.CallbackContext context)
+        {
+            _moveInput = Vector2.zero;
+        }
 
         public void Update()
         {
-            if (_isLocked && lockedTarget != null)
+            if (_isLocked && lockedTarget != null && _moveInput != Vector2.zero)
             {
-                lockedTarget.Activate(Vector3.left);
+                Vector3 moveDirection = new Vector3(_moveInput.x, 0, _moveInput.y);
+                lockedTarget.Activate(moveDirection);
             }
         }
     }

@@ -59,9 +59,11 @@ namespace Game_Flow.PlayerMovement
                 _velocity.y = -2f;
 
             // Move input
-            Vector3 move = transform.right * _movementInput.x + transform.forward * _movementInput.y;
-            _controller.Move(move * moveSpeed * Time.deltaTime);
-
+            if (!PlayerObjectController.IsLockedOn)
+            {
+                Vector3 move = transform.right * _movementInput.x + transform.forward * _movementInput.y;
+                _controller.Move(move * moveSpeed * Time.deltaTime);
+            }
             // Gravity
             _velocity.y += gravity * Time.deltaTime;
             _controller.Move(_velocity * Time.deltaTime);
