@@ -1,3 +1,4 @@
+using Core.Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,6 +19,7 @@ namespace Game_Flow.PlayerMovement
         private Vector2 _movementInput;
         private Vector3 _velocity;
         private bool _isGrounded;
+        private bool _isMovementLocked;
 
         
         public Vector3 Velocity => _velocity;
@@ -35,6 +37,7 @@ namespace Game_Flow.PlayerMovement
             _inputActions.Player.Move.performed += OnMovePerformed;
             _inputActions.Player.Move.canceled += OnMoveCanceled;
             _inputActions.Player.Jump.performed += OnJumpPerformed;
+            EventManager.OnLockStateChanged += HandleLockStateChanged;
         }
 
         void OnDisable()
@@ -43,11 +46,17 @@ namespace Game_Flow.PlayerMovement
             _inputActions.Player.Move.canceled -= OnMoveCanceled;
             _inputActions.Player.Jump.performed -= OnJumpPerformed;
             _inputActions.Player.Disable();
+            EventManager.OnLockStateChanged -= HandleLockStateChanged;
         }
 
         void Update()
         {
             HandleMovement();
+        }
+        
+        private void HandleLockStateChanged(bool isLocked)
+        {
+            _isMovementLocked = isLocked;
         }
 
         void HandleMovement()
@@ -59,7 +68,7 @@ namespace Game_Flow.PlayerMovement
                 _velocity.y = -2f;
 
             // Move input
-            if (!PlayerObjectController.IsLockedOn)
+            if (!_isMovementLocked)
             {
                 Vector3 move = transform.right * _movementInput.x + transform.forward * _movementInput.y;
                 _controller.Move(move * moveSpeed * Time.deltaTime);

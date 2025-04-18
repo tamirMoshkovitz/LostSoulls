@@ -1,4 +1,5 @@
 ﻿using System;
+using Core.Managers;
 using Game_Flow.DotVisual.Scripts;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
 using UnityEngine;
@@ -10,12 +11,11 @@ namespace Game_Flow.PlayerMovement
     {
         [SerializeField] private DotVisualController targetingController;
         
-        public static bool IsLockedOn => _isLocked;
-
         private MonoImpactObject lockedTarget;
         private static bool _isLocked = false;
         private InputSystem_Actions _inputActions;
         private Vector2 _moveInput;
+        
 
         private void OnEnable()
         {
@@ -35,6 +35,15 @@ namespace Game_Flow.PlayerMovement
             _inputActions.Player.Move.canceled -= OnMoveCanceled;
             _inputActions.Player.Disable();
         }
+        
+        private void SetLockState(bool state)
+        {
+            if (_isLocked != state)
+            {
+                _isLocked = state;
+                EventManager.LockStateChanged(_isLocked); // 🟢 Call the EventManager
+            }
+        }
 
         public void OnLock(InputAction.CallbackContext context)
         {
@@ -43,13 +52,13 @@ namespace Game_Flow.PlayerMovement
                 if (targetingController.CurrentTarget != null && !_isLocked)
                 {
                     lockedTarget = targetingController.CurrentTarget;
-                    _isLocked = true;
+                    SetLockState(true);
                 }
             }
             else if (context.canceled)
             {
                 lockedTarget = null;
-                _isLocked = false;
+                SetLockState(false);
             }
         }
         
