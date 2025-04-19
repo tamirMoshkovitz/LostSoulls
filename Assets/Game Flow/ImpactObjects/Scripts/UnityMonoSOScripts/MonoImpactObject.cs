@@ -10,12 +10,15 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         private IImpactObject _impactObject;
         [SerializeField] private List<ImpactObjectTypes> decoratorOrder;
         [SerializeField] private ImpactObjectStats stats;
+        public bool IsSoul {get; private set;}
         void Start()
         {
+            IsSoul = false;
             _impactObject = new BasicImpactObject(this,stats);
             
             foreach (var type in decoratorOrder)
             {
+                if (type == ImpactObjectTypes.Soul) IsSoul = true; 
                 _impactObject = ImpactObjectFactory.CreateImpactObject(type, _impactObject, this,stats);
             }
         }
