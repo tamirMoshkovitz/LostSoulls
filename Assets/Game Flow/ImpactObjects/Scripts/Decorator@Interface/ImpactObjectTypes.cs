@@ -6,9 +6,11 @@ namespace Game_Flow.ImpactObjects.Scripts.Decorator_Interface
 {
     public enum ImpactObjectTypes
     {
-        StraightAndBackwards = 0,
-        RightAndLeft = 1,
-        Soul = 2
+        Straight = 0,
+        Backwards = 1,
+        Right = 2,
+        Left = 3,
+        Soul = 4
     }
     public static class ImpactObjectFactory
     {
@@ -16,8 +18,10 @@ namespace Game_Flow.ImpactObjects.Scripts.Decorator_Interface
         {
             return type switch
             {
-                ImpactObjectTypes.StraightAndBackwards => new StraightAndBackwardImpactObject(inner,mono,stats),
-                ImpactObjectTypes.RightAndLeft => new RightAndLeftImpactObject(inner,mono,stats),
+                ImpactObjectTypes.Straight => new StraightImpactObject(inner,mono,stats),
+                ImpactObjectTypes.Backwards => new BackwardImpactObject(inner,mono,stats),
+                ImpactObjectTypes.Right => new RightImpactObject(inner,mono,stats),
+                ImpactObjectTypes.Left => new LeftImpactObject(inner,mono,stats),
                 ImpactObjectTypes.Soul => new SoulImpactObject(inner,mono,stats),
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };

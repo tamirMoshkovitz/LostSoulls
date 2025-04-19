@@ -4,12 +4,12 @@ using UnityEngine;
 
 namespace Game_Flow.ImpactObjects.Scripts.Types
 {
-    public class RightAndLeftImpactObject : ImpactObjectDecorator
+    public class RightImpactObject : ImpactObjectDecorator
     {
         private readonly BoxCollider _boxCollider;
         private bool _activated = false;
 
-        public RightAndLeftImpactObject(IImpactObject inner, MonoImpactObject mono, ImpactObjectStats stats)
+        public RightImpactObject(IImpactObject inner, MonoImpactObject mono, ImpactObjectStats stats)
             : base(inner, mono, stats)
         {
             _boxCollider = Mono.GetComponent<BoxCollider>();
@@ -19,30 +19,30 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
         {
             base.Impact(direction);
 
-            _activated = direction == Vector3.right || direction == Vector3.left;
+            _activated = direction == Vector3.right;
             if (!_activated) return;
 
-            // Get safe cast origin & world-space box size
             Vector3 halfExtents = new Vector3(0f, _boxCollider.bounds.extents.y, _boxCollider.bounds.extents.z);
             float castDistance = _boxCollider.bounds.extents.x + Stats.bufferForRaycast;
-            Vector3 origin = _boxCollider.bounds.center + direction * (halfExtents.x + 0.001f); // shift slightly outside collider
+            Vector3 origin = _boxCollider.bounds.center + Vector3.right * (halfExtents.x + 0.001f);
 
             bool blocked = Physics.BoxCast(
                 origin,
                 halfExtents,
-                direction,
-                Quaternion.identity, // World space
+                Vector3.right,
+                Quaternion.identity,
                 castDistance,
                 Stats.impactObjectLayerMask | Stats.objectBorderLayerMask
             );
 
             if (!blocked)
             {
-                Mono.transform.Translate(direction * Stats.speed * Time.deltaTime, Space.World);
+                Mono.transform.Translate(Vector3.right * Stats.speed * Time.deltaTime, Space.World);
             }
             else
             {
-                Debug.Log("Blocked by object. No movement (Right/Left).");
+                Mono.IsBlocked = true;
+                Debug.Log("Blocked (Right)");
             }
         }
 
@@ -51,21 +51,14 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             base.DrawGizmos();
             if (!_activated) return;
 
-            Vector3 center = _boxCollider.bounds.center;
             Vector3 halfExtents = new Vector3(0f, _boxCollider.bounds.extents.y, _boxCollider.bounds.extents.z);
             float castDistance = _boxCollider.bounds.extents.x + Stats.bufferForRaycast;
             Vector3 boxSize = halfExtents * 2f;
+            Vector3 origin = _boxCollider.bounds.center + Vector3.right * castDistance;
 
             Gizmos.color = Color.blue;
-
-            // Right
-            Gizmos.matrix = Matrix4x4.TRS(center + Vector3.right * castDistance, Quaternion.identity, Vector3.one);
+            Gizmos.matrix = Matrix4x4.TRS(origin, Quaternion.identity, Vector3.one);
             Gizmos.DrawWireCube(Vector3.zero, boxSize);
-
-            // Left
-            Gizmos.matrix = Matrix4x4.TRS(center + Vector3.left * castDistance, Quaternion.identity, Vector3.one);
-            Gizmos.DrawWireCube(Vector3.zero, boxSize);
-
             Gizmos.matrix = Matrix4x4.identity;
         }
     }

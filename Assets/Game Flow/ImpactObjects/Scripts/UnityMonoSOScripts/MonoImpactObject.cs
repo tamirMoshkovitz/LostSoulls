@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Game_Flow.ImpactObjects.Scripts.Decorator_Interface;
 using Game_Flow.ImpactObjects.Scripts.Types;
@@ -10,7 +11,10 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         private IImpactObject _impactObject;
         [SerializeField] private List<ImpactObjectTypes> decoratorOrder;
         [SerializeField] private ImpactObjectStats stats;
+        [SerializeField] private MultiImpactObjectLinker linker;
+        private bool _activated;
         public bool IsSoul {get; private set;}
+        public bool IsBlocked { get; set; } = false;
         void Start()
         {
             IsSoul = false;
@@ -28,10 +32,20 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         
         public void Activate(Vector3 direction)
         {
+            if (_activated) return;
+            _activated = true;
             Vector3 snapped = GetClosestCardinalDirection(direction);
+            IsBlocked = false;
             _impactObject.Impact(snapped);
+            if (linker != null)
+                linker.ActivateSiblings(snapped);
         }
-        
+
+        public void Update()
+        {
+            _activated = false;
+        }
+
         void OnDrawGizmos()
         {
             _impactObject?.DrawGizmos();
