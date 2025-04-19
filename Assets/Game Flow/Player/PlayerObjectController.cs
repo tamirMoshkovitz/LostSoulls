@@ -1,4 +1,6 @@
-﻿using Core.Managers;
+﻿using System;
+using Core.Managers;
+using Game_Flow.Camera;
 using Game_Flow.DotVisual.Scripts;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
 using UnityEngine;
@@ -9,12 +11,16 @@ namespace Game_Flow.Player
     public class PlayerObjectController : MonoBehaviour
     {
         [SerializeField] private DotVisualController targetingController;
+        [SerializeField] private UnityEngine.Camera firstPersonCamera;
+        [SerializeField] private UnityEngine.Camera topDownCamera;
         
         private MonoImpactObject lockedTarget;
         private static bool _isLocked = false;
         private InputSystem_Actions _inputActions;
         private Vector2 _moveInput;
-        
+        private bool isInTopDownView = false;
+        private Vector3 cachedRayOriginPosition;
+
 
         private void OnEnable()
         {
@@ -24,6 +30,7 @@ namespace Game_Flow.Player
             _inputActions.Player.Lock.canceled += OnLock;
             _inputActions.Player.Move.performed += OnMovePerformed;
             _inputActions.Player.Move.canceled += OnMoveCanceled;
+            EventManager.OnViewModeChanged += OnViewModeChanged;
         }
         
         private void OnDisable()
@@ -32,6 +39,7 @@ namespace Game_Flow.Player
             _inputActions.Player.Lock.canceled -= OnLock;
             _inputActions.Player.Move.performed -= OnMovePerformed;
             _inputActions.Player.Move.canceled -= OnMoveCanceled;
+            EventManager.OnViewModeChanged -= OnViewModeChanged;
             _inputActions.Player.Disable();
         }
         
@@ -74,17 +82,42 @@ namespace Game_Flow.Player
 
         public void Update()
         {
-            if (_isLocked && lockedTarget != null && _moveInput != Vector2.zero)
+            if (!isInTopDownView) return;
+
+            if (_moveInput == Vector2.zero)
             {
-                Vector3 camForward = UnityEngine.Camera.main.transform.forward;
-                Vector3 camRight = UnityEngine.Camera.main.transform.right;
+                Debug.Log("No movement input detected.");
+                return;
+            }
+
+            if (_isLocked && lockedTarget != null)
+            {
+                Vector3 camForward = firstPersonCamera.transform.forward;
+                Vector3 camRight = firstPersonCamera.transform.right;
                 camForward.y = 0;
                 camRight.y = 0;
                 camForward.Normalize();
                 camRight.Normalize();
-
                 Vector3 moveDirection = camForward * _moveInput.y + camRight * _moveInput.x;
                 lockedTarget.Activate(moveDirection);
+            }
+            else
+            {
+                Vector3 moveDirection = new Vector3(_moveInput.x, 0f, _moveInput.y);
+                targetingController.MoveRayOrigin(moveDirection);
+            }
+        }
+        
+        private void OnViewModeChanged(ViewMode mode)
+        {
+            if (mode == ViewMode.TopDown)
+            {
+                isInTopDownView = true;
+            }
+            else
+            {
+                isInTopDownView = false;
+                targetingController.SetRayOriginPosition(transform.position);
             }
         }
     }

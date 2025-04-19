@@ -1,4 +1,5 @@
 ﻿using System;
+using Game_Flow.Camera;
 using UnityEngine;
 
 namespace Core.Managers
@@ -25,6 +26,20 @@ namespace Core.Managers
         public static void LockStateChanged(bool isLocked)
         {
             OnLockStateChanged?.Invoke(isLocked);
+        }
+        
+        public static event Action<bool> OnPlayerZoneChanged;
+
+        public static void TriggerPlayerZoneChanged(bool canSwitchView)
+        {
+            OnPlayerZoneChanged?.Invoke(canSwitchView);
+        }
+        
+        public static event Action<ViewMode> OnViewModeChanged;
+
+        public static void ViewModeChanged(ViewMode newMode)
+        {
+            OnViewModeChanged?.Invoke(newMode);
         }
     }
 }

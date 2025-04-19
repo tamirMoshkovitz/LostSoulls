@@ -8,6 +8,7 @@ namespace Game_Flow.DotVisual.Scripts
     {
         [SerializeField] private Transform rayOrigin;
         [SerializeField] private float rayLength = 50f;
+        [SerializeField] private float rayOffset = 0.5f;
         
         [SerializeField] private LayerMask targetLayers;
         
@@ -42,10 +43,11 @@ namespace Game_Flow.DotVisual.Scripts
                 return;
             }
             
-            //Debug.DrawRay(rayOrigin.position, rayOrigin.forward * rayLength, Color.red);
-            
             RaycastHit hit;
-            if (Physics.SphereCast(rayOrigin.position, SphereRadius, rayOrigin.forward, out hit, rayLength, targetLayers))
+            Vector3 direction = (rayOrigin.forward + Vector3.down * rayOffset).normalized;
+
+            //Debug.DrawRay(rayOrigin.position, direction * rayLength, Color.red);
+            if (Physics.SphereCast(rayOrigin.position, SphereRadius, direction, out hit, rayLength, targetLayers))
             {
                 dotInstance.transform.position = hit.point;
                 var impactObject = hit.collider.GetComponent<MonoImpactObject>();
@@ -67,5 +69,23 @@ namespace Game_Flow.DotVisual.Scripts
                 dotRenderer.material.color = defaultColor;
             }
         }
+        
+        public void MoveRayOrigin(Vector3 direction)
+        {
+            Debug.Log("Moving ray origin: " + direction);
+            rayOrigin.position += direction * Time.deltaTime * 5f;
+        }
+        
+        /**private void OnDrawGizmos()
+        {
+            if (rayOrigin != null)
+            {
+                Gizmos.color = Color.cyan;
+                Gizmos.DrawSphere(rayOrigin.position, 0.2f);
+            }
+        }**/
+        
+        public Vector3 GetRayOriginPosition() => rayOrigin.position;
+        public void SetRayOriginPosition(Vector3 position) => rayOrigin.position = position;
     }
 }
