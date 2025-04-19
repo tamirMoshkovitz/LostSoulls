@@ -1,11 +1,10 @@
-﻿using System;
-using Core.Managers;
+﻿using Core.Managers;
 using Game_Flow.DotVisual.Scripts;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Game_Flow.PlayerMovement
+namespace Game_Flow.Player
 {
     public class PlayerObjectController : MonoBehaviour
     {
@@ -76,7 +75,14 @@ namespace Game_Flow.PlayerMovement
         {
             if (_isLocked && lockedTarget != null && _moveInput != Vector2.zero)
             {
-                Vector3 moveDirection = new Vector3(_moveInput.x, 0, _moveInput.y);
+                Vector3 camForward = UnityEngine.Camera.main.transform.forward;
+                Vector3 camRight = UnityEngine.Camera.main.transform.right;
+                camForward.y = 0;
+                camRight.y = 0;
+                camForward.Normalize();
+                camRight.Normalize();
+
+                Vector3 moveDirection = camForward * _moveInput.y + camRight * _moveInput.x;
                 lockedTarget.Activate(moveDirection);
             }
         }

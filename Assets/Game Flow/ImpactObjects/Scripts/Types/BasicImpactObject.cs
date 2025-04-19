@@ -15,12 +15,12 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
         }
         public void Impact(Vector3 direction)
         {
-            Debug.Log("Basic Impact Logic");
+            
         }
 
         public void DrawGizmos()
         {
-            Debug.Log("Drawing Gizmos For Basic Impact Object");
+           
         }
     }
 }
