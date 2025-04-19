@@ -42,6 +42,7 @@ namespace Game_Flow.PlayerMovement
             {
                 _isLocked = state;
                 EventManager.LockStateChanged(_isLocked); // 🟢 Call the EventManager
+                targetingController.IsLocked = _isLocked; // 🟢 Update the targeting controller
             }
         }
 

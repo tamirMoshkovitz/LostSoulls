@@ -18,7 +18,10 @@ namespace Game_Flow.DotVisual.Scripts
         
         private Renderer dotRenderer;
         private GameObject dotInstance;
+        private const float SphereRadius = 1f;
+        
         public MonoImpactObject CurrentTarget { get; private set; }
+        public bool IsLocked { get; set; } = false;
 
         public void Start()
         {
@@ -32,10 +35,17 @@ namespace Game_Flow.DotVisual.Scripts
         
         public void Update()
         {
-            float sphereRadius = 1f;
+            if (IsLocked && CurrentTarget != null)
+            {
+                dotInstance.transform.position = CurrentTarget.transform.position + CurrentTarget.transform.localScale / 2;
+                dotRenderer.material.color = hitColor;
+                return;
+            }
+            
             //Debug.DrawRay(rayOrigin.position, rayOrigin.forward * rayLength, Color.red);
+            
             RaycastHit hit;
-            if (Physics.SphereCast(rayOrigin.position, sphereRadius, rayOrigin.forward, out hit, rayLength, targetLayers))
+            if (Physics.SphereCast(rayOrigin.position, SphereRadius, rayOrigin.forward, out hit, rayLength, targetLayers))
             {
                 dotInstance.transform.position = hit.point;
                 var impactObject = hit.collider.GetComponent<MonoImpactObject>();
