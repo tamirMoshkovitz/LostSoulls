@@ -8,6 +8,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Decorator_Interface
     {
         StraightAndBackwards = 0,
         RightAndLeft = 1,
+        Soul = 2
     }
     public static class ImpactObjectFactory
     {
@@ -17,6 +18,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Decorator_Interface
             {
                 ImpactObjectTypes.StraightAndBackwards => new StraightAndBackwardImpactObject(inner,mono,stats),
                 ImpactObjectTypes.RightAndLeft => new RightAndLeftImpactObject(inner,mono,stats),
+                ImpactObjectTypes.Soul => new SoulImpactObject(inner,mono,stats),
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
         }
