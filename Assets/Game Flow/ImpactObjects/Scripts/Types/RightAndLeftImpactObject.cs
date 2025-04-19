@@ -22,22 +22,16 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             _activated = direction == Vector3.right || direction == Vector3.left;
             if (!_activated) return;
 
-            Vector3 origin = _boxCollider.bounds.center;
-
-            // Custom halfExtents: height (Y) and depth (Z), width (X) set to 0
-            Vector3 halfExtents = new Vector3(
-                0f,
-                _boxCollider.size.y * 0.5f,
-                _boxCollider.size.z * 0.5f
-            );
-
-            float castDistance = (_boxCollider.size.x * 0.5f) + Stats.bufferForRaycast;
+            // Get safe cast origin & world-space box size
+            Vector3 halfExtents = new Vector3(0f, _boxCollider.bounds.extents.y, _boxCollider.bounds.extents.z);
+            float castDistance = _boxCollider.bounds.extents.x + Stats.bufferForRaycast;
+            Vector3 origin = _boxCollider.bounds.center + direction * (halfExtents.x + 0.001f); // shift slightly outside collider
 
             bool blocked = Physics.BoxCast(
                 origin,
                 halfExtents,
                 direction,
-                Mono.transform.rotation,
+                Quaternion.identity, // World space
                 castDistance,
                 Stats.impactObjectLayerMask | Stats.objectBorderLayerMask
             );
@@ -57,25 +51,19 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             base.DrawGizmos();
             if (!_activated) return;
 
-            Vector3 origin = _boxCollider.bounds.center;
-            Quaternion rotation = Mono.transform.rotation;
-            float castDistance = (_boxCollider.size.x * 0.5f) + Stats.bufferForRaycast;
-
-            // Thin X slice for Gizmo box
-            Vector3 boxSize = new Vector3(
-                0.01f,
-                _boxCollider.size.y,
-                _boxCollider.size.z
-            );
+            Vector3 center = _boxCollider.bounds.center;
+            Vector3 halfExtents = new Vector3(0f, _boxCollider.bounds.extents.y, _boxCollider.bounds.extents.z);
+            float castDistance = _boxCollider.bounds.extents.x + Stats.bufferForRaycast;
+            Vector3 boxSize = halfExtents * 2f;
 
             Gizmos.color = Color.blue;
 
-            // Right box
-            Gizmos.matrix = Matrix4x4.TRS(origin + Vector3.right * castDistance, rotation, Vector3.one);
+            // Right
+            Gizmos.matrix = Matrix4x4.TRS(center + Vector3.right * castDistance, Quaternion.identity, Vector3.one);
             Gizmos.DrawWireCube(Vector3.zero, boxSize);
 
-            // Left box
-            Gizmos.matrix = Matrix4x4.TRS(origin + Vector3.left * castDistance, rotation, Vector3.one);
+            // Left
+            Gizmos.matrix = Matrix4x4.TRS(center + Vector3.left * castDistance, Quaternion.identity, Vector3.one);
             Gizmos.DrawWireCube(Vector3.zero, boxSize);
 
             Gizmos.matrix = Matrix4x4.identity;

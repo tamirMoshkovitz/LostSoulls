@@ -29,6 +29,11 @@ namespace Game_Flow.PlayerMovement
         {
             _controller = GetComponent<CharacterController>();
             _inputActions = new InputSystem_Actions();
+            Physics.IgnoreLayerCollision(
+                LayerMask.NameToLayer("Player"), 
+                LayerMask.NameToLayer("BorderImpactObject"), 
+                true
+            );
         }
 
         void OnEnable()

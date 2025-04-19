@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ImpactObjectStats
   m_EditorClassIdentifier: 
   speed: 3
-  bufferForRaycast: 0.1
+  bufferForRaycast: 0.05
   impactObjectLayerMask:
     serializedVersion: 2
     m_Bits: 32768
