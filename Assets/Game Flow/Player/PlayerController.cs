@@ -1,4 +1,5 @@
 using Core.Managers;
+using Game_Flow.Camera;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -43,6 +44,7 @@ namespace Game_Flow.PlayerMovement
             _inputActions.Player.Move.canceled += OnMoveCanceled;
             _inputActions.Player.Jump.performed += OnJumpPerformed;
             EventManager.OnLockStateChanged += HandleLockStateChanged;
+            EventManager.OnViewModeChanged += OnViewModeChanged;
         }
 
         void OnDisable()
@@ -52,6 +54,7 @@ namespace Game_Flow.PlayerMovement
             _inputActions.Player.Jump.performed -= OnJumpPerformed;
             _inputActions.Player.Disable();
             EventManager.OnLockStateChanged -= HandleLockStateChanged;
+            EventManager.OnViewModeChanged -= OnViewModeChanged;
         }
 
         void Update()
@@ -97,6 +100,11 @@ namespace Game_Flow.PlayerMovement
         private void OnMoveCanceled(InputAction.CallbackContext context)
         {
             _movementInput = Vector2.zero;
+        }
+        
+        private void OnViewModeChanged(ViewMode mode)
+        {
+            _isMovementLocked = mode == ViewMode.TopDown;
         }
     }
 }
