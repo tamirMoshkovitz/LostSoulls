@@ -82,7 +82,7 @@ namespace Game_Flow.Player
 
         public void Update()
         {
-            if (!isInTopDownView) return;
+            // if (!isInTopDownView) return; //TODO: uncomment this line to disable movement in only top-down view
 
             if (_moveInput == Vector2.zero)
             {
