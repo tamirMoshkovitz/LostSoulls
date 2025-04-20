@@ -14,19 +14,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    sobelStrength: 1
-    outlineThickness: 3
+    sobelStrength: 0.548
+    outlineThickness: 2.992
     outlineColor: {r: 0, g: 0, b: 0, a: 1}
-    depthMultiplier: 25
-    noiseScale: 50
-    noiseStrength: 0.1
-    timeScale: 0.5
-    Frequency: 0.1
-    bokashiColor: {r: 0.6, g: 0.1, b: 0.4, a: 1}
-    bokashiStrength: 0.3
-    edgeThreshold: 0.05
-    noiseEdgeOnly: 0.8
-    solidNoiseStrength: 0.005
+    depthMultiplier: 87.7
+    noiseScale: 27.7
+    noiseStrength: 1.89
+    timeScale: 0
+    Frequency: 0
+    bokashiColor: {r: 0.5, g: 0.39586955, b: 0.3183962, a: 1}
+    bokashiStrength: 0.331
+    edgeThreshold: 0.01
+    noiseEdgeOnly: 0
+    solidNoiseStrength: 0
   shader: {fileID: 4800000, guid: 9148eaa4d593f4651b35b5b2c425a95a, type: 3}
 --- !u!114 &11400000
 MonoBehaviour:
