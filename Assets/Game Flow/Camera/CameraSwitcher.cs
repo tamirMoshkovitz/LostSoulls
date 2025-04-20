@@ -1,59 +1,92 @@
 ﻿using Core.Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Unity.Cinemachine;
+using System.Collections;
+using WaitForSeconds = UnityEngine.WaitForSeconds;
 
 namespace Game_Flow.Camera
 {
     public enum ViewMode { FirstPerson, TopDown }
     public class CameraSwitcher : MonoBehaviour
     {
-        [SerializeField] private UnityEngine.Camera firstPersonCamera;
-        [SerializeField] private UnityEngine.Camera topDownCamera;
+        [SerializeField] private CinemachineCamera firstPersonCamera;
+        [SerializeField] private CinemachineCamera topDownCamera;
+        [SerializeField] private UnityEngine.Camera mainCamera;
 
-        private InputSystem_Actions inputActions;
+        private InputSystem_Actions _inputActions;
         
-        private bool isTopDown = false;
-        private bool canSwitchView = false;
-        private ViewMode currentViewMode = ViewMode.FirstPerson;
+        private bool _isTopDown = false;
+        private bool _canSwitchView = false;
+        private ViewMode _currentViewMode = ViewMode.FirstPerson;
+        private CinemachineBrain _cinemachineBrain;
 
         private void Awake()
         {
-            inputActions = new InputSystem_Actions();
+            _inputActions = new InputSystem_Actions();
+            _cinemachineBrain = mainCamera.GetComponent<CinemachineBrain>();
         }
 
         private void OnEnable()
         {
-            inputActions.Player.Enable();
-            inputActions.Player.SwitchView.performed += ToggleView;
+            _inputActions.Player.Enable();
+            _inputActions.Player.SwitchView.performed += ToggleView;
             EventManager.OnPlayerZoneChanged += HandleZoneChange;
         }
 
         private void OnDisable()
         {
-            inputActions.Player.SwitchView.performed -= ToggleView;
+            _inputActions.Player.SwitchView.performed -= ToggleView;
             EventManager.OnPlayerZoneChanged -= HandleZoneChange;
-            inputActions.Player.Disable();
+            _inputActions.Player.Disable();
         }
 
         private void ToggleView(InputAction.CallbackContext ctx)
         {
-            if (!canSwitchView) return; 
-            isTopDown = !isTopDown;
-            firstPersonCamera.gameObject.SetActive(!isTopDown);
-            topDownCamera.gameObject.SetActive(isTopDown);
-            currentViewMode = isTopDown ? ViewMode.TopDown : ViewMode.FirstPerson;
-            EventManager.ViewModeChanged(currentViewMode);
+            if (!_canSwitchView || _cinemachineBrain.IsBlending) return; 
+            _isTopDown = !_isTopDown;
+            firstPersonCamera.gameObject.SetActive(!_isTopDown);
+            topDownCamera.gameObject.SetActive(_isTopDown);
+            ChangeViewMode();
+            EventManager.ViewModeChanged(_currentViewMode);
+        }
+
+        private void ChangeViewMode()
+        {
+            if (_isTopDown)
+            {
+                _currentViewMode = ViewMode.TopDown;
+                StartCoroutine(SwitchToOrtho());
+            }
+            else
+            {
+                SwitchToPerspective();
+            }
+        }
+        
+        private IEnumerator SwitchToOrtho()
+        {
+            yield return new WaitForSeconds(_cinemachineBrain.DefaultBlend.BlendTime * 9/10);
+            mainCamera.orthographic = true;
+            topDownCamera.Lens.OrthographicSize = 2.75f;
+            mainCamera.orthographicSize = 2.5f;
+        }
+        
+        private void SwitchToPerspective()
+        {
+            mainCamera.orthographic = false;
+            mainCamera.fieldOfView = 60f;
         }
         
         private void HandleZoneChange(bool canSwitch)
         {
-            canSwitchView = canSwitch;
-            if (!canSwitchView && isTopDown)
+            _canSwitchView = canSwitch;
+            if (!_canSwitchView && _isTopDown)
             {
-                isTopDown = false;
+                _isTopDown = false;
                 firstPersonCamera.gameObject.SetActive(true);
                 topDownCamera.gameObject.SetActive(false);
-                currentViewMode = ViewMode.FirstPerson;
+                _currentViewMode = ViewMode.FirstPerson;
             }
         }
     }
