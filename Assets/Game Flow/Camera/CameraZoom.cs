@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using Unity.Cinemachine;
+using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 
 // allows player to zoom in the FOV when holding a button down
 namespace Game_Flow.Camera
@@ -9,10 +11,10 @@ namespace Game_Flow.Camera
 	{
 		[SerializeField] private float zoomFOV = 30.0f;
 		[SerializeField] private float zoomSpeed = 9f;
+		[FormerlySerializedAs("_camera")] [SerializeField] private CinemachineCamera playerCamera;
 	
 		private float _targetFOV;
 		private float _baseFOV;
-		private UnityEngine.Camera _camera;
 		private InputSystem_Actions _inputActions;
 
 	
@@ -24,10 +26,7 @@ namespace Game_Flow.Camera
 
 		void OnEnable()
 		{
-			if (_camera == null)
-				_camera = GetComponent<UnityEngine.Camera>();
-
-			_baseFOV = _camera.fieldOfView;
+			_baseFOV = playerCamera.Lens.FieldOfView;
 			_targetFOV = _baseFOV;
 			_inputActions.Player.Enable();
 			_inputActions.Player.Zoom.performed += OnZoomPerformed;
@@ -52,7 +51,7 @@ namespace Game_Flow.Camera
 	
 		private void UpdateZoom()
 		{
-			_camera.fieldOfView = Mathf.Lerp(_camera.fieldOfView, _targetFOV, zoomSpeed * Time.deltaTime);
+			playerCamera.Lens.FieldOfView = Mathf.Lerp(playerCamera.Lens.FieldOfView, _targetFOV, zoomSpeed * Time.deltaTime);
 		}
 
 		void OnDisable()
