@@ -76,14 +76,14 @@ namespace Game_Flow.DotVisual.Scripts
             rayOrigin.position += direction * Time.deltaTime * 5f;
         }
         
-        /**private void OnDrawGizmos()
+        private void OnDrawGizmos()
         {
             if (rayOrigin != null)
             {
                 Gizmos.color = Color.cyan;
                 Gizmos.DrawSphere(rayOrigin.position, 0.2f);
             }
-        }**/
+        }
         
         public Vector3 GetRayOriginPosition() => rayOrigin.position;
         public void SetRayOriginPosition(Vector3 position) => rayOrigin.position = position;
