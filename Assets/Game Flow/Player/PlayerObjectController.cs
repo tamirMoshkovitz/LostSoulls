@@ -3,6 +3,7 @@ using Core.Managers;
 using Game_Flow.Camera;
 using Game_Flow.DotVisual.Scripts;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,8 +12,8 @@ namespace Game_Flow.Player
     public class PlayerObjectController : MonoBehaviour
     {
         [SerializeField] private DotVisualController targetingController;
-        [SerializeField] private UnityEngine.Camera firstPersonCamera;
-        [SerializeField] private UnityEngine.Camera topDownCamera;
+        [SerializeField] private CinemachineCamera firstPersonCamera;
+        [SerializeField] private CinemachineCamera topDownCamera;
         
         private MonoImpactObject lockedTarget;
         private static bool _isLocked = false;
@@ -123,4 +124,4 @@ namespace Game_Flow.Player
             }
         }
     }
-}
+} 
