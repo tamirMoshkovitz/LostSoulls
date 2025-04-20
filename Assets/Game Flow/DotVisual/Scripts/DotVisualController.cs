@@ -21,6 +21,8 @@ namespace Game_Flow.DotVisual.Scripts
         private GameObject dotInstance;
         private const float SphereRadius = 1f;
         
+        private bool _isInTopDownMode;
+        
         public MonoImpactObject CurrentTarget { get; private set; }
         public bool IsLocked { get; set; } = false;
 
@@ -36,6 +38,10 @@ namespace Game_Flow.DotVisual.Scripts
         
         public void Update()
         {
+            if (rayOrigin.parent == null)
+            {
+                Debug.LogWarning("rayOrigin has lost its parent!");
+            }
             if (IsLocked && CurrentTarget != null)
             {
                 dotInstance.transform.position = CurrentTarget.transform.position + CurrentTarget.transform.localScale / 2;
@@ -46,7 +52,7 @@ namespace Game_Flow.DotVisual.Scripts
             RaycastHit hit;
             Vector3 direction = (rayOrigin.forward + Vector3.down * rayOffset).normalized;
 
-            //Debug.DrawRay(rayOrigin.position, direction * rayLength, Color.red);
+            Debug.DrawRay(rayOrigin.position, direction * rayLength, Color.red);
             if (Physics.SphereCast(rayOrigin.position, SphereRadius, direction, out hit, rayLength, targetLayers))
             {
                 dotInstance.transform.position = hit.point;
@@ -70,10 +76,29 @@ namespace Game_Flow.DotVisual.Scripts
             }
         }
         
+        
         public void MoveRayOrigin(Vector3 direction)
         {
-            Debug.Log("Moving ray origin: " + direction);
-            rayOrigin.position += direction * Time.deltaTime * 5f;
+            Vector3 localMove = new Vector3(direction.x, 0, 0); // block Z
+            rayOrigin.localPosition += localMove * Time.deltaTime * 5f;
+
+            rayOrigin.localPosition = new Vector3(
+                Mathf.Clamp(rayOrigin.localPosition.x, -10f, 10f),
+                0,
+                0
+            );
+        }
+        
+        public void ResetRayOriginLocalPosition()
+        {
+            if (rayOrigin.parent != null)
+            {
+                rayOrigin.position = rayOrigin.parent.position;
+            }
+            else
+            {
+                Debug.LogWarning("Ray origin has no parent!");
+            }
         }
         
         private void OnDrawGizmos()
@@ -85,7 +110,12 @@ namespace Game_Flow.DotVisual.Scripts
             }
         }
         
+        public void SetTopDownMode(bool isTopDown)
+        {
+            _isInTopDownMode = isTopDown;
+        }
+        
         public Vector3 GetRayOriginPosition() => rayOrigin.position;
-        public void SetRayOriginPosition(Vector3 position) => rayOrigin.position = position;
+        public void SetRayOriginPosition(Vector3 position) => rayOrigin.localPosition += position;
     }
 }
