@@ -32,7 +32,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         
         public void Activate(Vector3 direction)
         {
-            if (_activated) return;
+            if (_activated || direction.Equals(Vector3.zero)) return;
             _activated = true;
             Vector3 snapped = GetClosestCardinalDirection(direction);
             IsBlocked = false;

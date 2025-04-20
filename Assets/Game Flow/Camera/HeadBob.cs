@@ -1,3 +1,4 @@
+using Game_Flow.DotVisual.Scripts;
 using Game_Flow.PlayerMovement;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -42,6 +43,9 @@ namespace Camera
         
         void Update()
         {
+            if (ObjectController.Instance.IsLocked)
+                return;
+            
             bool isMoving = _moveInput.sqrMagnitude > 0.01f;
             bool isGrounded = controller.IsGrounded;
 

@@ -1,5 +1,7 @@
 using Core.Managers;
 using Game_Flow.Camera;
+using Game_Flow.DotVisual.Scripts;
+using Game_Flow.DotVisual.Scripts.States;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,6 +32,8 @@ namespace Game_Flow.PlayerMovement
         {
             _controller = GetComponent<CharacterController>();
             _inputActions = new InputSystem_Actions();
+            _inputActions.Enable();
+            _inputActions.Player.Enable();
             Physics.IgnoreLayerCollision(
                 LayerMask.NameToLayer("Player"), 
                 LayerMask.NameToLayer("BorderImpactObject"), 
@@ -44,7 +48,6 @@ namespace Game_Flow.PlayerMovement
             _inputActions.Player.Move.canceled += OnMoveCanceled;
             _inputActions.Player.Jump.performed += OnJumpPerformed;
             EventManager.OnLockStateChanged += HandleLockStateChanged;
-            EventManager.OnViewModeChanged += OnViewModeChanged;
         }
 
         void OnDisable()
@@ -54,7 +57,6 @@ namespace Game_Flow.PlayerMovement
             _inputActions.Player.Jump.performed -= OnJumpPerformed;
             _inputActions.Player.Disable();
             EventManager.OnLockStateChanged -= HandleLockStateChanged;
-            EventManager.OnViewModeChanged -= OnViewModeChanged;
         }
 
         void Update()
@@ -62,13 +64,14 @@ namespace Game_Flow.PlayerMovement
             HandleMovement();
         }
         
-        private void HandleLockStateChanged(bool isLocked)
+        private void HandleLockStateChanged(IObjeckLockingState state)
         {
-            _isMovementLocked = isLocked;
+            _isMovementLocked = state is TopDownState;
         }
 
         void HandleMovement()
         {
+            if (_isMovementLocked || ObjectController.Instance.IsLocked) {return;}
             // Ground check
             _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); //TODO fix this
 
@@ -76,11 +79,9 @@ namespace Game_Flow.PlayerMovement
                 _velocity.y = -2f;
 
             // Move input
-            if (!_isMovementLocked)
-            {
-                Vector3 move = transform.right * _movementInput.x + transform.forward * _movementInput.y;
-                _controller.Move(move * moveSpeed * Time.deltaTime);
-            }
+            Vector3 move = transform.right * _movementInput.x + transform.forward * _movementInput.y;
+            _controller.Move(move * moveSpeed * Time.deltaTime);
+                
             // Gravity
             _velocity.y += gravity * Time.deltaTime;
             _controller.Move(_velocity * Time.deltaTime);
@@ -100,11 +101,6 @@ namespace Game_Flow.PlayerMovement
         private void OnMoveCanceled(InputAction.CallbackContext context)
         {
             _movementInput = Vector2.zero;
-        }
-        
-        private void OnViewModeChanged(ViewMode mode)
-        {
-            _isMovementLocked = mode == ViewMode.TopDown;
         }
     }
 }

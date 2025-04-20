@@ -1,5 +1,6 @@
 ﻿using System;
 using Game_Flow.Camera;
+using Game_Flow.DotVisual.Scripts.States;
 using UnityEngine;
 
 namespace Core.Managers
@@ -21,11 +22,11 @@ namespace Core.Managers
             }
         }
         
-        public static event Action<bool> OnLockStateChanged;
+        public static event Action<IObjeckLockingState> OnLockStateChanged;
 
-        public static void LockStateChanged(bool isLocked)
+        public static void LockStateChanged(IObjeckLockingState state)
         {
-            OnLockStateChanged?.Invoke(isLocked);
+            OnLockStateChanged?.Invoke(state);
         }
         
         public static event Action<bool> OnPlayerZoneChanged;

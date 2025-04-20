@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Unity.Cinemachine;
 using System.Collections;
+using Game_Flow.DotVisual.Scripts;
+using Game_Flow.DotVisual.Scripts.States;
 using WaitForSeconds = UnityEngine.WaitForSeconds;
 
 namespace Game_Flow.Camera
@@ -70,12 +72,14 @@ namespace Game_Flow.Camera
             mainCamera.orthographic = true;
             topDownCamera.Lens.OrthographicSize = 2.75f;
             mainCamera.orthographicSize = 2.5f;
+            ObjectController.Instance.ChangeState(new TopDownState());
         }
         
         private void SwitchToPerspective()
         {
             mainCamera.orthographic = false;
             mainCamera.fieldOfView = 60f;
+            ObjectController.Instance.ChangeState(new FPState());
         }
         
         private void HandleZoneChange(bool canSwitch)

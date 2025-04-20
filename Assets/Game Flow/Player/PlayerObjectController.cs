@@ -49,7 +49,7 @@ namespace Game_Flow.Player
             if (_isLocked != state)
             {
                 _isLocked = state;
-                EventManager.LockStateChanged(_isLocked); // 🟢 Call the EventManager
+                // EventManager.LockStateChanged(_isLocked); // 🟢 Call the EventManager
                 targetingController.IsLocked = _isLocked; // 🟢 Update the targeting controller
             }
         }
