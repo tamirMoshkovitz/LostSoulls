@@ -103,7 +103,7 @@ namespace Game_Flow.Player
             }
             else
             {
-                Vector3 moveDirection = new Vector3(_moveInput.x, 0f, _moveInput.y);
+                Vector3 moveDirection = new Vector3(_moveInput.x, _moveInput.y, 0f);
                 targetingController.MoveRayOrigin(moveDirection);
             }
         }
@@ -113,11 +113,13 @@ namespace Game_Flow.Player
             if (mode == ViewMode.TopDown)
             {
                 isInTopDownView = true;
+                targetingController.SetTopDownMode(true);
             }
             else
             {
                 isInTopDownView = false;
-                targetingController.SetRayOriginPosition(transform.position);
+                targetingController.SetTopDownMode(false);
+                targetingController.ResetRayOriginLocalPosition();
             }
         }
     }
