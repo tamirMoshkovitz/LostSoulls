@@ -15,11 +15,11 @@ MonoBehaviour:
   m_Active: 1
   settings:
     sobelStrength: 0.548
-    outlineThickness: 2.992
+    outlineThickness: 3.898
     outlineColor: {r: 0, g: 0, b: 0, a: 1}
-    depthMultiplier: 87.7
-    noiseScale: 27.7
-    noiseStrength: 1.89
+    depthMultiplier: 100
+    noiseScale: 32.8
+    noiseStrength: 2.29
     timeScale: 0
     Frequency: 0
     bokashiColor: {r: 0.5, g: 0.39586955, b: 0.3183962, a: 1}

@@ -12,7 +12,7 @@ public static class ObjectOutlineEditorUtils {
     private static readonly GUIStyle RichHelpBoxStyle = new(EditorStyles.helpBox) { richText = true };
 
     public static void SetActive(Material material, bool active) {
-        var renderer = GetRenderer(Camera.current ?? Camera.main);
+        var renderer = GetRenderer(UnityEngine.Camera.current ?? UnityEngine.Camera.main);
         if (renderer == null) {
             const string m = "<b>ScriptableRendererData</b> is required to enable per-object outlines.\n" +
                              "Please assign a <b>URP Asset</b> in the Graphics settings.";
@@ -89,7 +89,7 @@ public static class ObjectOutlineEditorUtils {
     }
 
     [CanBeNull]
-    private static ScriptableRenderer GetRenderer(Camera camera) {
+    private static ScriptableRenderer GetRenderer(UnityEngine.Camera camera) {
         if (!camera) {
             return null;
         }
