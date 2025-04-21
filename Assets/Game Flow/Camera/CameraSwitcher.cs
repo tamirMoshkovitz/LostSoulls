@@ -5,6 +5,7 @@ using Unity.Cinemachine;
 using System.Collections;
 using Game_Flow.DotVisual.Scripts;
 using Game_Flow.DotVisual.Scripts.States;
+using Game_Flow.PlayerMovement;
 using WaitForSeconds = UnityEngine.WaitForSeconds;
 
 namespace Game_Flow.Camera
@@ -68,6 +69,7 @@ namespace Game_Flow.Camera
         
         private IEnumerator SwitchToOrtho()
         {
+            PlayerController.Instance.IsMovementLocked = true;
             yield return new WaitForSeconds(_cinemachineBrain.DefaultBlend.BlendTime * 9/10);
             mainCamera.orthographic = true;
             topDownCamera.Lens.OrthographicSize = 2.75f;

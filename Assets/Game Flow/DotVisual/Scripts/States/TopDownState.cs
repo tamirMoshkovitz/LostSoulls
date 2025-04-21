@@ -18,10 +18,10 @@ namespace Game_Flow.DotVisual.Scripts.States
         
         public void EnterState(Transform origin, GameObject dotInstance)
         {
+            EventManager.LockStateChanged(this);
             _inputActions = new InputSystem_Actions();
             _inputActions.Enable();
             _inputActions.Player.Enable();
-            EventManager.LockStateChanged(this);
             _position = origin.position;
             _dot = dotInstance;
             _dotRenderer = _dot.GetComponent<Renderer>();

@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 namespace Game_Flow.PlayerMovement
 {
     [RequireComponent(typeof(CharacterController))]
-    public class PlayerController : MonoBehaviour
+    public class PlayerController : MonoSingleton<PlayerController>
     {
         [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private float gravity = -9.81f;
@@ -23,6 +23,7 @@ namespace Game_Flow.PlayerMovement
         private Vector3 _velocity;
         private bool _isGrounded;
         private bool _isMovementLocked;
+        public bool IsMovementLocked {get => _isMovementLocked; set => _isMovementLocked = value;}
 
         
         public Vector3 Velocity => _velocity;
