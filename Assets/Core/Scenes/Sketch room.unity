@@ -276,6 +276,7 @@ MonoBehaviour:
   decoratorOrder: 00000000010000000300000002000000
   stats: {fileID: 11400000, guid: c90d6b901ff6448618b68bd07b0d0feb, type: 2}
   linker: {fileID: 0}
+  gridVisualizer: {fileID: 0}
 --- !u!65 &83093994
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -371,6 +372,7 @@ MonoBehaviour:
   decoratorOrder: 00000000010000000300000002000000
   stats: {fileID: 11400000, guid: c90d6b901ff6448618b68bd07b0d0feb, type: 2}
   linker: {fileID: 0}
+  gridVisualizer: {fileID: 0}
 --- !u!65 &136523668
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -436,9 +438,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 701f344e942c4fa4a68c98437e024978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  decoratorOrder: 00000000010000000300000002000000
+  decoratorOrder: 0000000001000000030000000200000006000000
   stats: {fileID: 11400000, guid: c90d6b901ff6448618b68bd07b0d0feb, type: 2}
   linker: {fileID: 0}
+  gridVisualizer: {fileID: 1591793260}
 --- !u!65 &190736473
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -593,13 +596,25 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: -8246853646395646270, guid: b3cc47cdcec804f83a99ee60c34c0ead, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -7843570125825365140, guid: b3cc47cdcec804f83a99ee60c34c0ead, type: 3}
       propertyPath: m_Layer
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: -7843570125825365140, guid: b3cc47cdcec804f83a99ee60c34c0ead, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -6800856015322825301, guid: b3cc47cdcec804f83a99ee60c34c0ead, type: 3}
       propertyPath: m_Layer
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: -6800856015322825301, guid: b3cc47cdcec804f83a99ee60c34c0ead, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -6119674474511337958, guid: b3cc47cdcec804f83a99ee60c34c0ead, type: 3}
       propertyPath: m_Enabled
@@ -617,6 +632,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: -4295161053746276571, guid: b3cc47cdcec804f83a99ee60c34c0ead, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: -2907208967137612723, guid: b3cc47cdcec804f83a99ee60c34c0ead, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -625,9 +644,17 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: -2268493968148393607, guid: b3cc47cdcec804f83a99ee60c34c0ead, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -1982784859556895146, guid: b3cc47cdcec804f83a99ee60c34c0ead, type: 3}
       propertyPath: m_Layer
       value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: -1982784859556895146, guid: b3cc47cdcec804f83a99ee60c34c0ead, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -1503636843404066311, guid: b3cc47cdcec804f83a99ee60c34c0ead, type: 3}
       propertyPath: m_Enabled
@@ -640,6 +667,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: b3cc47cdcec804f83a99ee60c34c0ead, type: 3}
       propertyPath: m_Name
       value: Moving objects
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b3cc47cdcec804f83a99ee60c34c0ead, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1183138477964465343, guid: b3cc47cdcec804f83a99ee60c34c0ead, type: 3}
       propertyPath: m_Enabled
@@ -1071,6 +1102,7 @@ MonoBehaviour:
   decoratorOrder: 00000000010000000300000002000000
   stats: {fileID: 11400000, guid: c90d6b901ff6448618b68bd07b0d0feb, type: 2}
   linker: {fileID: 0}
+  gridVisualizer: {fileID: 0}
 --- !u!65 &440869734
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1940,9 +1972,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 701f344e942c4fa4a68c98437e024978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  decoratorOrder: 0000000001000000020000000300000004000000
+  decoratorOrder: 000000000100000002000000030000000400000005000000
   stats: {fileID: 11400000, guid: c90d6b901ff6448618b68bd07b0d0feb, type: 2}
   linker: {fileID: 0}
+  gridVisualizer: {fileID: 1591793260}
 --- !u!65 &635983884
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2156,6 +2189,7 @@ MonoBehaviour:
   decoratorOrder: 020000000100000003000000
   stats: {fileID: 11400000, guid: c90d6b901ff6448618b68bd07b0d0feb, type: 2}
   linker: {fileID: 1462327823}
+  gridVisualizer: {fileID: 0}
 --- !u!65 &817079170
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2280,6 +2314,7 @@ MonoBehaviour:
   decoratorOrder: 0300000000000000
   stats: {fileID: 11400000, guid: c90d6b901ff6448618b68bd07b0d0feb, type: 2}
   linker: {fileID: 1462327823}
+  gridVisualizer: {fileID: 0}
 --- !u!65 &819344661
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2494,9 +2529,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 701f344e942c4fa4a68c98437e024978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  decoratorOrder: 00000000010000000300000002000000
+  decoratorOrder: 000000000100000003000000020000000a000000
   stats: {fileID: 11400000, guid: c90d6b901ff6448618b68bd07b0d0feb, type: 2}
   linker: {fileID: 0}
+  gridVisualizer: {fileID: 1591793260}
 --- !u!1 &1045119440 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -2968314599266499146, guid: 6857bf45b75264b3c920d4fcb8fb80fe, type: 3}
@@ -2517,6 +2553,7 @@ MonoBehaviour:
   decoratorOrder: 00000000010000000300000002000000
   stats: {fileID: 11400000, guid: c90d6b901ff6448618b68bd07b0d0feb, type: 2}
   linker: {fileID: 0}
+  gridVisualizer: {fileID: 0}
 --- !u!65 &1045119445
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2555,9 +2592,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 701f344e942c4fa4a68c98437e024978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  decoratorOrder: 00000000010000000300000002000000
+  decoratorOrder: 0000000001000000030000000200000006000000
   stats: {fileID: 11400000, guid: c90d6b901ff6448618b68bd07b0d0feb, type: 2}
   linker: {fileID: 0}
+  gridVisualizer: {fileID: 1591793260}
 --- !u!65 &1102381677
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2899,9 +2937,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 701f344e942c4fa4a68c98437e024978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  decoratorOrder: 0000000001000000020000000300000004000000
+  decoratorOrder: 000000000100000002000000030000000400000005000000
   stats: {fileID: 11400000, guid: c90d6b901ff6448618b68bd07b0d0feb, type: 2}
   linker: {fileID: 0}
+  gridVisualizer: {fileID: 1591793260}
 --- !u!65 &1349536931
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2966,7 +3005,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1462327822
 Transform:
   m_ObjectHideFlags: 0
@@ -3278,6 +3317,27 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5495902117074765545, guid: c8ee8189efeea4598a446e87571baaaa, type: 3}
+--- !u!1 &1591793258 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -8824702379704827567, guid: 6857bf45b75264b3c920d4fcb8fb80fe, type: 3}
+  m_PrefabInstance: {fileID: 1641583437}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1591793260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1591793258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c63e5d9a28945e587ef45b90978ad47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rows: 6
+  cols: 4
+  gizmoRadius: 0.05
+  gizmoHeightOffset: 0.1
 --- !u!1 &1602557920 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1355570288625910027, guid: 8804a82ec22eb4ff08d0ac09124f33af, type: 3}
@@ -3322,9 +3382,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 701f344e942c4fa4a68c98437e024978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  decoratorOrder: 00000000010000000300000002000000
+  decoratorOrder: 0000000001000000030000000200000005000000
   stats: {fileID: 11400000, guid: c90d6b901ff6448618b68bd07b0d0feb, type: 2}
   linker: {fileID: 0}
+  gridVisualizer: {fileID: 1591793260}
 --- !u!65 &1625949021
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3673,6 +3734,10 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 3170dc1c9d48e4db2919ae0ca893a371, type: 2}
+    - target: {fileID: 8226084195463809049, guid: 6857bf45b75264b3c920d4fcb8fb80fe, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 6422387593283224088, guid: 6857bf45b75264b3c920d4fcb8fb80fe, type: 3}
@@ -3745,6 +3810,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: -2968314599266499146, guid: 6857bf45b75264b3c920d4fcb8fb80fe, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1045119444}
+    - targetCorrespondingSourceObject: {fileID: -8824702379704827567, guid: 6857bf45b75264b3c920d4fcb8fb80fe, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1591793260}
     - targetCorrespondingSourceObject: {fileID: -5388867356167283329, guid: 6857bf45b75264b3c920d4fcb8fb80fe, type: 3}
       insertIndex: -1
       addedObject: {fileID: 891891882}
@@ -3843,9 +3911,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 701f344e942c4fa4a68c98437e024978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  decoratorOrder: 00000000010000000300000002000000
+  decoratorOrder: 0000000001000000030000000200000005000000
   stats: {fileID: 11400000, guid: c90d6b901ff6448618b68bd07b0d0feb, type: 2}
   linker: {fileID: 0}
+  gridVisualizer: {fileID: 1591793260}
 --- !u!65 &1752082699
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3865,8 +3934,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 0.85323447, y: 1.3017282, z: 0.6452489}
+  m_Center: {x: -0.073382765, y: 0.15086412, z: -0.17737556}
 --- !u!1 &1774110420
 GameObject:
   m_ObjectHideFlags: 0
@@ -4022,9 +4091,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 701f344e942c4fa4a68c98437e024978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  decoratorOrder: 00000000010000000300000002000000
+  decoratorOrder: 0000000001000000030000000200000007000000
   stats: {fileID: 11400000, guid: c90d6b901ff6448618b68bd07b0d0feb, type: 2}
   linker: {fileID: 0}
+  gridVisualizer: {fileID: 1591793260}
 --- !u!65 &1787351813
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4149,6 +4219,7 @@ MonoBehaviour:
   decoratorOrder: 020000000000000001000000
   stats: {fileID: 11400000, guid: c90d6b901ff6448618b68bd07b0d0feb, type: 2}
   linker: {fileID: 1462327823}
+  gridVisualizer: {fileID: 0}
 --- !u!65 &1810752213
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4432,9 +4503,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 701f344e942c4fa4a68c98437e024978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  decoratorOrder: 00000000010000000300000002000000
+  decoratorOrder: 0000000001000000030000000200000009000000
   stats: {fileID: 11400000, guid: c90d6b901ff6448618b68bd07b0d0feb, type: 2}
   linker: {fileID: 0}
+  gridVisualizer: {fileID: 1591793260}
 --- !u!65 &1906387397
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4476,6 +4548,7 @@ MonoBehaviour:
   decoratorOrder: 00000000010000000300000002000000
   stats: {fileID: 11400000, guid: c90d6b901ff6448618b68bd07b0d0feb, type: 2}
   linker: {fileID: 0}
+  gridVisualizer: {fileID: 0}
 --- !u!65 &1916585328
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4626,9 +4699,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 701f344e942c4fa4a68c98437e024978, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  decoratorOrder: 00000000010000000300000002000000
+  decoratorOrder: 0000000001000000030000000200000005000000
   stats: {fileID: 11400000, guid: c90d6b901ff6448618b68bd07b0d0feb, type: 2}
   linker: {fileID: 0}
+  gridVisualizer: {fileID: 1591793260}
 --- !u!65 &2094160059
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4843,7 +4917,7 @@ SceneRoots:
   - {fileID: 662289126}
   - {fileID: 1849499387}
   - {fileID: 569639263}
-  - {fileID: 405076818}
   - {fileID: 464143598}
   - {fileID: 506078599}
   - {fileID: 1488419460}
+  - {fileID: 405076818}
