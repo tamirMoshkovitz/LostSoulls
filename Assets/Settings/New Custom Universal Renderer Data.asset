@@ -22,7 +22,7 @@ MonoBehaviour:
     noiseStrength: 1.7
     timeScale: 0
     Frequency: 0
-    bokashiColor: {r: 0.6886792, g: 0.5971591, b: 0.48402455, a: 1}
+    bokashiColor: {r: 0.09282664, g: 0.09473706, b: 0.13207549, a: 1}
     bokashiStrength: 0.27
     edgeThreshold: 0.01
     noiseEdgeOnly: 0
