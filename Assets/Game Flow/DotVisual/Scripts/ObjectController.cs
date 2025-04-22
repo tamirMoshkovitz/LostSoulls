@@ -55,11 +55,11 @@ namespace Game_Flow.DotVisual.Scripts
         private void Update()
         {
             _currentState?.Update();
+            _currentState?.GetTarget(out _target);
             if (IsLocked)
             {
-                _currentState?.GetTarget(out _target);
                 Vector3 targetMovement = _currentState.CalculateMovement(_input);
-                _target?.Activate(targetMovement);
+                _target?.UpdateObject(targetMovement);
                 Debug.Log(_input);
             }
         }
@@ -76,11 +76,13 @@ namespace Game_Flow.DotVisual.Scripts
 
         private void OnLock(InputAction.CallbackContext context)
         {
+            if(_target != null) _target.Activate();
             IsLocked = true;
         }
         
         private void OnUnlock(InputAction.CallbackContext context)
         {
+            if(_target != null) _target.DeActivate();
             IsLocked = false;
         }
         

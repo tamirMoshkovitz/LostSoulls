@@ -100,7 +100,7 @@ namespace Game_Flow.Player
                 camForward.Normalize();
                 camRight.Normalize();
                 Vector3 moveDirection = camForward * _moveInput.y + camRight * _moveInput.x;
-                lockedTarget.Activate(moveDirection);
+                lockedTarget.UpdateObject(moveDirection);
             }
             else
             {
