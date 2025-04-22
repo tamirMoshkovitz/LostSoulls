@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rayOrigin: {fileID: 0}
   rayLength: 5
+  rayOffset: 0.5
   targetLayers:
     serializedVersion: 2
     m_Bits: 32768
