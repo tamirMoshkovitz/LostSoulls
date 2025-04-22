@@ -15,9 +15,9 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             _boxCollider = Mono.GetComponent<BoxCollider>();
         }
 
-        public override void Impact(Vector3 direction)
+        public override void UpdateImpact(Vector3 direction)
         {
-            base.Impact(direction);
+            base.UpdateImpact(direction);
 
             _activated = direction == Vector3.right;
             if (!_activated) return;

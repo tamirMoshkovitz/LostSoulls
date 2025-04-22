@@ -17,7 +17,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             }
         }
 
-        void LateUpdate()
+        public void ConnectObjects()
         {
             MonoImpactObject reference = null;
             Vector3 delta = Vector3.zero;
@@ -74,11 +74,27 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             }
         }
 
-        public void ActivateSiblings(Vector3 snapped)
+        public void ActivateSiblings()
         {
             foreach (var obj in linkedObjects)
             {
-                   obj.Activate(snapped);
+                   obj.Activate();
+            }
+        }
+
+        public void DeActivateSiblings()
+        {
+            foreach (var obj in linkedObjects)
+            {
+                obj.DeActivate();
+            } 
+        }
+
+        public void UpdateSiblings(Vector3 snapped)
+        {
+            foreach (var obj in linkedObjects)
+            {
+                obj.UpdateObject(snapped);
             }
         }
     }

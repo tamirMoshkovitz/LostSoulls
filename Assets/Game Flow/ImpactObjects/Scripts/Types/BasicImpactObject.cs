@@ -13,7 +13,13 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             _mono = mono;
             
         }
-        public void Impact(Vector3 direction)
+
+        public void StartImpact()
+        {
+            
+        }
+
+        public void UpdateImpact(Vector3 direction)
         {
             
         }
@@ -21,6 +27,11 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
         public void DrawGizmos()
         {
            
+        }
+
+        public void StopImpact()
+        {
+            
         }
     }
 }

@@ -12,6 +12,8 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         [SerializeField] private List<ImpactObjectTypes> decoratorOrder;
         [SerializeField] private ImpactObjectStats stats;
         [SerializeField] private MultiImpactObjectLinker linker;
+        [SerializeField] private GridVisualizer gridVisualizer;
+        private bool _updated;
         private bool _activated;
         public bool IsSoul {get; private set;}
         public bool IsBlocked { get; set; } = false;
@@ -22,28 +24,56 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             
             foreach (var type in decoratorOrder)
             {
-                if (type == ImpactObjectTypes.Soul) IsSoul = true; 
-                _impactObject = ImpactObjectFactory.CreateImpactObject(type, _impactObject, this,stats);
+                if (type == ImpactObjectTypes.Soul) IsSoul = true;
+                bool shouldSnapToGrid = gridVisualizer != null && type is ImpactObjectTypes.OneBlockGrid
+                    or ImpactObjectTypes.TwoBlockHorizontalGrid
+                    or ImpactObjectTypes.TwoBlockVerticalGrid
+                    or ImpactObjectTypes.ThreeBlockHorizontalGrid
+                    or ImpactObjectTypes.ThreeBlockVerticalGrid
+                    or ImpactObjectTypes.FourBlocksSquareGrid;
+                
+                
+                _impactObject = ImpactObjectFactory.CreateImpactObject(type, _impactObject, this,stats,gridVisualizer);
+                if(shouldSnapToGrid) _impactObject.StopImpact();
             }
         }
 
-        
-        
-        
-        public void Activate(Vector3 direction)
+
+        public void Activate()
         {
-            if (_activated || direction.Equals(Vector3.zero)) return;
+            if(_activated) return;
             _activated = true;
+            _impactObject.StartImpact();
+            if (linker != null)
+                linker.ActivateSiblings();
+        }
+        
+        public void UpdateObject(Vector3 direction)
+        {
+            if (_updated || direction.Equals(Vector3.zero)) return;
+            _updated = true;
             Vector3 snapped = GetClosestCardinalDirection(direction);
             IsBlocked = false;
-            _impactObject.Impact(snapped);
+            _impactObject.UpdateImpact(snapped);
             if (linker != null)
-                linker.ActivateSiblings(snapped);
+            {
+                linker.UpdateSiblings(snapped);
+                linker.ConnectObjects();
+            }
+        }
+        
+        public void DeActivate()
+        {
+            if(!_activated) return;
+            _activated = false;
+            _impactObject.StopImpact();
+            if (linker != null)
+                linker.DeActivateSiblings();
         }
 
         public void Update()
         {
-            _activated = false;
+            _updated = false;
         }
 
         void OnDrawGizmos()
@@ -78,6 +108,17 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             }
 
             return best;
+        }
+        
+        public Vector3 GetBottomCenter()
+        {
+            Renderer renderer = GetComponent<Renderer>();
+            if (renderer == null) return transform.position;
+
+            Bounds bounds = renderer.bounds;
+            Vector3 bottomCenter = bounds.center;
+            bottomCenter.y = bounds.min.y;
+            return bottomCenter;
         }
 
     }
