@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-2044907142533458756
+--- !u!114 &-8552876455582750347
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,15 +20,16 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Heater
+  m_Name: Dresser2 4
   m_Shader: {fileID: 4800000, guid: bee44b4a58655ee4cbff107302a3e131, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords:
+  - DR_ENABLE_LIGHTMAP_DIR
   - DR_GRADIENT_ON
   - _CELPRIMARYMODE_SINGLE
   - _DETAILMAPBLENDINGMODE_MULTIPLY
-  - _GRADIENTSPACE_WORLD
+  - _GRADIENTSPACE_LOCAL
   - _OUTLINESPACE_SCREEN
   - _TEXTUREBLENDINGMODE_MULTIPLY
   m_InvalidKeywords:
@@ -147,11 +148,11 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _GradientAngle: 0
-    - _GradientCenterX: 0.56
-    - _GradientCenterY: 1.03
+    - _GradientCenterX: 28.87
+    - _GradientCenterY: 0.18
     - _GradientEnabled: 1
-    - _GradientSize: 1.13
-    - _GradientSpace: 0
+    - _GradientSize: 0.48
+    - _GradientSpace: 1
     - _LightContribution: 0
     - _LightFalloffSize: 0
     - _LightmapDirectionPitch: 0
@@ -190,13 +191,13 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.3679245, g: 0.3175952, b: 0.3175952, a: 1}
+    - _BaseColor: {r: 0.26415092, g: 0.23999779, b: 0.23798503, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorDim: {r: 0.2924528, g: 0.2924528, b: 0.2924528, a: 1}
+    - _ColorDim: {r: 0.2830189, g: 0.24350305, b: 0.23362409, a: 1}
     - _ColorDimCurve: {r: 0.85023, g: 0.85034, b: 0.8504499, a: 0.85056}
     - _ColorDimExtra: {r: 0.85023, g: 0.85034, b: 0.8504499, a: 0.85056}
     - _ColorDimSteps: {r: 0.85023, g: 0.85034, b: 0.8504499, a: 0.85056}
-    - _ColorGradient: {r: 0.13207549, g: 0.036545493, b: 0.011836951, a: 1}
+    - _ColorGradient: {r: 0.11320752, g: 0.05364541, b: 0.022961903, a: 1}
     - _DetailMapColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FlatRimColor: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
