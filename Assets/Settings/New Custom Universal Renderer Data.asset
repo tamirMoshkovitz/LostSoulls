@@ -16,7 +16,7 @@ MonoBehaviour:
   settings:
     sobelStrength: 0.548
     outlineThickness: 1
-    outlineColor: {r: 0.046085168, g: 0.03991634, b: 0.122641504, a: 1}
+    outlineColor: {r: 0.103773594, g: 0.04995413, b: 0.027901389, a: 1}
     depthMultiplier: 20
     noiseScale: 25
     noiseStrength: 1.7
