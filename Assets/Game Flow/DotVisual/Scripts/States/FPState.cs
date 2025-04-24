@@ -27,12 +27,12 @@ namespace Game_Flow.DotVisual.Scripts.States
 
         public void Update()
         {
-            if (ObjectController.Instance.IsLocked)
-            {
-                LockedUpdate();
-                return;
-            }
-            UnLockedUpdate();
+            // if (ObjectController.Instance.IsLocked)
+            // {
+            //     LockedUpdate();
+            //     return;
+            // }
+            // UnLockedUpdate();
         }
 
         private void LockedUpdate()
@@ -61,12 +61,15 @@ namespace Game_Flow.DotVisual.Scripts.States
 
         public MonoImpactObject GetTarget(out MonoImpactObject target)
         {
-            return target = _target;
+            // return target = _target;
+            return target = null;
+
         }
 
         public Vector3 CalculateMovement(Vector2 input)
         {
-            return _origin.transform.rotation * (new Vector3(input.x, 0, input.y));
+            // return _origin.transform.rotation * (new Vector3(input.x, 0, input.y));
+            return Vector3.zero;
         }
     }
 }
