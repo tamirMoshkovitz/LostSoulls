@@ -44,12 +44,12 @@ namespace Game_Flow.DotVisual.Scripts
 
         private void OnDisable()
         {
-            _inputSystemActions.Disable();
             _inputSystemActions.Player.Lock.performed -= OnLock;
             _inputSystemActions.Player.Lock.canceled -= OnUnlock;
-            _inputSystemActions.Player.Enable();
-            _inputSystemActions.Player.Move.performed += OnMovePerformed;
-            _inputSystemActions.Player.Move.canceled += OnMoveCanceled;
+            _inputSystemActions.Player.Move.performed -= OnMovePerformed;
+            _inputSystemActions.Player.Move.canceled -= OnMoveCanceled;
+            _inputSystemActions.Player.Disable();
+            _inputSystemActions.Disable();
         }
 
         private void Update()

@@ -7,13 +7,14 @@ namespace Game_Flow.DotVisual.Scripts.States
 {
     public class TopDownState : IObjeckLockingState
     {
-        private float speed = 2f;
+        private const float Speed = 2f;
         private Vector3 _position;
         private GameObject _dot;
         private Renderer _dotRenderer;
         private InputSystem_Actions _inputActions;
         private Vector2 _input;
         private MonoImpactObject _target;
+        private InputAction _inputReader;
 
         
         public void EnterState(Transform origin, GameObject dotInstance)
@@ -22,18 +23,19 @@ namespace Game_Flow.DotVisual.Scripts.States
             _inputActions = new InputSystem_Actions();
             _inputActions.Enable();
             _inputActions.Player.Enable();
+            _inputReader = _inputActions.Player.Move;
             _position = origin.position;
             _dot = dotInstance;
             _dotRenderer = _dot.GetComponent<Renderer>();
-            _inputActions.Player.Look.performed += OnMovePerformed;
-            _inputActions.Player.Look.canceled += OnMoveCanceled;
+            _inputReader.performed += OnMovePerformed;
+            _inputReader.canceled += OnMoveCanceled;
             
             Debug.Log("Entered top state");
         }
         public void ExitState()
         {
-            _inputActions.Player.Look.performed -= OnMovePerformed;
-            _inputActions.Player.Look.canceled -= OnMoveCanceled;            
+            _inputReader.performed -= OnMovePerformed;
+            _inputReader.canceled -= OnMoveCanceled;            
             _inputActions.Player.Disable();
             _inputActions.Disable();
         }
@@ -55,7 +57,7 @@ namespace Game_Flow.DotVisual.Scripts.States
 
         private void UnLockedUpdate()
         {
-            _position += new Vector3(-_input.x, 0, -_input.y) * speed * Time.deltaTime;
+            _position += new Vector3(-_input.x, 0, -_input.y) * Speed * Time.deltaTime;
             if (Physics.Raycast(_position, Vector3.down, out var hit))
             {
                 if (hit.transform.gameObject.layer == LayerMask.NameToLayer("ImpactObject"))
@@ -74,7 +76,7 @@ namespace Game_Flow.DotVisual.Scripts.States
 
         private void OnMovePerformed(InputAction.CallbackContext context)
         {
-            _input = _inputActions.Player.Look.ReadValue<Vector2>();
+            _input = _inputReader.ReadValue<Vector2>();
         }
         
         private void OnMoveCanceled(InputAction.CallbackContext context)
@@ -89,7 +91,7 @@ namespace Game_Flow.DotVisual.Scripts.States
 
         public Vector3 CalculateMovement(Vector2 input)
         {
-            return new Vector3(-input.x, 0, -input.y) * speed * Time.deltaTime;
+            return new Vector3(-input.x, 0, -input.y) * Speed * Time.deltaTime;
         }
     }
 }
