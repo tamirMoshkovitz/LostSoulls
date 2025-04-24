@@ -30,15 +30,27 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             float castDistance = _boxCollider.bounds.extents.z + Stats.bufferForRaycast;
             Vector3 origin = _boxCollider.bounds.center + Vector3.back * (halfExtents.z + 0.001f);
 
-            bool blocked = Physics.BoxCast(
+            RaycastHit hit;
+            bool hitSomething = Physics.BoxCast(
                 origin,
                 halfExtents,
                 Vector3.back,
+                out hit,
                 Quaternion.identity,
                 castDistance,
                 Stats.impactObjectLayerMask | Stats.objectBorderLayerMask
             );
 
+            bool blocked = false;
+
+            if (hitSomething)
+            {
+                var other = hit.collider.GetComponent<MonoImpactObject>();
+                if (other == null || !Mono.NonCollidingObjects.Contains(other))
+                {
+                    blocked = true;
+                }
+            }
             if (!blocked)
             {
                 Mono.transform.Translate(Vector3.back * Stats.speed * Time.deltaTime, Space.World);
