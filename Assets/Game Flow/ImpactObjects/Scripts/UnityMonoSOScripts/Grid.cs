@@ -7,7 +7,7 @@ using static Game_Flow.ImpactObjects.Scripts.Decorator_Interface.ImpactObjectTyp
 namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
 {
     [ExecuteAlways]
-    public class GridVisualizer : MonoBehaviour
+    public class Grid : MonoBehaviour
     {
         [SerializeField] private int rows = 6;
         [SerializeField] private int cols = 4;

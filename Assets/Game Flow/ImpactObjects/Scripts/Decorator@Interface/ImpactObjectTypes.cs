@@ -20,7 +20,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Decorator_Interface
     }
     public static class ImpactObjectFactory
     {
-        public static IImpactObject CreateImpactObject(ImpactObjectTypes type, IImpactObject inner, MonoImpactObject mono,ImpactObjectStats stats, GridVisualizer gridVisualizer)
+        public static IImpactObject CreateImpactObject(ImpactObjectTypes type, IImpactObject inner, MonoImpactObject mono,ImpactObjectStats stats, Grid grid)
         {
             return type switch
             {
@@ -29,12 +29,12 @@ namespace Game_Flow.ImpactObjects.Scripts.Decorator_Interface
                 ImpactObjectTypes.Right => new RightImpactObject(inner,mono,stats),
                 ImpactObjectTypes.Left => new LeftImpactObject(inner,mono,stats),
                 ImpactObjectTypes.Soul => new SoulImpactObject(inner,mono,stats),
-                ImpactObjectTypes.OneBlockGrid => new OneBlockGridImpactObject(inner,mono,stats,gridVisualizer),
-                ImpactObjectTypes.TwoBlockHorizontalGrid => new TwoBlockHorizontalGridImpactObject(inner,mono,stats,gridVisualizer),
-                ImpactObjectTypes.TwoBlockVerticalGrid => new TwoBlockVerticalGridImpactObject(inner,mono,stats,gridVisualizer),
-                ImpactObjectTypes.ThreeBlockHorizontalGrid => new ThreeBlockHorizontalGridImpactObject(inner,mono,stats,gridVisualizer),
-                ImpactObjectTypes.ThreeBlockVerticalGrid => new ThreeBlockVerticalGridImpactObject(inner,mono,stats,gridVisualizer),
-                ImpactObjectTypes.FourBlocksSquareGrid => new FourBlocksSquareGridImpactObject(inner,mono,stats,gridVisualizer),
+                ImpactObjectTypes.OneBlockGrid => new OneBlockGridImpactObject(inner,mono,stats,grid),
+                ImpactObjectTypes.TwoBlockHorizontalGrid => new TwoBlockHorizontalGridImpactObject(inner,mono,stats,grid),
+                ImpactObjectTypes.TwoBlockVerticalGrid => new TwoBlockVerticalGridImpactObject(inner,mono,stats,grid),
+                ImpactObjectTypes.ThreeBlockHorizontalGrid => new ThreeBlockHorizontalGridImpactObject(inner,mono,stats,grid),
+                ImpactObjectTypes.ThreeBlockVerticalGrid => new ThreeBlockVerticalGridImpactObject(inner,mono,stats,grid),
+                ImpactObjectTypes.FourBlocksSquareGrid => new FourBlocksSquareGridImpactObject(inner,mono,stats,grid),
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
         }

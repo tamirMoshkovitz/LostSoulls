@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Game_Flow.ImpactObjects.Scripts.Decorator_Interface;
 using Game_Flow.ImpactObjects.Scripts.Types;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
 {
@@ -12,11 +13,14 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         [SerializeField] private List<ImpactObjectTypes> decoratorOrder;
         [SerializeField] private ImpactObjectStats stats;
         [SerializeField] private MultiImpactObjectLinker linker;
-        [SerializeField] private GridVisualizer gridVisualizer;
+        [FormerlySerializedAs("gridVisualizer")] [SerializeField] private Grid grid;
+        [SerializeField] private List<MonoImpactObject> nonCollidingObjects = new List<MonoImpactObject>();
+        
         private bool _updated;
         private bool _activated;
         public bool IsSoul {get; private set;}
         public bool IsBlocked { get; set; } = false;
+        public List<MonoImpactObject> NonCollidingObjects => nonCollidingObjects;
         void Start()
         {
             IsSoul = false;
@@ -25,7 +29,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             foreach (var type in decoratorOrder)
             {
                 if (type == ImpactObjectTypes.Soul) IsSoul = true;
-                bool shouldSnapToGrid = gridVisualizer != null && type is ImpactObjectTypes.OneBlockGrid
+                bool shouldSnapToGrid = grid != null && type is ImpactObjectTypes.OneBlockGrid
                     or ImpactObjectTypes.TwoBlockHorizontalGrid
                     or ImpactObjectTypes.TwoBlockVerticalGrid
                     or ImpactObjectTypes.ThreeBlockHorizontalGrid
@@ -33,7 +37,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                     or ImpactObjectTypes.FourBlocksSquareGrid;
                 
                 
-                _impactObject = ImpactObjectFactory.CreateImpactObject(type, _impactObject, this,stats,gridVisualizer);
+                _impactObject = ImpactObjectFactory.CreateImpactObject(type, _impactObject, this,stats,grid);
                 if(shouldSnapToGrid) _impactObject.StopImpact();
             }
         }
