@@ -29,11 +29,12 @@ namespace Game_Flow.DotVisual.Scripts.States
             _dotRenderer = _dot.GetComponent<Renderer>();
             _inputReader.performed += OnMovePerformed;
             _inputReader.canceled += OnMoveCanceled;
-            
+            _dotRenderer.enabled = true;
             Debug.Log("Entered top state");
         }
         public void ExitState()
         {
+            _dotRenderer.enabled = false;
             _inputReader.performed -= OnMovePerformed;
             _inputReader.canceled -= OnMoveCanceled;            
             _inputActions.Player.Disable();
