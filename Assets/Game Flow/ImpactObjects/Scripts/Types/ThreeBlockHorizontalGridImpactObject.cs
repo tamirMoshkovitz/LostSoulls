@@ -2,28 +2,29 @@ using Game_Flow.ImpactObjects.Scripts.Decorator_Interface;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
 using UnityEngine;
 using System.Collections.Generic;
+using Grid = Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts.Grid;
 
 namespace Game_Flow.ImpactObjects.Scripts.Types
 {
     public class ThreeBlockHorizontalGridImpactObject : ImpactObjectDecorator
     {
-        private readonly GridVisualizer _gridVisualizer;
+        private readonly Grid grid;
         private readonly BoxCollider _boxCollider;
         private List<Vector3> _lastSnappedFootprint = new();
 
         public ThreeBlockHorizontalGridImpactObject(IImpactObject inner, MonoImpactObject mono, ImpactObjectStats stats,
-            GridVisualizer grid)
+            Grid grid)
             : base(inner, mono, stats)
         {
-            _gridVisualizer = grid;
+            this.grid = grid;
             _boxCollider = mono.GetComponent<BoxCollider>();
         }
 
         public override void StartImpact()
         {
             base.StartImpact();
-            if (_gridVisualizer == null) return;
-            _gridVisualizer.UnmarkOccupied(Mono.GetBottomCenter(), ImpactObjectTypes.ThreeBlockHorizontalGrid);
+            if (grid == null) return;
+            grid.UnmarkOccupied(Mono.GetBottomCenter(), ImpactObjectTypes.ThreeBlockHorizontalGrid);
         }
 
         public override void StopImpact()
@@ -31,24 +32,24 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             base.StopImpact();
             SnapToNearestGridPoint();
 
-            if (_gridVisualizer != null && _lastSnappedFootprint.Count == 3)
+            if (grid != null && _lastSnappedFootprint.Count == 3)
             {
                 foreach (var cell in _lastSnappedFootprint)
                 {
-                    _gridVisualizer.MarkOccupied(cell, ImpactObjectTypes.OneBlockGrid);
+                    grid.MarkOccupied(cell, ImpactObjectTypes.OneBlockGrid);
                 }
             }
         }
 
         private void SnapToNearestGridPoint()
         {
-            if (_gridVisualizer == null || _boxCollider == null) return;
+            if (grid == null || _boxCollider == null) return;
 
             Bounds bounds = _boxCollider.bounds;
             Vector3 basePosition = bounds.center;
             basePosition.y = bounds.min.y;
 
-            var footprint = _gridVisualizer.GetGridFootprint(basePosition, ImpactObjectTypes.ThreeBlockHorizontalGrid);
+            var footprint = grid.GetGridFootprint(basePosition, ImpactObjectTypes.ThreeBlockHorizontalGrid);
             if (footprint.Count < 3)
             {
                 Debug.LogWarning($"[GridSnap] Invalid 3-block horizontal footprint for {Mono.name}, skipping snap.");
