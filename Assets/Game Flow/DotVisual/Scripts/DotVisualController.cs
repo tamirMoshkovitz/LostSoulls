@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace Game_Flow.DotVisual.Scripts
 {
+    //comment to merge conflict
     public class DotVisualController : MonoBehaviour
     {
         [SerializeField] private Transform rayOrigin;
