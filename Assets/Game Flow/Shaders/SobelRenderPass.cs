@@ -19,6 +19,7 @@ public class SobelRenderPass : ScriptableRenderPass
     private static readonly int edgeThresholdId = Shader.PropertyToID("_EdgeThreshold");
     private static readonly int noiseEdgeOnlyId = Shader.PropertyToID("_NoiseEdgeOnly");
     private static readonly int solidNoiseStrengthId = Shader.PropertyToID("_SolidNoiseStrength");
+    private static readonly int depthContrastId = Shader.PropertyToID("_DepthContrast");
 
     private const string k_SobelTextureName = "_SobelTexture";
     private const string k_SobelPassName = "SobelRenderPass";
@@ -54,6 +55,7 @@ public class SobelRenderPass : ScriptableRenderPass
         material.SetFloat(edgeThresholdId, settings.edgeThreshold);
         material.SetFloat(noiseEdgeOnlyId, settings.noiseEdgeOnly);
         material.SetFloat(solidNoiseStrengthId, settings.solidNoiseStrength);
+        material.SetFloat(depthContrastId, settings.depthContrast);
         // if (settings.noiseTexture != null)
         //     material.SetTexture(noiseTexId, settings.noiseTexture);
     }

@@ -13,6 +13,7 @@ Shader "CustomEffects/UkiyoeSobel"
         _EdgeThreshold("Edge Threshold", Range(0.01, 0.2)) = 0.05
         _SolidNoiseStrength("Solid Area Noise", Range(0, 0.05)) = 0.005
         _NoiseEdgeOnly("Noise on Edges Only", Range(0, 1)) = 0.8
+        _DepthContrast("Depth Contrast", Range(0.01, 10)) = 2.0
     }
 
     HLSLINCLUDE
@@ -33,6 +34,7 @@ Shader "CustomEffects/UkiyoeSobel"
         float _EdgeThreshold;
         float _SolidNoiseStrength;
         float _NoiseEdgeOnly;
+        float _DepthContrast;
 
         // Define Sobel kernels as separate floats instead of matrices
         static const float Sx[9] = {
@@ -114,27 +116,39 @@ Shader "CustomEffects/UkiyoeSobel"
 
             // Get the current pixel's depth for scaling
             float centerDepth = GetDepth(uv);
-            
+            // return float4(centerDepth,centerDepth,centerDepth,1);
+            // Normalize depth and enhance contrast for indoor scene distances
+            float normalizedDepth2 = saturate(centerDepth / 0.2);
+            // Apply power function to enhance contrast
+            normalizedDepth2 = pow(normalizedDepth2, _DepthContrast);
+            // centerDepth =1.0- normalizedDepth2;
+            // return float4(normalizedDepth2, normalizedDepth2, normalizedDepth2, 1);
             // Depth-based adjustments for line rendering
             float depthFactor = saturate(1.0 - centerDepth / 5.0);
-            float adaptiveOutlineThickness = _OutlineThickness * lerp(0.6, 1.2, depthFactor);
+            // return float4(normalizedDepth2, normalizedDepth2, normalizedDepth2, 1);
+            depthFactor = normalizedDepth2;
+            float adaptiveOutlineThickness = _OutlineThickness * lerp(0, 8.8, normalizedDepth2);
+            // return float4(adaptiveOutlineThickness, adaptiveOutlineThickness, adaptiveOutlineThickness, 1);
             texelSize = 1.0 / _ScreenParams.xy * adaptiveOutlineThickness;
+            // return float4(texelSize,0.0, 1);
             
             // Create stable noise coordinates for temporal coherence
-            float2 worldPos = uv * _ScreenParams.xy / _ScreenParams.y;
-            worldPos = floor(worldPos * 100) / 100; // Grid snap for stability
+            float2 worldPos = uv * _ScreenParams.xy / _NoiseScale;
+            // Remove the grid snap for smoother noise
+            // worldPos = floor(worldPos * 100) / 100; // Grid snap for stability
             float adaptiveNoiseScale = _NoiseScale * (1.0 + (1.0 - depthFactor) * 0.5);
             
             // Calculate noise
             float2 noiseUV = uv * adaptiveNoiseScale;
-            float2 stableNoiseUV = worldPos * adaptiveNoiseScale;
+            float2 stableNoiseUV = worldPos;
             float brushStrokeEffect = fbm(stableNoiseUV * 3.0 + _Time.y * _TimeScale * 0.2);
             brushStrokeEffect = pow(brushStrokeEffect, 2.0) * 0.3;
-            
+            // return float4(brushStrokeEffect, brushStrokeEffect, brushStrokeEffect, 1);
             // Calculate noise offset for hand-drawn feel
             float2 noiseOffset = float2(fbm(noiseUV), fbm(noiseUV + 3.14));
             float depthScale = saturate(centerDepth / 10.0);
             noiseOffset *= _NoiseStrength * texelSize * (1.0 + depthScale);
+            // return float4(noiseOffset,0.0, 1);
 
             // Handle transitions for very distant objects
             float normalizedDepth = saturate(centerDepth / 0.5);
