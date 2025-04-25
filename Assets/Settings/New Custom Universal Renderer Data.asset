@@ -15,6 +15,7 @@ MonoBehaviour:
   m_Active: 1
   settings:
     sobelStrength: 0.548
+<<<<<<< Updated upstream
     outlineThickness: 1
     outlineColor: {r: 0.103773594, g: 0.04995413, b: 0.027901389, a: 1}
     depthMultiplier: 20
@@ -24,6 +25,17 @@ MonoBehaviour:
     Frequency: 0
     bokashiColor: {r: 0.09282664, g: 0.09473706, b: 0.13207549, a: 1}
     bokashiStrength: 0.27
+=======
+    outlineThickness: 1.31
+    outlineColor: {r: 0.16981131, g: 0.055221096, b: 0.01201495, a: 1}
+    depthMultiplier: 48.3
+    noiseScale: 32.8
+    noiseStrength: 2.29
+    timeScale: 0
+    Frequency: 0
+    bokashiColor: {r: 0.7264151, g: 0.66568357, b: 0.5379584, a: 1}
+    bokashiStrength: 0.424
+>>>>>>> Stashed changes
     edgeThreshold: 0.01
     noiseEdgeOnly: 0
     solidNoiseStrength: 0
