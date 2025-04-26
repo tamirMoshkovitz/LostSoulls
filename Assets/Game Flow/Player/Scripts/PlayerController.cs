@@ -1,5 +1,4 @@
 using Core.Managers;
-using Game_Flow.Camera;
 using Game_Flow.DotVisual.Scripts;
 using Game_Flow.DotVisual.Scripts.States;
 using Game_Flow.ImpactObjects.Scripts.Types;
@@ -8,9 +7,10 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Game_Flow.PlayerMovement
+namespace Game_Flow.Player.Scripts
 {
     [RequireComponent(typeof(CharacterController))]
+    [RequireComponent(typeof(AudioSource))]
     public class PlayerController : MonoSingleton<PlayerController>
     {
         [SerializeField] private float moveSpeed = 5f;
@@ -19,13 +19,22 @@ namespace Game_Flow.PlayerMovement
         [SerializeField] private Transform groundCheck;
         [SerializeField] private LayerMask groundMask;
         [SerializeField] private float groundDistance = 0.4f;
+        [SerializeField] private AudioClip concreteFloorSound;
+        [SerializeField] private AudioClip woodFloorSound;
+        [SerializeField] private AudioClip woodStairsSound;
 
+        private const string FirstFloorTag = "First Floor";
+        private const string SecondFloorTag = "Second Floor";
+        private const string StairsTag = "Stairs";
+        
         private CharacterController _controller;
         private InputSystem_Actions _inputActions;
+        private PlayerAudio _playerAudio;
         private Vector2 _movementInput;
         private Vector3 _velocity;
         private bool _isGrounded;
         private bool _isMovementLocked;
+        private string _currentFloor = FirstFloorTag;
         public bool IsMovementLocked {get => _isMovementLocked; set => _isMovementLocked = value;}
 
         
@@ -53,6 +62,8 @@ namespace Game_Flow.PlayerMovement
             _inputActions.Player.Jump.performed += OnJumpPerformed;
             _inputActions.Player.Open.performed += OnOpenPerformed;
             EventManager.OnLockStateChanged += HandleLockStateChanged;
+            _playerAudio = new PlayerAudio(GetComponent<AudioSource>(), concreteFloorSound, woodFloorSound, woodStairsSound);
+
         }
 
         void OnDisable()
@@ -63,6 +74,7 @@ namespace Game_Flow.PlayerMovement
             _inputActions.Player.Open.performed -= OnOpenPerformed;
             _inputActions.Player.Disable();
             EventManager.OnLockStateChanged -= HandleLockStateChanged;
+            _playerAudio = null;
         }
 
         void Update()
@@ -79,7 +91,15 @@ namespace Game_Flow.PlayerMovement
         {
             if (_isMovementLocked || ObjectController.Instance.IsLocked) {return;}
             // Ground check
-            _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask); //TODO fix this
+            _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+            
+            if (Physics.Raycast(transform.position, Vector3.down, out var hit, Mathf.Infinity))
+            {
+                if (!hit.collider.CompareTag(_currentFloor))
+                {
+                    _currentFloor = hit.collider.gameObject.tag;
+                }
+            }
 
             if (_isGrounded && _velocity.y < 0)
                 _velocity.y = -2f;
@@ -87,6 +107,28 @@ namespace Game_Flow.PlayerMovement
             // Move input
             Vector3 move = transform.right * _movementInput.x + transform.forward * _movementInput.y;
             _controller.Move(move * moveSpeed * Time.deltaTime);
+            if (move.magnitude > 0.1f)
+            {
+                WalkingSurface surface = WalkingSurface.ConcreteFloor;
+                switch (_currentFloor)
+                {
+                    case FirstFloorTag:
+                        surface = WalkingSurface.ConcreteFloor;
+                        break;
+                    case StairsTag:
+                        surface = WalkingSurface.WoodenStairs;
+                        break;
+                    case SecondFloorTag:
+                        surface = WalkingSurface.WoodenFloor;
+                        break;
+                }
+                _playerAudio.PlayFootstepSound(surface);
+            }
+
+            else
+            {
+                _playerAudio.StopFootstepSound();
+            }
                 
             // Gravity
             _velocity.y += gravity * Time.deltaTime;

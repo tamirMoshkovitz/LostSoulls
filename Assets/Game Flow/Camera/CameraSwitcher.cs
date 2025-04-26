@@ -5,7 +5,7 @@ using Unity.Cinemachine;
 using System.Collections;
 using Game_Flow.DotVisual.Scripts;
 using Game_Flow.DotVisual.Scripts.States;
-using Game_Flow.PlayerMovement;
+using Game_Flow.Player.Scripts;
 using WaitForSeconds = UnityEngine.WaitForSeconds;
 
 namespace Game_Flow.Camera

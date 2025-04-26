@@ -1,5 +1,4 @@
-﻿using System;
-using Core.Managers;
+﻿using Core.Managers;
 using Game_Flow.Camera;
 using Game_Flow.DotVisual.Scripts;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
@@ -7,7 +6,7 @@ using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Game_Flow.Player
+namespace Game_Flow.Player.Scripts
 {
     public class PlayerObjectController : MonoBehaviour
     {
@@ -15,12 +14,11 @@ namespace Game_Flow.Player
         [SerializeField] private CinemachineCamera firstPersonCamera;
         [SerializeField] private CinemachineCamera topDownCamera;
         
-        private MonoImpactObject lockedTarget;
+        private MonoImpactObject _lockedTarget;
         private static bool _isLocked = false;
         private InputSystem_Actions _inputActions;
         private Vector2 _moveInput;
-        private bool isInTopDownView = false;
-        private Vector3 cachedRayOriginPosition;
+        private Vector3 _cachedRayOriginPosition;
 
 
         private void OnEnable()
@@ -60,13 +58,13 @@ namespace Game_Flow.Player
             {
                 if (targetingController.CurrentTarget != null && !_isLocked)
                 {
-                    lockedTarget = targetingController.CurrentTarget;
+                    _lockedTarget = targetingController.CurrentTarget;
                     SetLockState(true);
                 }
             }
             else if (context.canceled)
             {
-                lockedTarget = null;
+                _lockedTarget = null;
                 SetLockState(false);
             }
         }
@@ -91,7 +89,7 @@ namespace Game_Flow.Player
                 return;
             }
 
-            if (_isLocked && lockedTarget != null)
+            if (_isLocked && _lockedTarget != null)
             {
                 Vector3 camForward = firstPersonCamera.transform.forward;
                 Vector3 camRight = firstPersonCamera.transform.right;
@@ -100,7 +98,7 @@ namespace Game_Flow.Player
                 camForward.Normalize();
                 camRight.Normalize();
                 Vector3 moveDirection = camForward * _moveInput.y + camRight * _moveInput.x;
-                lockedTarget.UpdateObject(moveDirection);
+                _lockedTarget.UpdateObject(moveDirection);
             }
             else
             {
@@ -113,12 +111,10 @@ namespace Game_Flow.Player
         {
             if (mode == ViewMode.TopDown)
             {
-                isInTopDownView = true;
                 targetingController.SetTopDownMode(true);
             }
             else
             {
-                isInTopDownView = false;
                 targetingController.SetTopDownMode(false);
                 targetingController.ResetRayOriginLocalPosition();
             }

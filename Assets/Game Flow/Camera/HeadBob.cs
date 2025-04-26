@@ -1,5 +1,5 @@
 using Game_Flow.DotVisual.Scripts;
-using Game_Flow.PlayerMovement;
+using Game_Flow.Player.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
