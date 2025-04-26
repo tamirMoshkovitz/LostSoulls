@@ -2,6 +2,7 @@ using Core.Managers;
 using Game_Flow.Camera;
 using Game_Flow.DotVisual.Scripts;
 using Game_Flow.DotVisual.Scripts.States;
+using Game_Flow.ImpactObjects.Scripts.Types;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -110,11 +111,13 @@ namespace Game_Flow.PlayerMovement
         
         private void OnOpenPerformed(InputAction.CallbackContext context)
         {
+            Debug.Log("Pressed Open Button");
             if (_isMovementLocked) return;
             Ray ray = new Ray(gameObject.GetComponentInChildren<CinemachineCamera>().transform.position, gameObject.GetComponentInChildren<CinemachineCamera>().transform.forward);
             if (Physics.Raycast(ray, out RaycastHit hitInfo, 2f, LayerMask.GetMask("ImpactObject")))
             {
-                var openable = hitInfo.collider.GetComponent<MonoImpactObject>();
+                Debug.Log("Ray hit something!");
+                var openable = hitInfo.collider.GetComponentInChildren<OpenCloseImpactObject>();
                 if (openable != null)
                 {
                     if (openable.IsOpen)
