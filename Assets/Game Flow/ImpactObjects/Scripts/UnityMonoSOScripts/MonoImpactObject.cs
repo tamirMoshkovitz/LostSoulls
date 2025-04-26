@@ -75,7 +75,9 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             _activated = true;
             _impactObject.StartImpact();
             if (linker != null)
+            {
                 linker.ActivateSiblings();
+            }
         }
         
         public void UpdateObject(Vector3 direction)
@@ -87,8 +89,8 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             _impactObject.UpdateImpact(snapped);
             if (linker != null)
             {
-                linker.UpdateSiblings(snapped);
                 linker.ConnectObjects();
+                linker.UpdateSiblings(snapped);
             }
         }
         
@@ -98,7 +100,9 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             _activated = false;
             _impactObject.StopImpact();
             if (linker != null)
+            {
                 linker.DeActivateSiblings();
+            }
         }
 
         public void Update()
