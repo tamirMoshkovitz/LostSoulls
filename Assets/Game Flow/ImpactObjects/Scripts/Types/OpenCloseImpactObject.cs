@@ -5,27 +5,31 @@ using UnityEngine;
 
 namespace Game_Flow.ImpactObjects.Scripts.Types
 {
-    public class OpenCloseImpactObject : ImpactObjectDecorator
+    public class OpenCloseImpactObject : MonoBehaviour
     {
         private bool _isOpen;
         private Animator _animator;
+        
+        public bool IsOpen => _isOpen;
 
-        public OpenCloseImpactObject(IImpactObject inner, MonoImpactObject mono, ImpactObjectStats stats, bool isOpen) : base(inner, mono, stats)
+        void Start()
         {
-            _isOpen = isOpen;
-            _animator = mono.GetComponent<Animator>();
+            _isOpen = false;
+            _animator = gameObject.GetComponent<Animator>();
         }
 
         public void OpenImpactObject()
         {
             _isOpen = true;
             _animator.SetBool("IsOpen", true);
+            Debug.Log("OpenImpactObject");
         }
         
         public void CloseImpactObject()
         {
             _isOpen = false;
             _animator.SetBool("IsOpen", false);
+            Debug.Log("CloseImpactObject");
         }
     }
 }
