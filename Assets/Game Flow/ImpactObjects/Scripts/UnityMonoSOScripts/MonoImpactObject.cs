@@ -31,6 +31,9 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         public Color LockedColor => lockedColor;
         
         public bool IsMoveable { get; set; }
+        public bool IsOpenable { get; set; }
+        
+        public bool IsOpen { get; private set; }
 
         public bool IsSoul {get; private set;}
         public bool IsBlocked { get; set; } = false;
@@ -190,6 +193,22 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             {
                 light.enabled = false;
             }
+        }
+
+        public void OpenImpactObject()
+        {
+            if (!IsOpenable) return;
+            OpenCloseImpactObject openCloseImpactObject = (OpenCloseImpactObject)_impactObject;
+            openCloseImpactObject.OpenImpactObject();
+            IsOpen = true;
+        }
+        
+        public void CloseImpactObject()
+        {
+            if (!IsOpenable) return;
+            OpenCloseImpactObject openCloseImpactObject = (OpenCloseImpactObject)_impactObject;
+            openCloseImpactObject.CloseImpactObject();
+            IsOpen = false;
         }
 
     }
