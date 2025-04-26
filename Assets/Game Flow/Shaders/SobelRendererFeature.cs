@@ -63,4 +63,5 @@ public class SobelSettings
     [Range(0.01f, 0.2f)] public float edgeThreshold = 0.05f;
     [Range(0, 1f)] public float noiseEdgeOnly = 0.8f;
     [Range(0, 0.05f)] public float solidNoiseStrength = 0.005f;
+    [Range(0.01f, 10f)] public float depthContrast = 2.0f;
 }
