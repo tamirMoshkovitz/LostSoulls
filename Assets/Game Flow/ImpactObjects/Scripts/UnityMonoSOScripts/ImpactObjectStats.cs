@@ -9,5 +9,6 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         public float bufferForRaycast;
         public LayerMask impactObjectLayerMask;
         public LayerMask objectBorderLayerMask;
+        
     }
 }

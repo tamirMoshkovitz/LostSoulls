@@ -9,6 +9,8 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
 {
     public class MonoImpactObject : MonoBehaviour
     {
+        
+        
         private IImpactObject _impactObject;
         [SerializeField] private List<ImpactObjectTypes> decoratorOrder;
         [SerializeField] private ImpactObjectStats stats;
