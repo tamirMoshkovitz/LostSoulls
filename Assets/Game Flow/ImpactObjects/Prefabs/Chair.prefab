@@ -9,7 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2998144625522840911}
-  m_Layer: 0
+  - component: {fileID: 3609958725409441560}
+  - component: {fileID: 7663633775693878508}
+  m_Layer: 15
   m_Name: Chair
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,6 +34,44 @@ Transform:
   - {fileID: 6136232410651462829}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3609958725409441560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6807196003408677528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 701f344e942c4fa4a68c98437e024978, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  decoratorOrder: 0000000001000000030000000200000005000000
+  stats: {fileID: 11400000, guid: c90d6b901ff6448618b68bd07b0d0feb, type: 2}
+  linker: {fileID: 0}
+  grid: {fileID: 0}
+  nonCollidingObjects: []
+--- !u!65 &7663633775693878508
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6807196003408677528}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.7377892, y: 0.5221952, z: 0.5094821}
+  m_Center: {x: 0.00499484, y: -0.23889959, z: 0.007426322}
 --- !u!1001 &5954602723061263174
 PrefabInstance:
   m_ObjectHideFlags: 0
