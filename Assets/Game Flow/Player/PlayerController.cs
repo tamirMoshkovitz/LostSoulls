@@ -2,6 +2,8 @@ using Core.Managers;
 using Game_Flow.Camera;
 using Game_Flow.DotVisual.Scripts;
 using Game_Flow.DotVisual.Scripts.States;
+using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -48,6 +50,7 @@ namespace Game_Flow.PlayerMovement
             _inputActions.Player.Move.performed += OnMovePerformed;
             _inputActions.Player.Move.canceled += OnMoveCanceled;
             _inputActions.Player.Jump.performed += OnJumpPerformed;
+            _inputActions.Player.Open.performed += OnOpenPerformed;
             EventManager.OnLockStateChanged += HandleLockStateChanged;
         }
 
@@ -56,6 +59,7 @@ namespace Game_Flow.PlayerMovement
             _inputActions.Player.Move.performed -= OnMovePerformed;
             _inputActions.Player.Move.canceled -= OnMoveCanceled;
             _inputActions.Player.Jump.performed -= OnJumpPerformed;
+            _inputActions.Player.Open.performed -= OnOpenPerformed;
             _inputActions.Player.Disable();
             EventManager.OnLockStateChanged -= HandleLockStateChanged;
         }
@@ -103,5 +107,29 @@ namespace Game_Flow.PlayerMovement
         {
             _movementInput = Vector2.zero;
         }
+        
+        private void OnOpenPerformed(InputAction.CallbackContext context)
+        {
+            if (_isMovementLocked) return;
+            Ray ray = new Ray(gameObject.GetComponentInChildren<CinemachineCamera>().transform.position, gameObject.GetComponentInChildren<CinemachineCamera>().transform.forward);
+            if (Physics.Raycast(ray, out RaycastHit hitInfo, 2f, LayerMask.GetMask("ImpactObject")))
+            {
+                var openable = hitInfo.collider.GetComponent<MonoImpactObject>();
+                if (openable != null)
+                {
+                    if (openable.IsOpen)
+                    {
+                        Debug.Log("Closing");
+                        openable.CloseImpactObject();
+                    }
+                    else
+                    {
+                        Debug.Log("Opening");
+                        openable.OpenImpactObject();
+                    }
+                }
+            }
+        }
+        
     }
 }

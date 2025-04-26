@@ -31,6 +31,9 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         public Color LockedColor => lockedColor;
         
         public bool IsMoveable { get; set; }
+        public bool IsOpenable { get; set; }
+        
+        public bool IsOpen { get; private set; }
 
         public bool IsSoul {get; private set;}
         public bool IsBlocked { get; set; } = false;
@@ -72,7 +75,9 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             _activated = true;
             _impactObject.StartImpact();
             if (linker != null)
+            {
                 linker.ActivateSiblings();
+            }
         }
         
         public void UpdateObject(Vector3 direction)
@@ -84,8 +89,8 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             _impactObject.UpdateImpact(snapped);
             if (linker != null)
             {
-                linker.UpdateSiblings(snapped);
                 linker.ConnectObjects();
+                linker.UpdateSiblings(snapped);
             }
         }
         
@@ -95,7 +100,9 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             _activated = false;
             _impactObject.StopImpact();
             if (linker != null)
+            {
                 linker.DeActivateSiblings();
+            }
         }
 
         public void Update()
@@ -190,6 +197,22 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             {
                 light.enabled = false;
             }
+        }
+
+        public void OpenImpactObject()
+        {
+            if (!IsOpenable) return;
+            OpenCloseImpactObject openCloseImpactObject = (OpenCloseImpactObject)_impactObject;
+            openCloseImpactObject.OpenImpactObject();
+            IsOpen = true;
+        }
+        
+        public void CloseImpactObject()
+        {
+            if (!IsOpenable) return;
+            OpenCloseImpactObject openCloseImpactObject = (OpenCloseImpactObject)_impactObject;
+            openCloseImpactObject.CloseImpactObject();
+            IsOpen = false;
         }
 
     }

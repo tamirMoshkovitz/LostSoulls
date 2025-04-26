@@ -180,6 +180,15 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Open"",
+                    ""type"": ""Button"",
+                    ""id"": ""ca177533-3a4c-4564-ab71-bae62656ef49"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -521,6 +530,28 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": "";Keyboard&Mouse"",
                     ""action"": ""Switch View"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b692db83-3c23-42d0-b3b1-db4d1dfaea68"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""Open"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1cb9a3eb-2a7f-4e7f-8503-4621143fe95c"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Open"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1118,6 +1149,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         m_Player_Lock = m_Player.FindAction("Lock", throwIfNotFound: true);
         m_Player_Zoom = m_Player.FindAction("Zoom", throwIfNotFound: true);
         m_Player_SwitchView = m_Player.FindAction("Switch View", throwIfNotFound: true);
+        m_Player_Open = m_Player.FindAction("Open", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1221,6 +1253,7 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Lock;
     private readonly InputAction m_Player_Zoom;
     private readonly InputAction m_Player_SwitchView;
+    private readonly InputAction m_Player_Open;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -1272,6 +1305,10 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/SwitchView".
         /// </summary>
         public InputAction @SwitchView => m_Wrapper.m_Player_SwitchView;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Open".
+        /// </summary>
+        public InputAction @Open => m_Wrapper.m_Player_Open;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -1328,6 +1365,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @SwitchView.started += instance.OnSwitchView;
             @SwitchView.performed += instance.OnSwitchView;
             @SwitchView.canceled += instance.OnSwitchView;
+            @Open.started += instance.OnOpen;
+            @Open.performed += instance.OnOpen;
+            @Open.canceled += instance.OnOpen;
         }
 
         /// <summary>
@@ -1369,6 +1409,9 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
             @SwitchView.started -= instance.OnSwitchView;
             @SwitchView.performed -= instance.OnSwitchView;
             @SwitchView.canceled -= instance.OnSwitchView;
+            @Open.started -= instance.OnOpen;
+            @Open.performed -= instance.OnOpen;
+            @Open.canceled -= instance.OnOpen;
         }
 
         /// <summary>
@@ -1739,6 +1782,13 @@ public partial class @InputSystem_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSwitchView(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Open" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnOpen(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -8,17 +9,17 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
     {
         [SerializeField] private List<MonoImpactObject> linkedObjects = new();
         private Dictionary<MonoImpactObject, Vector3> lastPositions = new();
-
-        void Start()
+        
+        private IEnumerator Start()
         {
-            foreach (var obj in linkedObjects)
-            {
-                lastPositions[obj] = obj.transform.position;
-            }
-        }
+            yield return null; // Wait one frame
 
+            UpdateLastPositions();
+        }
+       
         public void ConnectObjects()
         {
+           
             MonoImpactObject reference = null;
             Vector3 delta = Vector3.zero;
 

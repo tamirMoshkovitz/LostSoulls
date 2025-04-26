@@ -17,7 +17,8 @@ namespace Game_Flow.ImpactObjects.Scripts.Decorator_Interface
         ThreeBlockHorizontalGrid = 8,
         ThreeBlockVerticalGrid = 9,
         FourBlocksSquareGrid = 10,
-        MovingShader = 11
+        MovingShader = 11,
+        OpenClose = 12
     }
     public static class ImpactObjectFactory
     {
@@ -37,6 +38,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Decorator_Interface
                 ImpactObjectTypes.ThreeBlockVerticalGrid => new ThreeBlockVerticalGridImpactObject(inner,mono,stats,grid),
                 ImpactObjectTypes.FourBlocksSquareGrid => new FourBlocksSquareGridImpactObject(inner,mono,stats,grid),
                 ImpactObjectTypes.MovingShader => new MovingShaderImpactObject(inner,mono,stats),
+                ImpactObjectTypes.OpenClose => new OpenCloseImpactObject(inner,mono,stats,false),
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
         }
