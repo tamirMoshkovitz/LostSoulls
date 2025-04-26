@@ -3317,7 +3317,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.1
+  near clip plane: 0.01
   far clip plane: 5000
   field of view: 60
   orthographic: 0
@@ -4985,6 +4985,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Basic Player
       objectReference: {fileID: 0}
+    - target: {fileID: 9009534992384163328, guid: 8318e9627c51641d1b035534dab91d4b, type: 3}
+      propertyPath: Lens.NearClipPlane
+      value: 0.01
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -5800,7 +5804,7 @@ MonoBehaviour:
   Lens:
     FieldOfView: 100
     OrthographicSize: 2
-    NearClipPlane: 0.1
+    NearClipPlane: 0.01
     FarClipPlane: 5000
     Dutch: 0
     ModeOverride: 0
