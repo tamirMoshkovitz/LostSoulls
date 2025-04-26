@@ -9,8 +9,12 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
 {
     public class MonoImpactObject : MonoBehaviour
     {
+        [Header("Material components")]
+        [SerializeField] private Renderer[] renderers;
+        [SerializeField] private Color impactColor;
+        [SerializeField] private Color lockedColor;
         
-        
+        [Header("Impact Object")]
         private IImpactObject _impactObject;
         [SerializeField] private List<ImpactObjectTypes> decoratorOrder;
         [SerializeField] private ImpactObjectStats stats;
@@ -20,6 +24,13 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         
         private bool _updated;
         private bool _activated;
+
+        public Renderer[] Renderers => renderers;
+        public Color ImpactColor => impactColor;
+        public Color LockedColor => lockedColor;
+        
+        public bool IsMoveable { get; set; }
+
         public bool IsSoul {get; private set;}
         public bool IsBlocked { get; set; } = false;
         public List<MonoImpactObject> NonCollidingObjects => nonCollidingObjects;
@@ -41,6 +52,10 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                 
                 _impactObject = ImpactObjectFactory.CreateImpactObject(type, _impactObject, this,stats,grid);
                 if(shouldSnapToGrid) _impactObject.StopImpact();
+                if (type == ImpactObjectTypes.MovingShader)
+                {
+                    IsMoveable = true;
+                }
             }
         }
 
@@ -125,6 +140,42 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             Vector3 bottomCenter = bounds.center;
             bottomCenter.y = bounds.min.y;
             return bottomCenter;
+        }
+        
+        public void HighlightObject()
+        {
+            if (! IsMoveable) return;
+            foreach (var renderer in renderers)
+            {
+                if (renderer == null) continue;
+                var material = renderer.material;
+                if (material == null) continue;
+                if (material.HasProperty("_RimEnabled"))
+                {
+                    material.SetInt("_RimEnabled", 1);
+                }
+                material.EnableKeyword("DR_RIM_ON");
+                if (material.HasProperty("_FlatRimColor"))
+                {
+                    material.SetColor("_FlatRimColor",impactColor);
+                }
+            }
+        }
+        
+        public void UnhighlightObject()
+        {
+            if (! IsMoveable) return;
+            foreach (var renderer in renderers)
+            {
+                if (renderer == null) continue;
+                var material = renderer.material;
+                if (material == null) continue;
+                if (material.HasProperty("_RimEnabled"))
+                {
+                    material.SetInt("_RimEnabled", 0);
+                }
+                material.DisableKeyword("DR_RIM_ON");
+            }
         }
 
     }
