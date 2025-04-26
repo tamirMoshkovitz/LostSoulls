@@ -13,6 +13,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         [SerializeField] private Renderer[] renderers;
         [SerializeField] private Color impactColor;
         [SerializeField] private Color lockedColor;
+        private Light light;
         
         [Header("Impact Object")]
         private IImpactObject _impactObject;
@@ -55,6 +56,11 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                 if (type == ImpactObjectTypes.MovingShader)
                 {
                     IsMoveable = true;
+                    light = GetComponentInChildren<Light>();
+                    if (light != null)
+                    {
+                        light.enabled = false;
+                    }
                 }
             }
         }
@@ -160,6 +166,10 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                     material.SetColor("_FlatRimColor",impactColor);
                 }
             }
+            if (light != null)
+            {
+                light.enabled = true;
+            }
         }
         
         public void UnhighlightObject()
@@ -175,6 +185,10 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                     material.SetInt("_RimEnabled", 0);
                 }
                 material.DisableKeyword("DR_RIM_ON");
+            }
+            if (light != null)
+            {
+                light.enabled = false;
             }
         }
 

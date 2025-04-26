@@ -63,7 +63,7 @@ namespace Game_Flow.DotVisual.Scripts.States
             {
                 if (hit.transform.gameObject.layer == LayerMask.NameToLayer("ImpactObject"))
                 {
-                    //_dotRenderer.material.color = Color.green;
+                    _dotRenderer.material.color = Color.green;
                     _target = hit.transform.gameObject.GetComponent<MonoImpactObject>();
                     if (_target != null && _target.IsMoveable)
                     {
@@ -72,8 +72,11 @@ namespace Game_Flow.DotVisual.Scripts.States
                 }
                 else
                 {
-                    _target.UnhighlightObject();
-                    //_dotRenderer.material.color = Color.red;
+                    if (_target != null)
+                    {
+                        _target.UnhighlightObject();
+                    }
+                    _dotRenderer.material.color = Color.red;
                     _target = null;
                 }
                 _dot.transform.position = hit.point;
