@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Game_Flow.ImpactObjects.Scripts.Audio;
 using Game_Flow.ImpactObjects.Scripts.Decorator_Interface;
 using Game_Flow.ImpactObjects.Scripts.Types;
 using UnityEngine;
@@ -24,8 +25,13 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         [FormerlySerializedAs("gridVisualizer")] [SerializeField] private Grid grid;
         [SerializeField] private List<MonoImpactObject> nonCollidingObjects = new List<MonoImpactObject>();
         
+        [Header("Audio")]
+        [SerializeField] private AudioSource objectAudioSource;
+        [SerializeField] private AudioClip objectAudio;
+        
         private bool _updated;
         private bool _activated;
+        private MoovingObjectAudio _objectAudio;
 
         public Renderer[] Renderers => renderers;
         public Color ImpactColor => impactColor;
@@ -66,6 +72,11 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                         light.enabled = false;
                     }
                 }
+            }
+            
+            if (objectAudioSource != null && objectAudio != null)
+            {
+                _objectAudio = new MoovingObjectAudio(objectAudioSource, objectAudio);
             }
         }
 

@@ -35,6 +35,7 @@ namespace Game_Flow.Camera
         {
             _inputActions.Player.Enable();
             _inputActions.Player.SwitchView.performed += ToggleView;
+            EventManager.OnDollPlaced += ToggleViewByDoll;
             EventManager.OnPlayerZoneChanged += HandleZoneChange;
         }
 
@@ -42,12 +43,22 @@ namespace Game_Flow.Camera
         {
             _inputActions.Player.SwitchView.performed -= ToggleView;
             EventManager.OnPlayerZoneChanged -= HandleZoneChange;
+            EventManager.OnDollPlaced -= ToggleViewByDoll;
             _inputActions.Player.Disable();
         }
 
         private void ToggleView(InputAction.CallbackContext ctx)
         {
             if (!_canSwitchView || _cinemachineBrain.IsBlending) return; 
+            _isTopDown = !_isTopDown;
+            firstPersonCamera.gameObject.SetActive(!_isTopDown);
+            topDownCamera.gameObject.SetActive(_isTopDown);
+            ChangeViewMode();
+            EventManager.ViewModeChanged(_currentViewMode);
+        }
+
+        private void ToggleViewByDoll()
+        {
             _isTopDown = !_isTopDown;
             firstPersonCamera.gameObject.SetActive(!_isTopDown);
             topDownCamera.gameObject.SetActive(_isTopDown);
