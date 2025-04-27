@@ -4,6 +4,7 @@ using Game_Flow.DotVisual.Scripts;
 using Game_Flow.DotVisual.Scripts.States;
 using Game_Flow.ImpactObjects.Scripts.Types;
 using Game_Flow.UI;
+using OpeningScene;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -219,11 +220,11 @@ namespace Game_Flow.Player.Scripts
             {
                 Debug.Log("Ray hit something!");
                 Debug.Log(hitInfo.collider.gameObject.name);
-                // var sign = hitInfo.collider.GetComponentInChildren<StartSignBehaviour>();
-                // if (sign != null)
-                // {
-                //     sign.OnStartPressed();
-                // }
+                var sign = hitInfo.collider.GetComponentInChildren<StartSignBehaviour>();
+                if (sign != null)
+                {
+                    sign.OnStartPressed();
+                }
             }
             else
             {
