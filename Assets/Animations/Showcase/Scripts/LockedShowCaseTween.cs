@@ -9,6 +9,8 @@ namespace Animations.Showcase.Scripts
         [SerializeField] private float duration = 0.3f;
         [SerializeField] private float strength = 0.2f;
         [SerializeField] private int vibrato = 10;
+        
+        public bool IsLocked { get; private set; } = true;
 
         public void PlayLockedAnimation()
         {

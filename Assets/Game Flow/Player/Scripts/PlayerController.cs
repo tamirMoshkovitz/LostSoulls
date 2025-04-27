@@ -1,4 +1,5 @@
 using Core.Managers;
+using Game_Flow.CollectableObjects;
 using Game_Flow.DotVisual.Scripts;
 using Game_Flow.DotVisual.Scripts.States;
 using Game_Flow.ImpactObjects.Scripts.Types;
@@ -168,6 +169,12 @@ namespace Game_Flow.Player.Scripts
                 var openable = hitInfo.collider.GetComponentInChildren<OpenCloseImpactObject>();
                 if (openable != null)
                 {
+                    if (openable.IsLocked)
+                    {
+                        openable.PlayLockedAnimation();
+                        Debug.Log("Object is locked");
+                        return;
+                    }
                     if (openable.IsOpen)
                     {
                         Debug.Log("Closing");
@@ -179,6 +186,21 @@ namespace Game_Flow.Player.Scripts
                         openable.OpenImpactObject();
                     }
                 }
+            }
+            else if (Physics.Raycast(ray, out hitInfo, 2f, LayerMask.GetMask("CollectableObject")))
+            {
+                Debug.Log("Ray hit something!");
+                Debug.Log(hitInfo.collider.gameObject.name);
+                var collectable = hitInfo.collider.GetComponentInChildren<CollectableKeyObject>();
+                var tag = hitInfo.collider.gameObject.tag;
+                if (collectable != null && tag == "CollectableKey")
+                {
+                    collectable.OnCollect();
+                }
+            }
+            else
+            {
+                Debug.Log("Ray did not hit anything.");
             }
         }
         
