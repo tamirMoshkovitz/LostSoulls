@@ -4,6 +4,7 @@ using Game_Flow.DotVisual.Scripts;
 using Game_Flow.DotVisual.Scripts.States;
 using Game_Flow.ImpactObjects.Scripts.Types;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
+using OpeningScene;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -196,6 +197,16 @@ namespace Game_Flow.Player.Scripts
                 if (collectable != null && tag == "CollectableKey")
                 {
                     collectable.OnCollect();
+                }
+            }
+            else if (Physics.Raycast(ray, out hitInfo, 2f, LayerMask.GetMask("OpeningSceneLayer")))
+            {
+                Debug.Log("Ray hit something!");
+                Debug.Log(hitInfo.collider.gameObject.name);
+                var sign = hitInfo.collider.GetComponentInChildren<StartSignBehaviour>();
+                if (sign != null)
+                {
+                    sign.OnStartPressed();
                 }
             }
             else
