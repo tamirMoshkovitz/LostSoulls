@@ -21,14 +21,16 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
         public void OpenImpactObject()
         {
             _isOpen = true;
-            _animator.SetBool("IsOpen", true);
+            _animator.SetTrigger("IsOpen");
+            //_animator.SetBool("IsOpen", true);
             Debug.Log("OpenImpactObject");
         }
         
         public void CloseImpactObject()
         {
             _isOpen = false;
-            _animator.SetBool("IsOpen", false);
+            _animator.SetTrigger("IsClose");
+            //_animator.SetBool("IsOpen", false);
             Debug.Log("CloseImpactObject");
         }
     }
