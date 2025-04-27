@@ -3441,7 +3441,7 @@ Transform:
   m_GameObject: {fileID: 623489537}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.75820345, z: 0, w: 0.6520181}
-  m_LocalPosition: {x: 2.37, y: 1.9300001, z: -3.01}
+  m_LocalPosition: {x: 2.37, y: 1.8499999, z: -3.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5388,7 +5388,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 569664042453942489, guid: 8318e9627c51641d1b035534dab91d4b, type: 3}
       propertyPath: moveSpeed
-      value: 0.75
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 569664042453942489, guid: 8318e9627c51641d1b035534dab91d4b, type: 3}
       propertyPath: woodSound
@@ -5414,6 +5414,10 @@ PrefabInstance:
       propertyPath: concreteFloorSound
       value: 
       objectReference: {fileID: 8300000, guid: 7ac786adf4614545b972c5f972673ca0, type: 3}
+    - target: {fileID: 1190104569821750386, guid: 8318e9627c51641d1b035534dab91d4b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.4
+      objectReference: {fileID: 0}
     - target: {fileID: 3421614729091044864, guid: 8318e9627c51641d1b035534dab91d4b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 2.37
@@ -5456,11 +5460,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7130040369046478622, guid: 8318e9627c51641d1b035534dab91d4b, type: 3}
       propertyPath: bobSpeed
-      value: 10
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 7130040369046478622, guid: 8318e9627c51641d1b035534dab91d4b, type: 3}
       propertyPath: bobAmount
-      value: 0.1
+      value: 0.075
       objectReference: {fileID: 0}
     - target: {fileID: 8520636754364356879, guid: 8318e9627c51641d1b035534dab91d4b, type: 3}
       propertyPath: m_Name
