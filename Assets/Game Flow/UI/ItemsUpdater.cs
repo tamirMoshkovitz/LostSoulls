@@ -14,10 +14,14 @@ namespace Game_Flow.UI
         [Header("Sprite References")]
         [SerializeField] private Sprite[] itemSprites; // Set order to match item IDs
 
-        private readonly List<GameObject> activeIcons = new();
+        // Track each icon together with its item ID
+        private class ItemEntry
+        {
+            public int ItemId;
+            public GameObject Icon;
+        }
+        private readonly List<ItemEntry> activeIcons = new();
 
-        
-        
         public void AddItem(int itemId)
         {
             if (itemId < 0 || itemId >= itemSprites.Length)
@@ -28,16 +32,38 @@ namespace Game_Flow.UI
 
             GameObject icon = Instantiate(itemIconPrefab, container);
             icon.GetComponent<Image>().sprite = itemSprites[itemId];
-            activeIcons.Add(icon);
+
+            activeIcons.Add(new ItemEntry {
+                ItemId = itemId,
+                Icon = icon
+            });
         }
 
-        public void RemoveItem(int index)
+        /// <summary>
+        /// Removes the first spawned icon matching this itemId.
+        /// </summary>
+        public void RemoveItem(int itemId)
         {
-            if (index < 0 || index >= activeIcons.Count) return;
+            // find the entry
+            var entry = activeIcons.Find(e => e.ItemId == itemId);
+            if (entry == null)
+            {
+                Debug.LogWarning($"No active icon for item ID: {itemId}");
+                return;
+            }
 
-            Destroy(activeIcons[index]);
-            activeIcons.RemoveAt(index);
+            Destroy(entry.Icon);
+            activeIcons.Remove(entry);
         }
 
+        /// <summary>
+        /// If you ever need to clear all icons:
+        /// </summary>
+        public void ClearAll()
+        {
+            foreach (var e in activeIcons)
+                Destroy(e.Icon);
+            activeIcons.Clear();
+        }
     }
 }

@@ -1,9 +1,11 @@
+using System;
 using Core.Managers;
 using Game_Flow.CollectableObjects;
 using Game_Flow.DotVisual.Scripts;
 using Game_Flow.DotVisual.Scripts.States;
 using Game_Flow.ImpactObjects.Scripts.Types;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
+using Game_Flow.UI;
 using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -26,6 +28,7 @@ namespace Game_Flow.Player.Scripts
         [SerializeField] private AudioClip woodStairsSound;
         [SerializeField] private AudioSource stepsAudioSource;
         [SerializeField] private AudioSource BGAudioSource;
+        [SerializeField] private ItemsUpdater itemsUpdater;
 
         private const string FirstFloorTag = "First Floor";
         private const string SecondFloorTag = "Second Floor";
@@ -39,6 +42,7 @@ namespace Game_Flow.Player.Scripts
         private bool _isGrounded;
         private bool _isMovementLocked;
         private string _currentFloor = FirstFloorTag;
+        private bool _collectedDoll = false;
         public bool IsMovementLocked {get => _isMovementLocked; set => _isMovementLocked = value;}
 
         
@@ -177,12 +181,14 @@ namespace Game_Flow.Player.Scripts
                     }
                     if (openable.IsOpen)
                     {
+                        
                         Debug.Log("Closing");
                         openable.CloseImpactObject();
                     }
                     else
                     {
                         Debug.Log("Opening");
+                        itemsUpdater.ClearAll();
                         openable.OpenImpactObject();
                     }
                 }
@@ -193,16 +199,33 @@ namespace Game_Flow.Player.Scripts
                 Debug.Log(hitInfo.collider.gameObject.name);
                 var collectable = hitInfo.collider.GetComponentInChildren<CollectableKeyObject>();
                 var tag = hitInfo.collider.gameObject.tag;
-                if (collectable != null && tag == "CollectableKey")
+                if (collectable != null)
                 {
                     collectable.OnCollect();
                 }
+                var collectableDoll = hitInfo.collider.GetComponentInChildren<CollectableDollObject>();
+                if (collectableDoll != null)
+                {
+                    collectableDoll.OnCollect();
+                    _collectedDoll = true;
+                }
+                var collectableManDoll = hitInfo.collider.GetComponentInChildren<CollectableManDollObject>();
+                if (collectableManDoll != null && _collectedDoll)
+                {
+                    collectableManDoll.OnCollect(OnDollPlaced);
+                    _collectedDoll = true;
+                }
+                
             }
             else
             {
                 Debug.Log("Ray did not hit anything.");
             }
         }
-        
+
+        private void OnDollPlaced()
+        {
+            //TODO MOVE TO TOP STATE
+        }
     }
 }
