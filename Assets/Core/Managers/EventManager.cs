@@ -24,6 +24,8 @@ namespace Core.Managers
         
         public static event Action<IObjeckLockingState> OnLockStateChanged;
 
+        public static event Action OnDollPlaced; 
+
         public static void LockStateChanged(IObjeckLockingState state)
         {
             OnLockStateChanged?.Invoke(state);
