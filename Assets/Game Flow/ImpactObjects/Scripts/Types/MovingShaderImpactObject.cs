@@ -25,26 +25,18 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             foreach (var renderer in _renderers)
             {
                 if (renderer == null) continue;
-                
-                // Only process renderers that are children with "Highlightable" tag
-                if (!renderer.gameObject.CompareTag("Highlightable")) continue;
-                
                 var material = renderer.material;
                 if (material == null) continue;
-                
-                // Enable outline first
-                material.EnableKeyword("DR_OUTLINE_ON");
-                
-                if (material.HasProperty("_OutlineEnabled"))
+                if (material.HasProperty("_RimEnabled"))
                 {
-                    material.SetInt("_OutlineEnabled", 1);
-                    
-                    // Only set color after confirming outline is enabled
-                    if (material.HasProperty("_OutlineColor"))
-                    {
-                        Color hdrColor = GetHDRColor(_lockedColor, 3f);
-                        material.SetColor("_OutlineColor", hdrColor);
-                    }
+                    material.SetInt("_RimEnabled", 1);
+                }
+
+                material.EnableKeyword("DR_RIM_ON");
+                if (material.HasProperty("_FlatRimColor"))
+                {
+                    Color hdrColor = GetHDRColor(_lockedColor, 5f);
+                    material.SetColor("_FlatRimColor", hdrColor);
                 }
             }
             if (_light != null)
@@ -59,20 +51,13 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             foreach (var renderer in _renderers)
             {
                 if (renderer == null) continue;
-                
-                // Only process renderers that are children with "Highlightable" tag
-                if (!renderer.gameObject.CompareTag("Highlightable")) continue;
-                
                 var material = renderer.material;
                 if (material == null) continue;
-                
-                // Disable outline
-                material.DisableKeyword("DR_OUTLINE_ON");
-                
-                if (material.HasProperty("_OutlineEnabled"))
+                if (material.HasProperty("_RimEnabled"))
                 {
-                    material.SetInt("_OutlineEnabled", 0);
+                    material.SetInt("_RimEnabled", 0);
                 }
+                material.DisableKeyword("DR_RIM_ON");
             }
             if (_light != null)
             {

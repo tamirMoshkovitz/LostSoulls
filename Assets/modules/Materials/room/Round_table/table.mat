@@ -40,7 +40,6 @@ Material:
     RenderType: Opaque
   disabledShaderPasses:
   - MOTIONVECTORS
-  - SRPDEFAULTUNLIT
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -163,7 +162,7 @@ Material:
     - _OutlineEnabled: 0
     - _OutlineScale: 1
     - _OutlineSpace: 0
-    - _OutlineWidth: 4.2
+    - _OutlineWidth: 1
     - _OverrideLightmapDir: 0
     - _Parallax: 0.005
     - _QueueOffset: 0

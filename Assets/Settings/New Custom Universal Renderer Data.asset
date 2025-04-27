@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-9167681911171689111
+--- !u!114 &-8487859222207548040
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 576f949be0794f548b825c9ce6f556db, type: 3}
   m_Name: Flat Kit Per Object Outline
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   settings:
     passTag: RenderObjectsFeature
     Event: 300
@@ -59,20 +59,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    sobelStrength: 0.393
-    outlineThickness: 1.057
+    sobelStrength: 0.548
+    outlineThickness: 1
     outlineColor: {r: 0.103773594, g: 0.04995413, b: 0.027901389, a: 1}
-    depthMultiplier: 11.8
+    depthMultiplier: 20
     noiseScale: 25
     noiseStrength: 1.7
     timeScale: 0
     Frequency: 0
     bokashiColor: {r: 0.09282664, g: 0.09473706, b: 0.13207549, a: 1}
-    bokashiStrength: 0.35
+    bokashiStrength: 0.27
     edgeThreshold: 0.01
     noiseEdgeOnly: 0
     solidNoiseStrength: 0
-    depthContrast: 0.6
+    depthContrast: 2
   shader: {fileID: 4800000, guid: 9148eaa4d593f4651b35b5b2c425a95a, type: 3}
 --- !u!114 &-585579038818733757
 MonoBehaviour:
@@ -121,8 +121,8 @@ MonoBehaviour:
     probeVolumeBlendStatesCS: {fileID: 0}
   m_RendererFeatures:
   - {fileID: -7023678355093873830}
+  - {fileID: -8487859222207548040}
   - {fileID: -585579038818733757}
-  - {fileID: -9167681911171689111}
   m_RendererFeatureMap: 5a9b07c4bfe1869e43714b7bf79adff7
   m_UseNativeRenderPass: 0
   xrSystemData: {fileID: 0}

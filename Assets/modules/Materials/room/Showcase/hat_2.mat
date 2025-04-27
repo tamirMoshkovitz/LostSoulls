@@ -40,20 +40,14 @@ Material:
     RenderType: Opaque
   disabledShaderPasses:
   - MOTIONVECTORS
-  - SRPDEFAULTUNLIT
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs: []
     m_Ints: []
-    m_Floats:
-    - _OutlineDepthOffset: 0
-    - _OutlineEnabled: 0
-    - _OutlineScale: 1.72
-    - _OutlineWidth: 1.9
+    m_Floats: []
     m_Colors:
     - _BaseColor: {r: 0.4245283, g: 0.40116587, b: 0.38247597, a: 1}
     - _ColorDim: {r: 0.4716981, g: 0.3456524, b: 0.24252403, a: 1}
-    - _OutlineColor: {r: 0.95696914, g: 1, b: 0.4292453, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
