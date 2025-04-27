@@ -53,6 +53,7 @@ Material:
     - _GradientSize: 10
     m_Colors:
     - _BaseColor: {r: 0.103773594, g: 0.08957815, b: 0.08957815, a: 1}
+    - _Color: {r: 0.10377359, g: 0.08957813, b: 0.08957813, a: 1}
     - _ColorDim: {r: 0.066037714, g: 0.066037714, b: 0.066037714, a: 1}
     - _ColorGradient: {r: 0.85023, g: 0.85034, b: 0.85045, a: 0.85056}
   m_BuildTextureStacks: []
