@@ -7,6 +7,7 @@ TagManager:
   - Stairs
   - Second Floor
   - First Floor
+  - CollectableKey
   layers:
   - Default
   - TransparentFX
@@ -26,7 +27,7 @@ TagManager:
   - ImpactObject
   - BorderImpactObject
   - AnimationObject
-  - 
+  - CollectableObject
   - 
   - 
   - 
