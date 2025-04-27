@@ -16,19 +16,19 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         [SerializeField] private Color impactColor;
         [SerializeField] private Color lockedColor;
         [SerializeField] private Light light;
-        
+
         [Header("Impact Object")]
         private IImpactObject _impactObject;
         [SerializeField] private List<ImpactObjectTypes> decoratorOrder;
         [SerializeField] private ImpactObjectStats stats;
         [SerializeField] private MultiImpactObjectLinker linker;
-        [FormerlySerializedAs("gridVisualizer")] [SerializeField] private Grid grid;
+        [FormerlySerializedAs("gridVisualizer")][SerializeField] private Grid grid;
         [SerializeField] private List<MonoImpactObject> nonCollidingObjects = new List<MonoImpactObject>();
-        
+
         [Header("Audio")]
         [SerializeField] private AudioSource objectAudioSource;
         [SerializeField] private AudioClip objectAudio;
-        
+
         private bool _updated;
         private bool _activated;
         private MoovingObjectAudio _objectAudio;
@@ -37,20 +37,20 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         public Color ImpactColor => impactColor;
         public Color LockedColor => lockedColor;
         public Light Light => light;
-        
+
         public bool IsMoveable { get; set; }
         public bool IsOpenable { get; set; }
-        
+
         public bool IsOpen { get; private set; }
 
-        public bool IsSoul {get; private set;}
+        public bool IsSoul { get; private set; }
         public bool IsBlocked { get; set; } = false;
         public List<MonoImpactObject> NonCollidingObjects => nonCollidingObjects;
         void Start()
         {
             IsSoul = false;
-            _impactObject = new BasicImpactObject(this,stats);
-            
+            _impactObject = new BasicImpactObject(this, stats);
+
             foreach (var type in decoratorOrder)
             {
                 if (type == ImpactObjectTypes.Soul) IsSoul = true;
@@ -60,10 +60,10 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                     or ImpactObjectTypes.ThreeBlockHorizontalGrid
                     or ImpactObjectTypes.ThreeBlockVerticalGrid
                     or ImpactObjectTypes.FourBlocksSquareGrid;
-                
-                
-                _impactObject = ImpactObjectFactory.CreateImpactObject(type, _impactObject, this,stats,grid);
-                if(shouldSnapToGrid) _impactObject.StopImpact();
+
+
+                _impactObject = ImpactObjectFactory.CreateImpactObject(type, _impactObject, this, stats, grid);
+                if (shouldSnapToGrid) _impactObject.StopImpact();
                 if (type == ImpactObjectTypes.MovingShader)
                 {
                     IsMoveable = true;
@@ -73,7 +73,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                     }
                 }
             }
-            
+
             if (objectAudioSource != null && objectAudio != null)
             {
                 _objectAudio = new MoovingObjectAudio(objectAudioSource, objectAudio);
@@ -83,7 +83,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
 
         public void Activate()
         {
-            if(_activated) return;
+            if (_activated) return;
             _activated = true;
             _impactObject.StartImpact();
             if (linker != null)
@@ -91,7 +91,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                 linker.ActivateSiblings();
             }
         }
-        
+
         public void UpdateObject(Vector3 direction)
         {
             if (_updated || direction.Equals(Vector3.zero)) return;
@@ -105,10 +105,10 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                 linker.UpdateSiblings(snapped);
             }
         }
-        
+
         public void DeActivate()
         {
-            if(!_activated) return;
+            if (!_activated) return;
             _activated = false;
             _impactObject.StopImpact();
             if (linker != null)
@@ -126,7 +126,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         {
             _impactObject?.DrawGizmos();
         }
-        
+
         private Vector3 GetClosestCardinalDirection(Vector3 direction)
         {
             direction.y = 0; // Ignore vertical component
@@ -155,7 +155,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
 
             return best;
         }
-        
+
         public Vector3 GetBottomCenter()
         {
             Renderer renderer = GetComponent<Renderer>();
@@ -166,24 +166,33 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             bottomCenter.y = bounds.min.y;
             return bottomCenter;
         }
-        
+
         public void HighlightObject()
         {
-            if (! IsMoveable) return;
+            if (!IsMoveable) return;
             foreach (var renderer in renderers)
             {
                 if (renderer == null) continue;
+                
+                // Only process renderers that are children with "Highlightable" tag
+                if (!renderer.gameObject.CompareTag("Highlightable")) continue;
+                
                 var material = renderer.material;
                 if (material == null) continue;
-                if (material.HasProperty("_RimEnabled"))
+                
+                // Enable outline first
+                material.EnableKeyword("DR_OUTLINE_ON");
+                
+                if (material.HasProperty("_OutlineEnabled"))
                 {
-                    material.SetInt("_RimEnabled", 1);
-                }
-                material.EnableKeyword("DR_RIM_ON");
-                if (material.HasProperty("_FlatRimColor"))
-                {
-                    Color hdrColor = GetHDRColor(impactColor, 5f);
-                    material.SetColor("_FlatRimColor",hdrColor);
+                    material.SetInt("_OutlineEnabled", 1);
+                    
+                    // Only set color after confirming outline is enabled
+                    if (material.HasProperty("_OutlineColor"))
+                    {
+                        Color hdrColor = GetHDRColor(impactColor, 3f);
+                        material.SetColor("_OutlineColor", hdrColor);
+                    }
                 }
             }
             if (light != null)
@@ -191,27 +200,34 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                 light.enabled = true;
             }
         }
-        
+
         public void UnhighlightObject()
         {
-            if (! IsMoveable) return;
+            if (!IsMoveable) return;
             foreach (var renderer in renderers)
             {
                 if (renderer == null) continue;
+                
+                // Only process renderers that are children with "Highlightable" tag
+                if (!renderer.gameObject.CompareTag("Highlightable")) continue;
+                
                 var material = renderer.material;
                 if (material == null) continue;
-                if (material.HasProperty("_RimEnabled"))
+                
+                // Disable outline
+                material.DisableKeyword("DR_OUTLINE_ON");
+                
+                if (material.HasProperty("_OutlineEnabled"))
                 {
-                    material.SetInt("_RimEnabled", 0);
+                    material.SetInt("_OutlineEnabled", 0);
                 }
-                material.DisableKeyword("DR_RIM_ON");
             }
             if (light != null)
             {
                 light.enabled = false;
             }
         }
-        
+
         private Color GetHDRColor(Color baseColor, float intensity)
         {
             return new Color(baseColor.r * intensity, baseColor.g * intensity, baseColor.b * intensity, baseColor.a);
@@ -224,7 +240,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             openCloseImpactObject.OpenImpactObject();
             IsOpen = true;
         }
-        
+
         public void CloseImpactObject()
         {
             if (!IsOpenable) return;
