@@ -19,9 +19,12 @@ namespace Game_Flow.Player.Scripts
         [SerializeField] private Transform groundCheck;
         [SerializeField] private LayerMask groundMask;
         [SerializeField] private float groundDistance = 0.4f;
+        [SerializeField] private AudioClip whiteNoise;
         [SerializeField] private AudioClip concreteFloorSound;
         [SerializeField] private AudioClip woodFloorSound;
         [SerializeField] private AudioClip woodStairsSound;
+        [SerializeField] private AudioSource stepsAudioSource;
+        [SerializeField] private AudioSource BGAudioSource;
 
         private const string FirstFloorTag = "First Floor";
         private const string SecondFloorTag = "Second Floor";
@@ -62,7 +65,8 @@ namespace Game_Flow.Player.Scripts
             _inputActions.Player.Jump.performed += OnJumpPerformed;
             _inputActions.Player.Open.performed += OnOpenPerformed;
             EventManager.OnLockStateChanged += HandleLockStateChanged;
-            _playerAudio = new PlayerAudio(GetComponent<AudioSource>(), concreteFloorSound, woodFloorSound, woodStairsSound);
+            _playerAudio = new PlayerAudio(stepsAudioSource, BGAudioSource, whiteNoise, concreteFloorSound, woodFloorSound, woodStairsSound);
+            _playerAudio.PlayWhiteNoise();
 
         }
 

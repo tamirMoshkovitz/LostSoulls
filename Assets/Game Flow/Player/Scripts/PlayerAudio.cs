@@ -11,25 +11,37 @@ namespace Game_Flow.Player.Scripts
     
     public class PlayerAudio
     {
-        private AudioSource _audioSource;
+        private AudioSource _BGAudioSource;
+        private AudioSource _StepsAudioSource;
+        private AudioClip _whiteNoise;
         private AudioClip _walkingOnConcreteFloor;
         private AudioClip _walkingOnWoodenFloor;
         private AudioClip _walkingOnWoodenStairs;
         private WalkingSurface _currentSurfaceType;
         
-        public PlayerAudio(AudioSource audioSource, AudioClip walkingOnConcreteFloor, AudioClip walkingOnWoodenFloor, AudioClip walkingOnWoodenStairs)
+        public PlayerAudio(AudioSource stepsAudioSource, AudioSource bgAudioSource, AudioClip whiteNoise, AudioClip walkingOnConcreteFloor, AudioClip walkingOnWoodenFloor, AudioClip walkingOnWoodenStairs)
         {
-            _audioSource = audioSource;
+            _StepsAudioSource = stepsAudioSource;
+            _BGAudioSource = bgAudioSource;
             _walkingOnWoodenFloor = walkingOnWoodenFloor;
             _walkingOnConcreteFloor = walkingOnConcreteFloor;
             _walkingOnWoodenStairs = walkingOnWoodenStairs;
-            _audioSource.loop = true;
+            _whiteNoise = whiteNoise;
+            _StepsAudioSource.loop = true;
             _currentSurfaceType = WalkingSurface.ConcreteFloor;
+        }
+        
+        public void PlayWhiteNoise()
+        {
+            _BGAudioSource.clip = _whiteNoise;
+            _BGAudioSource.loop = true;
+            _BGAudioSource.volume = 0.1f;
+            _BGAudioSource.Play();
         }
         
         public void PlayFootstepSound(WalkingSurface surfaceType)
         {
-            if (_audioSource.isPlaying && _currentSurfaceType.Equals(surfaceType))
+            if (_StepsAudioSource.isPlaying && _currentSurfaceType.Equals(surfaceType))
                 return;
 
             AudioClip clipToPlay;
@@ -52,17 +64,17 @@ namespace Game_Flow.Player.Scripts
 
             if (clipToPlay != null)
             {
-                _audioSource.clip = clipToPlay;
-                _audioSource.Play();
+                _StepsAudioSource.clip = clipToPlay;
+                _StepsAudioSource.Play();
             }
             _currentSurfaceType = surfaceType;
         }
 
         public void StopFootstepSound()
         {
-            if (_audioSource.isPlaying)
+            if (_StepsAudioSource.isPlaying)
             {
-                _audioSource.Stop();
+                _StepsAudioSource.Stop();
             }
         }
     }
