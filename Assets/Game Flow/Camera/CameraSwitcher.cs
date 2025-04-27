@@ -16,6 +16,7 @@ namespace Game_Flow.Camera
         [SerializeField] private CinemachineCamera firstPersonCamera;
         [SerializeField] private CinemachineCamera topDownCamera;
         [SerializeField] private UnityEngine.Camera mainCamera;
+        [SerializeField] private GameObject ceiling;
 
         private InputSystem_Actions _inputActions;
         
@@ -63,25 +64,24 @@ namespace Game_Flow.Camera
             }
             else
             {
-                SwitchToPerspective();
+                StartCoroutine(SwitchToPerspective());
             }
         }
         
         private IEnumerator SwitchToOrtho()
         {
             PlayerController.Instance.IsMovementLocked = true;
-            yield return new WaitForSeconds(_cinemachineBrain.DefaultBlend.BlendTime * 9/10);
-            mainCamera.orthographic = true;
-            topDownCamera.Lens.OrthographicSize = 2.75f;
-            mainCamera.orthographicSize = 2.5f;
+            yield return new WaitForSeconds(_cinemachineBrain.DefaultBlend.BlendTime * .18f);
+            ceiling.gameObject.SetActive(false);
             ObjectController.Instance.ChangeState(new TopDownState());
         }
         
-        private void SwitchToPerspective()
+        private IEnumerator SwitchToPerspective()
         {
-            mainCamera.orthographic = false;
             mainCamera.fieldOfView = 60f;
             ObjectController.Instance.ChangeState(new FPState());
+            yield return new WaitForSeconds(_cinemachineBrain.DefaultBlend.BlendTime * .82f);
+            ceiling.gameObject.SetActive(true);
         }
         
         private void HandleZoneChange(bool canSwitch)
