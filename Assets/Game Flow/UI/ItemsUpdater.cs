@@ -16,22 +16,8 @@ namespace Game_Flow.UI
 
         private readonly List<GameObject> activeIcons = new();
 
-        public void Start()
-        {
-            StartCoroutine(AddItemsWithDelay());
-        }
-
-        private System.Collections.IEnumerator AddItemsWithDelay()
-        {
-            AddItem(0);
-            yield return new WaitForSeconds(1f);
-
-            AddItem(1);
-            yield return new WaitForSeconds(1f);
-
-            AddItem(2);
-        }
-
+        
+        
         public void AddItem(int itemId)
         {
             if (itemId < 0 || itemId >= itemSprites.Length)
