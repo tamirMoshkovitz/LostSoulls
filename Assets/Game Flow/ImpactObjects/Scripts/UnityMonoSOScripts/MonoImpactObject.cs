@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Game_Flow.ImpactObjects.Scripts.Decorator_Interface;
 using Game_Flow.ImpactObjects.Scripts.Types;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.Serialization;
 
 namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
@@ -13,7 +14,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         [SerializeField] private Renderer[] renderers;
         [SerializeField] private Color impactColor;
         [SerializeField] private Color lockedColor;
-        private Light light;
+        [SerializeField] private Light light;
         
         [Header("Impact Object")]
         private IImpactObject _impactObject;
@@ -29,6 +30,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         public Renderer[] Renderers => renderers;
         public Color ImpactColor => impactColor;
         public Color LockedColor => lockedColor;
+        public Light Light => light;
         
         public bool IsMoveable { get; set; }
         public bool IsOpenable { get; set; }
@@ -59,7 +61,6 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                 if (type == ImpactObjectTypes.MovingShader)
                 {
                     IsMoveable = true;
-                    light = GetComponentInChildren<Light>();
                     if (light != null)
                     {
                         light.enabled = false;
@@ -170,7 +171,8 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                 material.EnableKeyword("DR_RIM_ON");
                 if (material.HasProperty("_FlatRimColor"))
                 {
-                    material.SetColor("_FlatRimColor",impactColor);
+                    Color hdrColor = GetHDRColor(impactColor, 5f);
+                    material.SetColor("_FlatRimColor",hdrColor);
                 }
             }
             if (light != null)
@@ -197,6 +199,11 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             {
                 light.enabled = false;
             }
+        }
+        
+        private Color GetHDRColor(Color baseColor, float intensity)
+        {
+            return new Color(baseColor.r * intensity, baseColor.g * intensity, baseColor.b * intensity, baseColor.a);
         }
 
         public void OpenImpactObject()

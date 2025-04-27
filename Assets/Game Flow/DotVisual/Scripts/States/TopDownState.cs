@@ -15,7 +15,7 @@ namespace Game_Flow.DotVisual.Scripts.States
         private Vector2 _input;
         private MonoImpactObject _target;
         private InputAction _inputReader;
-
+        
         
         public void EnterState(Transform origin, GameObject dotInstance)
         {
