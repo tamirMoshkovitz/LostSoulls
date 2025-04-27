@@ -1,10 +1,8 @@
-using System;
 using Core.Managers;
 using Game_Flow.CollectableObjects;
 using Game_Flow.DotVisual.Scripts;
 using Game_Flow.DotVisual.Scripts.States;
 using Game_Flow.ImpactObjects.Scripts.Types;
-using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
 using Game_Flow.UI;
 using Unity.Cinemachine;
 using UnityEngine;
@@ -216,6 +214,16 @@ namespace Game_Flow.Player.Scripts
                     _collectedDoll = true;
                 }
                 
+            }
+            else if (Physics.Raycast(ray, out hitInfo, 2f, LayerMask.GetMask("OpeningSceneLayer")))
+            {
+                Debug.Log("Ray hit something!");
+                Debug.Log(hitInfo.collider.gameObject.name);
+                // var sign = hitInfo.collider.GetComponentInChildren<StartSignBehaviour>();
+                // if (sign != null)
+                // {
+                //     sign.OnStartPressed();
+                // }
             }
             else
             {
