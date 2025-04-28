@@ -656,8 +656,8 @@ MonoBehaviour:
   m_UVBias: {x: -0.07447632, y: -0.123160206}
   m_DecalLayerMask: 1
   m_ScaleMode: 0
-  m_Offset: {x: 0.25716078, y: -0.19052082, z: 0.1578207}
-  m_Size: {x: 0.5367676, y: 1.9520453, z: 0.46435857}
+  m_Offset: {x: 0.25716078, y: -0.19052082, z: 0.11388163}
+  m_Size: {x: 0.5367676, y: 1.9520453, z: 0.37648043}
   m_FadeFactor: 1
 --- !u!4 &194725935 stripped
 Transform:
@@ -3511,7 +3511,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7a7b6f0cad7db45a4a47f19cc476f1cc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.167
+      value: 0.41300005
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7a7b6f0cad7db45a4a47f19cc476f1cc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5852,11 +5852,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5155af06db26d479eb2c5127129dd7af, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.045
+      value: -0.043
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5155af06db26d479eb2c5127129dd7af, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.223
+      value: 0.023
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 5155af06db26d479eb2c5127129dd7af, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7445,12 +7445,12 @@ MonoBehaviour:
   m_FadeScale: 0.9
   m_StartAngleFade: 180
   m_EndAngleFade: 180
-  m_UVScale: {x: 1.0084918, y: 0.8321737}
-  m_UVBias: {x: -0.01281337, y: 0.16268854}
+  m_UVScale: {x: 1.0084918, y: 0.7594093}
+  m_UVBias: {x: -0.01281337, y: 0.23545282}
   m_DecalLayerMask: 1
   m_ScaleMode: 0
-  m_Offset: {x: 0.56419957, y: -0.13395092, z: 0.1578207}
-  m_Size: {x: 1.0253441, y: 2.1369863, z: 0.46435857}
+  m_Offset: {x: 0.56419957, y: -0.04052311, z: 0.1578207}
+  m_Size: {x: 1.0253441, y: 1.9501308, z: 0.46435857}
   m_FadeFactor: 1
 --- !u!1001 &1769720069
 PrefabInstance:
@@ -7959,12 +7959,36 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 60b28b4b96ad040d19b7381ac7bd038c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 971848151}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 60b28b4b96ad040d19b7381ac7bd038c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1849499391}
   m_SourcePrefab: {fileID: 100100000, guid: 60b28b4b96ad040d19b7381ac7bd038c, type: 3}
 --- !u!4 &1849499388 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 60b28b4b96ad040d19b7381ac7bd038c, type: 3}
   m_PrefabInstance: {fileID: 1849499387}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &1849499391
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 971848143}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.2235203, y: 5.7115574, z: 3.0690708}
+  m_Center: {x: -12.863879, y: 2.8557787, z: -2.4654646}
 --- !u!1 &1874870778
 GameObject:
   m_ObjectHideFlags: 0
@@ -10929,8 +10953,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -3603093100183031170, guid: 1e9f7455976894be381ab7a6e5ba539d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.27
+      objectReference: {fileID: 0}
+    - target: {fileID: -3603093100183031170, guid: 1e9f7455976894be381ab7a6e5ba539d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.5
+      value: -0.021
       objectReference: {fileID: 0}
     - target: {fileID: -2965812122107570871, guid: 1e9f7455976894be381ab7a6e5ba539d, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
