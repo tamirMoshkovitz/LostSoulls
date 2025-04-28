@@ -137,7 +137,7 @@ Material:
     - _GradientAngle: 54
     - _GradientCenterX: 0
     - _GradientCenterY: 0
-    - _GradientEnabled: 1
+    - _GradientEnabled: 0
     - _GradientSize: 10
     - _GradientSpace: 0
     - _LightContribution: 0
