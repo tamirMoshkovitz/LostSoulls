@@ -72,7 +72,7 @@ MonoBehaviour:
     edgeThreshold: 0.01
     noiseEdgeOnly: 0
     solidNoiseStrength: 0
-    depthContrast: 0.75
+    depthContrast: 0.48
   shader: {fileID: 4800000, guid: 9148eaa4d593f4651b35b5b2c425a95a, type: 3}
 --- !u!114 &-585579038818733757
 MonoBehaviour:
