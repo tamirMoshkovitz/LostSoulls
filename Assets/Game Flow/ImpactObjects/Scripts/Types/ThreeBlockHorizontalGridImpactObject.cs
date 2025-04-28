@@ -1,69 +1,65 @@
+using System.Collections.Generic;
 using Game_Flow.ImpactObjects.Scripts.Decorator_Interface;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
 using UnityEngine;
-using System.Collections.Generic;
 using Grid = Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts.Grid;
 
 namespace Game_Flow.ImpactObjects.Scripts.Types
 {
     public class ThreeBlockHorizontalGridImpactObject : ImpactObjectDecorator
     {
-        private readonly Grid grid;
-        private readonly BoxCollider _boxCollider;
-        private List<Vector3> _lastSnappedFootprint = new();
+        private readonly Grid _grid;
+        private readonly float _initialTimePerMove;
 
-        public ThreeBlockHorizontalGridImpactObject(IImpactObject inner, MonoImpactObject mono, ImpactObjectStats stats,
-            Grid grid)
-            : base(inner, mono, stats)
+        public ThreeBlockHorizontalGridImpactObject(
+            IImpactObject inner,
+            MonoImpactObject mono,
+            ImpactObjectStats stats,
+            Grid grid
+        ) : base(inner, mono, stats)
         {
-            this.grid = grid;
-            _boxCollider = mono.GetComponent<BoxCollider>();
+            _grid = grid;
+            _initialTimePerMove = mono.TimePerMove;
         }
 
-        public override void StartImpact()
+        public override void UpdateImpact(Vector3 direction)
         {
-            base.StartImpact();
-            if (grid == null) return;
-            grid.UnmarkOccupied(Mono.GetBottomCenter(), ImpactObjectTypes.ThreeBlockHorizontalGrid);
-        }
+            base.UpdateImpact(direction);
 
-        public override void StopImpact()
-        {
-            base.StopImpact();
-            SnapToNearestGridPoint();
+            // accumulate until a discrete step is due
+            Mono.TimePerMove -= Time.deltaTime;
+            if (_grid == null || Mono.TimePerMove >= 0f)
+                return;
+            Mono.TimePerMove = _initialTimePerMove;
 
-            if (grid != null && _lastSnappedFootprint.Count == 3)
+            // clear out the old three‐cell footprint
+            _grid.UnmarkOccupied(Mono);
+
+            // compute row/col offset
+            int dRow = 0, dCol = 0;
+            if (direction == Vector3.forward)    dRow = +1;
+            else if (direction == Vector3.back)  dRow = -1;
+            else if (direction == Vector3.right) dCol = +1;
+            else if (direction == Vector3.left)  dCol = -1;
+
+            // shift each occupied cell
+            var oldCells    = new List<(int row, int col)>(Mono.UsedCells);
+            var targetCells = new List<(int row, int col)>();
+            foreach (var (r, c) in oldCells)
+                targetCells.Add((r + dRow, c + dCol));
+
+            // if any new cell is invalid or occupied, revert and block
+            if (_grid.IsCellsOccupied(targetCells))
             {
-                foreach (var cell in _lastSnappedFootprint)
-                {
-                    grid.MarkOccupied(cell, ImpactObjectTypes.OneBlockGrid);
-                }
-            }
-        }
-
-        private void SnapToNearestGridPoint()
-        {
-            if (grid == null || _boxCollider == null) return;
-
-            Bounds bounds = _boxCollider.bounds;
-            Vector3 basePosition = bounds.center;
-            basePosition.y = bounds.min.y;
-
-            var footprint = grid.GetGridFootprint(basePosition, ImpactObjectTypes.ThreeBlockHorizontalGrid);
-            if (footprint.Count < 3)
-            {
-                Debug.LogWarning($"[GridSnap] Invalid 3-block horizontal footprint for {Mono.name}, skipping snap.");
+                Mono.IsBlocked = true;
+                _grid.MarkOccupied(Mono, oldCells);
                 return;
             }
-
-            _lastSnappedFootprint = footprint;
-
-            Vector3 midpoint = (footprint[0] + footprint[1] + footprint[2]) / 3f;
-            float offsetY = bounds.extents.y;
-
-            Mono.transform.position = new Vector3(midpoint.x, midpoint.y + offsetY, midpoint.z);
-
-            Debug.Log($"[GridSnap] {Mono.name} snapped to midpoint of 3-block horizontal grid points.");
+            
+            // otherwise occupy new cells and move to their center
+            Vector3 worldCenter = _grid.MarkOccupied(Mono, targetCells);
+            Mono.transform.position = worldCenter;
+            Mono.UsedCells = targetCells;
         }
     }
 }

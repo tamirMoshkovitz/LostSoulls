@@ -2,7 +2,6 @@ using Game_Flow.ImpactObjects.Scripts.Decorator_Interface;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 using Grid = Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts.Grid;
 
 namespace Game_Flow.ImpactObjects.Scripts.Types
@@ -10,65 +9,66 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
     public class TwoBlockVerticalGridImpactObject : ImpactObjectDecorator
     {
         private readonly Grid grid;
-        private readonly BoxCollider _boxCollider;
-        private List<Vector3> _lastSnappedFootprint = new();
+        private readonly float initialTimePerMove;
 
-        public TwoBlockVerticalGridImpactObject(IImpactObject inner, MonoImpactObject mono, ImpactObjectStats stats, Grid grid)
-            : base(inner, mono, stats)
+        public TwoBlockVerticalGridImpactObject(
+            IImpactObject inner,
+            MonoImpactObject mono,
+            ImpactObjectStats stats,
+            Grid grid
+        ) : base(inner, mono, stats)
         {
             this.grid = grid;
-            _boxCollider = mono.GetComponent<BoxCollider>();
+            initialTimePerMove = mono.TimePerMove;
         }
 
-        public override void StartImpact()
+        public override void UpdateImpact(Vector3 direction)
         {
-            base.StartImpact();
-            if (grid == null) return;
+            base.UpdateImpact(direction);
 
-            grid.UnmarkOccupied(Mono.GetBottomCenter(), ImpactObjectTypes.TwoBlockVerticalGrid);
+            // accumulate delta‐time until we should step
+            Mono.TimePerMove -= Time.deltaTime;
+            if (grid == null || Mono.TimePerMove >= 0f)
+                return;
+            Mono.TimePerMove = initialTimePerMove;
+
+            // clear previous occupancy
+            grid.UnmarkOccupied(Mono);
+
+            // start from the cells the MonoImpactObject last occupied
+            var oldCells = new List<(int row, int col)>(Mono.UsedCells);
+            var targetCells = new List<(int row, int col)>();
+
+            // compute each cell's new row/col
+            foreach (var (row, col) in oldCells)
+            {
+                var newCell = (row, col);
+                if (direction == Vector3.forward)   newCell.row += 1;
+                else if (direction == Vector3.back) newCell.row -= 1;
+                else if (direction == Vector3.right)newCell.col += 1;
+                else if (direction == Vector3.left) newCell.col -= 1;
+
+                targetCells.Add(newCell);
+            }
+
+            // if any target is out of bounds or occupied, block
+            if (grid.IsCellsOccupied(targetCells))
+            {
+                Mono.IsBlocked = true;
+                // put old occupancy back so grid stays consistent
+                grid.MarkOccupied(Mono, oldCells);
+                return;
+            }
+            // we can move: mark new cells, reposition, save state
+            Vector3 newPos = grid.MarkOccupied(Mono, targetCells);
+            Mono.transform.position = newPos;
+            Mono.UsedCells = targetCells;
         }
 
         public override void StopImpact()
         {
             base.StopImpact();
-            SnapToNearestGridPoint();
-
-            if (grid != null && _lastSnappedFootprint.Count == 2)
-            {
-                foreach (var cell in _lastSnappedFootprint)
-                {
-                    grid.MarkOccupied(cell, ImpactObjectTypes.OneBlockGrid);
-                }
-            }
-        }
-
-        private void SnapToNearestGridPoint()
-        {
-            if (grid == null || _boxCollider == null) return;
-
-            Bounds bounds = _boxCollider.bounds;
-            Vector3 basePosition = bounds.center;
-            basePosition.y = bounds.min.y;
-
-            var footprint = grid.GetGridFootprint(basePosition, ImpactObjectTypes.TwoBlockVerticalGrid);
-            if (footprint.Count < 2)
-            {
-                Debug.LogWarning($"[GridSnap] Invalid footprint for {Mono.name}, skipping snap.");
-                return;
-            }
-
-            _lastSnappedFootprint = footprint;
-
-            Vector3 midpoint = (footprint[0] + footprint[1]) * 0.5f;
-            float offsetY = bounds.extents.y;
-
-            Mono.transform.position = new Vector3(
-                midpoint.x,
-                midpoint.y + offsetY,
-                midpoint.z
-            );
-
-            Debug.Log($"[GridSnap] {Mono.name} snapped to midpoint between vertical grid points:\n- {footprint[0]}\n- {footprint[1]}");
+            // no additional snapping needed
         }
     }
 }

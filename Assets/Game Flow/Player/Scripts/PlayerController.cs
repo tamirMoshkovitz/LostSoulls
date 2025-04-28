@@ -59,6 +59,11 @@ namespace Game_Flow.Player.Scripts
                 LayerMask.NameToLayer("BorderImpactObject"), 
                 true
             );
+            Physics.IgnoreLayerCollision(
+                LayerMask.NameToLayer("Player"), 
+                LayerMask.NameToLayer("ImpactObject"), 
+                true
+            );
         }
 
         void OnEnable()
