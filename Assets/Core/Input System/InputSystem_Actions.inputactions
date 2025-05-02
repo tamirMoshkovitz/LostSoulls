@@ -986,6 +986,45 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "OpeningScene",
+            "id": "d35d1688-3b0a-4101-84ee-b14c56f5e9a8",
+            "actions": [
+                {
+                    "name": "Open",
+                    "type": "Button",
+                    "id": "1412a566-6602-4171-8a3a-10701b2d9f46",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6c5207e1-2be9-4178-bc27-7b36fa00a6ff",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
+                    "action": "Open",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b6ab7e3c-d4a7-457b-b958-8a695af92920",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Open",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

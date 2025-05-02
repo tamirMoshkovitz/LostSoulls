@@ -42,18 +42,22 @@ namespace Game_Flow.Player.Scripts
         private bool _isMovementLocked;
         private string _currentFloor = FirstFloorTag;
         private bool _collectedDoll = false;
+        private bool hasStarted = false;
         public bool IsMovementLocked {get => _isMovementLocked; set => _isMovementLocked = value;}
-
         
         public Vector3 Velocity => _velocity;
         public bool IsGrounded => _isGrounded;
+        
+        public InputSystem_Actions InputActions => _inputActions;
+        
 
         void Awake()
         {
             _controller = GetComponent<CharacterController>();
             _inputActions = new InputSystem_Actions();
             _inputActions.Enable();
-            _inputActions.Player.Enable();
+            _inputActions.Player.Disable();
+            _inputActions.OpeningScene.Enable();
             Physics.IgnoreLayerCollision(
                 LayerMask.NameToLayer("Player"), 
                 LayerMask.NameToLayer("BorderImpactObject"), 
@@ -64,15 +68,17 @@ namespace Game_Flow.Player.Scripts
                 LayerMask.NameToLayer("ImpactObject"), 
                 true
             );
+            IsMovementLocked = true;
         }
 
         void OnEnable()
         {
-            _inputActions.Player.Enable();
+            //_inputActions.Player.Enable();
             _inputActions.Player.Move.performed += OnMovePerformed;
             _inputActions.Player.Move.canceled += OnMoveCanceled;
             _inputActions.Player.Jump.performed += OnJumpPerformed;
             _inputActions.Player.Open.performed += OnOpenPerformed;
+            _inputActions.OpeningScene.Open.performed += OnOpenPerformed;
             EventManager.OnLockStateChanged += HandleLockStateChanged;
             _playerAudio = new PlayerAudio(stepsAudioSource, BGAudioSource, whiteNoise, concreteFloorSound, woodFloorSound, woodStairsSound);
             _playerAudio.PlayWhiteNoise();
@@ -85,6 +91,7 @@ namespace Game_Flow.Player.Scripts
             _inputActions.Player.Move.canceled -= OnMoveCanceled;
             _inputActions.Player.Jump.performed -= OnJumpPerformed;
             _inputActions.Player.Open.performed -= OnOpenPerformed;
+            _inputActions.OpeningScene.Open.performed -= OnOpenPerformed;
             _inputActions.Player.Disable();
             EventManager.OnLockStateChanged -= HandleLockStateChanged;
             _playerAudio = null;
@@ -167,8 +174,17 @@ namespace Game_Flow.Player.Scripts
         private void OnOpenPerformed(InputAction.CallbackContext context)
         {
             Debug.Log("Pressed Open Button");
+            
+            if (!hasStarted)
+            {
+                hasStarted = true;
+                OpeningSceneController.Instance.OnStartPressed();
+                _isMovementLocked = false;
+            }
+            
             if (_isMovementLocked) return;
-            Debug.DrawRay(gameObject.GetComponentInChildren<CinemachineCamera>().transform.position, gameObject.GetComponentInChildren<CinemachineCamera>().transform.forward, Color.magenta, 2f);
+            
+            //Debug.DrawRay(gameObject.GetComponentInChildren<CinemachineCamera>().transform.position, gameObject.GetComponentInChildren<CinemachineCamera>().transform.forward, Color.magenta, 2f);
             Ray ray = new Ray(gameObject.GetComponentInChildren<CinemachineCamera>().transform.position, gameObject.GetComponentInChildren<CinemachineCamera>().transform.forward);
             if (Physics.Raycast(ray, out RaycastHit hitInfo, 2f, LayerMask.GetMask("AnimationObject")))
             {
@@ -220,16 +236,6 @@ namespace Game_Flow.Player.Scripts
                     _collectedDoll = true;
                 }
                 
-            }
-            else if (Physics.Raycast(ray, out hitInfo, 2f, LayerMask.GetMask("OpeningSceneLayer")))
-            {
-                Debug.Log("Ray hit something!");
-                Debug.Log(hitInfo.collider.gameObject.name);
-                var sign = hitInfo.collider.GetComponentInChildren<StartSignBehaviour>();
-                if (sign != null)
-                {
-                    sign.OnStartPressed();
-                }
             }
             else
             {
