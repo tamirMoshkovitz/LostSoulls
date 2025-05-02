@@ -184,7 +184,7 @@ namespace Game_Flow.Player.Scripts
             
             if (_isMovementLocked) return;
             
-            //Debug.DrawRay(gameObject.GetComponentInChildren<CinemachineCamera>().transform.position, gameObject.GetComponentInChildren<CinemachineCamera>().transform.forward, Color.magenta, 2f);
+            Debug.DrawRay(gameObject.GetComponentInChildren<CinemachineCamera>().transform.position, gameObject.GetComponentInChildren<CinemachineCamera>().transform.forward, Color.magenta, 2f);
             Ray ray = new Ray(gameObject.GetComponentInChildren<CinemachineCamera>().transform.position, gameObject.GetComponentInChildren<CinemachineCamera>().transform.forward);
             if (Physics.Raycast(ray, out RaycastHit hitInfo, 2f, LayerMask.GetMask("AnimationObject")))
             {
