@@ -16,6 +16,7 @@ namespace Game_Flow.DotVisual.Scripts.States
         private InputSystem_Actions _inputActions;
         private Vector2 _input;
         private MonoImpactObject _target;
+        private MonoImpactObject _lastTarget;
         private InputAction _inputReader;
         
         private float _moveCooldown = 0.3f;
@@ -132,9 +133,20 @@ namespace Game_Flow.DotVisual.Scripts.States
                     Vector3 newPos = _grid.GetWorldCenter(_currentCell);
                     Debug.Log($"Moving dot to: {newPos}");
                     _dot.transform.position = newPos;
+                    Debug.Log("Last target: " + _lastTarget);
+                    Debug.Log("Current target: " + _target);
                     _target = _grid.GetOccupant(nextCell.row, nextCell.col);
+                    if (_lastTarget != null && _lastTarget != _target)
+                    {
+                        _lastTarget.UnhighlightObject();
+                    }
                     _dotRenderer.material.color = Color.green;
-                    _target?.HighlightObject();
+                    if (_target != null && _target.IsMoveable)
+                    {
+                        _target.HighlightObject();
+                    }
+
+                    _lastTarget = _target;
                     Debug.Log($"Found target: {_target}");
                     break;
                 }
@@ -142,6 +154,20 @@ namespace Game_Flow.DotVisual.Scripts.States
                 _currentCell = nextCell;
                 _dot.transform.position = _grid.GetWorldCenter(_currentCell);
                 yield return new WaitForSeconds(0.05f);
+            }
+            if (_target != null)
+            {
+                if (_lastTarget != null && _lastTarget != _target)
+                {
+                    _lastTarget.UnhighlightObject();
+                }
+
+                _lastTarget = _target;
+            }
+            else if (_lastTarget != null)
+            {
+                _lastTarget.UnhighlightObject();
+                _lastTarget = null;
             }
 
             _isMoving = false;

@@ -10,13 +10,16 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
         private readonly Color _impactColor;
         private readonly Color _lockedColor;
         private readonly Light _light;
+        private readonly float _intensity;
+        private readonly float _width;
         
         public MovingShaderImpactObject(IImpactObject inner, MonoImpactObject mono, ImpactObjectStats stats) : base(inner, mono, stats)
         {
             _renderers = mono.Renderers;
             _impactColor = mono.ImpactColor;
             _lockedColor = mono.LockedColor;
-            _light = mono.Light;
+            _intensity = mono.Intensity;
+            _width = mono.Width;
         }
 
         public override void StartImpact()
@@ -27,16 +30,22 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
                 if (renderer == null) continue;
                 var material = renderer.material;
                 if (material == null) continue;
-                if (material.HasProperty("_RimEnabled"))
+                if (material.HasProperty("_OutlineEnabled"))
                 {
-                    material.SetInt("_RimEnabled", 1);
+                    material.SetInt("_OutlineEnabled", 1);
                 }
-
-                material.EnableKeyword("DR_RIM_ON");
-                if (material.HasProperty("_FlatRimColor"))
+                material.EnableKeyword("DR_OUTLINE_ON");
+                if (material.HasProperty("_OutlineColor"))
                 {
-                    Color hdrColor = GetHDRColor(_lockedColor, 5f);
-                    material.SetColor("_FlatRimColor", hdrColor);
+                    material.SetColor("_OutlineColor", _lockedColor);
+                }
+                if (material.HasProperty("_OutlineWidth"))
+                {
+                    material.SetFloat("_OutlineWidth", _width);
+                }
+                if (material.HasProperty("_OutlineIntensity"))
+                {
+                    material.SetFloat("_OutlineIntensity", _intensity);
                 }
             }
             if (_light != null)
@@ -53,21 +62,16 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
                 if (renderer == null) continue;
                 var material = renderer.material;
                 if (material == null) continue;
-                if (material.HasProperty("_RimEnabled"))
+                if (material.HasProperty("_OutlineEnabled"))
                 {
-                    material.SetInt("_RimEnabled", 0);
+                    material.SetInt("_OutlineEnabled", 0);
                 }
-                material.DisableKeyword("DR_RIM_ON");
+                material.DisableKeyword("DR_OUTLINE_ON");
             }
             if (_light != null)
             {
                 _light.enabled = false;
             }
-        }
-        
-        private Color GetHDRColor(Color baseColor, float intensity)
-        {
-            return new Color(baseColor.r * intensity, baseColor.g * intensity, baseColor.b * intensity, baseColor.a);
         }
     }
 }

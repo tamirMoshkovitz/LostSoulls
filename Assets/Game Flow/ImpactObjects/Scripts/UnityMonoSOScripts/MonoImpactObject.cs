@@ -17,7 +17,8 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         [SerializeField] private Renderer[] renderers;
         [SerializeField] private Color impactColor;
         [SerializeField] private Color lockedColor;
-        [SerializeField] private Light light;
+        [SerializeField] private float intensity = 100f;
+        [SerializeField] private float width = 10f;
         
         [Header("Impact Object")]
         private IImpactObject _impactObject;
@@ -42,7 +43,8 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         public Renderer[] Renderers => renderers;
         public Color ImpactColor => impactColor;
         public Color LockedColor => lockedColor;
-        public Light Light => light;
+        public float Intensity => intensity;
+        public float Width => width;
         
         public bool IsMoveable { get; set; }
 
@@ -78,8 +80,6 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                 if (type == ImpactObjectTypes.MovingShader)
                 {
                     IsMoveable = true;
-                    if (light != null)
-                        light.enabled = false;
                 }
             }
 
@@ -182,20 +182,23 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                 if (renderer == null) continue;
                 var material = renderer.material;
                 if (material == null) continue;
-                if (material.HasProperty("_RimEnabled"))
+                if (material.HasProperty("_OutlineEnabled"))
                 {
-                    material.SetInt("_RimEnabled", 1);
+                    material.SetInt("_OutlineEnabled", 1);
                 }
-                material.EnableKeyword("DR_RIM_ON");
-                if (material.HasProperty("_FlatRimColor"))
+                material.EnableKeyword("DR_OUTLINE_ON");
+                if (material.HasProperty("_OutlineColor"))
                 {
-                    Color hdrColor = GetHDRColor(impactColor, 5f);
-                    material.SetColor("_FlatRimColor",hdrColor);
+                    material.SetColor("_OutlineColor", impactColor);
                 }
-            }
-            if (light != null)
-            {
-                light.enabled = true;
+                if (material.HasProperty("_OutlineWidth"))
+                {
+                    material.SetFloat("_OutlineWidth", width);
+                }
+                if (material.HasProperty("_OutlineIntensity"))
+                {
+                    material.SetFloat("_OutlineIntensity", intensity);
+                }
             }
         }
         
@@ -207,15 +210,11 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                 if (renderer == null) continue;
                 var material = renderer.material;
                 if (material == null) continue;
-                if (material.HasProperty("_RimEnabled"))
+                if (material.HasProperty("_OutlineEnabled"))
                 {
-                    material.SetInt("_RimEnabled", 0);
+                    material.SetInt("_OutlineEnabled", 0);
                 }
-                material.DisableKeyword("DR_RIM_ON");
-            }
-            if (light != null)
-            {
-                light.enabled = false;
+                material.DisableKeyword("DR_OUTLINE_ON");
             }
         }
         
