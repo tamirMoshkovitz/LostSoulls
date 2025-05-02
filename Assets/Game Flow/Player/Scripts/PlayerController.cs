@@ -28,6 +28,7 @@ namespace Game_Flow.Player.Scripts
         [SerializeField] private AudioSource stepsAudioSource;
         [SerializeField] private AudioSource BGAudioSource;
         [SerializeField] private ItemsUpdater itemsUpdater;
+        [SerializeField] private GameObject[] animatedObjects;
 
         private const string FirstFloorTag = "First Floor";
         private const string SecondFloorTag = "Second Floor";
@@ -246,6 +247,19 @@ namespace Game_Flow.Player.Scripts
         private void OnDollPlaced()
         {
             //TODO MOVE TO TOP STATE
+            CloseAllOpenedObjects();
+        }
+
+        private void CloseAllOpenedObjects()
+        {
+            foreach (var animatedObject in animatedObjects)
+            {
+                var openable = animatedObject.GetComponentInChildren<OpenCloseImpactObject>();
+                if (openable != null && openable.IsOpen)
+                {
+                    openable.CloseImpactObject();
+                }
+            }
         }
     }
 }
