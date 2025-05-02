@@ -10,7 +10,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
         private readonly Color _impactColor;
         private readonly Color _lockedColor;
         private readonly Light _light;
-        private readonly float _intensity;
+        private readonly float _scale;
         private readonly float _width;
         
         public MovingShaderImpactObject(IImpactObject inner, MonoImpactObject mono, ImpactObjectStats stats) : base(inner, mono, stats)
@@ -18,7 +18,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             _renderers = mono.Renderers;
             _impactColor = mono.ImpactColor;
             _lockedColor = mono.LockedColor;
-            _intensity = mono.Intensity;
+            _scale = mono.Scale;
             _width = mono.Width;
         }
 
@@ -43,9 +43,9 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
                 {
                     material.SetFloat("_OutlineWidth", _width);
                 }
-                if (material.HasProperty("_OutlineIntensity"))
+                if (material.HasProperty("_OutlineScale"))
                 {
-                    material.SetFloat("_OutlineIntensity", _intensity);
+                    material.SetFloat("_OutlineScale", _scale);
                 }
             }
             if (_light != null)

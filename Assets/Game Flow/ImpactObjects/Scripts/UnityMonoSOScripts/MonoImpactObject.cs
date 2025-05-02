@@ -17,7 +17,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         [SerializeField] private Renderer[] renderers;
         [SerializeField] private Color impactColor;
         [SerializeField] private Color lockedColor;
-        [SerializeField] private float intensity = 100f;
+        [FormerlySerializedAs("intensity")] [SerializeField] private float scale = 100f;
         [SerializeField] private float width = 10f;
         
         [Header("Impact Object")]
@@ -43,7 +43,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         public Renderer[] Renderers => renderers;
         public Color ImpactColor => impactColor;
         public Color LockedColor => lockedColor;
-        public float Intensity => intensity;
+        public float Scale => scale;
         public float Width => width;
         
         public bool IsMoveable { get; set; }
@@ -195,9 +195,9 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                 {
                     material.SetFloat("_OutlineWidth", width);
                 }
-                if (material.HasProperty("_OutlineIntensity"))
+                if (material.HasProperty("_OutlineScale"))
                 {
-                    material.SetFloat("_OutlineIntensity", intensity);
+                    material.SetFloat("_OutlineScale", scale);
                 }
             }
         }
