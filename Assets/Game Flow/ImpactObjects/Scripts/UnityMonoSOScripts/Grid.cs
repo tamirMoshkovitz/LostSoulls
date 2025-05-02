@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
 using Game_Flow.ImpactObjects.Scripts.Decorator_Interface;
+using Unity.Mathematics.Geometry;
+using Unity.VisualScripting;
 using static Game_Flow.ImpactObjects.Scripts.Decorator_Interface.ImpactObjectTypes;
 
 namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
@@ -140,5 +142,31 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                 }
             }
         }
+        
+        public Vector3 GetWorldCenter((int row, int col) cell)
+        {
+            cell.row = Mathf.Clamp(cell.row, 0, rows - 1);
+            cell.col = Mathf.Clamp(cell.col, 0, cols - 1);
+            return allGridCenters[cell.row][cell.col];
+        }
+        
+        public (int row, int col) WorldToCell(Vector3 position)
+        {
+            Bounds bounds = _renderer.bounds;
+            float cellWidth = bounds.size.x / cols;
+            float cellHeight = bounds.size.z / rows;
+
+            int col = Mathf.FloorToInt((position.x - bounds.min.x) / cellWidth);
+            int row = Mathf.FloorToInt((position.z - bounds.min.z) / cellHeight);
+            return (Mathf.Clamp(row, 0, rows - 1), Mathf.Clamp(col, 0, cols - 1));
+        }
+
+        public MonoImpactObject GetOccupant(int row, int col)
+        {
+            if (IsValidCell(row, col))
+                return occupiedCenters[row][col];
+            return null;
+        }
+
     }
 }
