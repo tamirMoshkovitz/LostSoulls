@@ -11,6 +11,8 @@ namespace Camera
         private InputSystem_Actions _inputActions;
         private Vector2 _lookInput;
         private float _xRotation = 0f;
+        
+        public InputSystem_Actions InputActions => _inputActions;
 
         void Awake()
         {
@@ -20,7 +22,7 @@ namespace Camera
 
         void OnEnable()
         {
-            _inputActions.Player.Enable();
+            _inputActions.Player.Disable();
             _inputActions.Player.Look.performed += OnLookPerformed;
             _inputActions.Player.Look.canceled += OnLookCanceled;
         }

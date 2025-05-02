@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Camera;
 using Core.Managers;
 using Game_Flow.Player.Scripts;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace OpeningScene
         [SerializeField] private Transform player;
         [SerializeField] private Vector3 moveTarget;
         [SerializeField] private float moveDuration = 2f;
+        [SerializeField] private FirstPersonCameraRotation firstPersonCameraRotation;
         
         private bool hasStarted = false;
         public void OnStartPressed()
@@ -41,6 +43,8 @@ namespace OpeningScene
             var actions = PlayerController.Instance.InputActions;
             actions.OpeningScene.Disable();
             actions.Player.Enable();
+            var cameraActions = firstPersonCameraRotation.InputActions;
+            cameraActions.Player.Enable();
         }
     }
 }
