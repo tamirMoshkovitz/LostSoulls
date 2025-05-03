@@ -252,6 +252,7 @@ namespace Game_Flow.Player.Scripts
         private void OnDollPlaced()
         {
             //TODO MOVE TO TOP STATE
+            EventManager.DollPlaced();
             CloseAllOpenedObjects();
         }
 

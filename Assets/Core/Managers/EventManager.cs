@@ -44,5 +44,10 @@ namespace Core.Managers
         {
             OnViewModeChanged?.Invoke(newMode);
         }
+        
+        public static void DollPlaced()
+        {
+            OnDollPlaced?.Invoke();
+        }
     }
 }
