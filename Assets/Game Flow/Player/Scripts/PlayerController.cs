@@ -3,6 +3,7 @@ using Game_Flow.CollectableObjects;
 using Game_Flow.DotVisual.Scripts;
 using Game_Flow.DotVisual.Scripts.States;
 using Game_Flow.ImpactObjects.Scripts.Types;
+using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
 using Game_Flow.UI;
 using OpeningScene;
 using Unity.Cinemachine;
@@ -28,7 +29,6 @@ namespace Game_Flow.Player.Scripts
         [SerializeField] private AudioSource stepsAudioSource;
         [SerializeField] private AudioSource BGAudioSource;
         [SerializeField] private ItemsUpdater itemsUpdater;
-        [SerializeField] private GameObject[] animatedObjects;
 
         private const string FirstFloorTag = "First Floor";
         private const string SecondFloorTag = "Second Floor";
@@ -51,6 +51,8 @@ namespace Game_Flow.Player.Scripts
         
         public InputSystem_Actions InputActions => _inputActions;
         
+        private HandleInteractableObjects _interactableObjectsHandler;
+        
 
         void Awake()
         {
@@ -70,6 +72,7 @@ namespace Game_Flow.Player.Scripts
                 true
             );
             IsMovementLocked = true;
+            _interactableObjectsHandler = gameObject.GetComponent<HandleInteractableObjects>();
         }
 
         void OnEnable()
@@ -253,19 +256,9 @@ namespace Game_Flow.Player.Scripts
         {
             //TODO MOVE TO TOP STATE
             EventManager.DollPlaced();
-            CloseAllOpenedObjects();
+            _interactableObjectsHandler.CloseAllOpenedObjects();
         }
-
-        private void CloseAllOpenedObjects()
-        {
-            foreach (var animatedObject in animatedObjects)
-            {
-                var openable = animatedObject.GetComponentInChildren<OpenCloseImpactObject>();
-                if (openable != null && openable.IsOpen)
-                {
-                    openable.CloseImpactObject();
-                }
-            }
-        }
+        
+        
     }
 }
