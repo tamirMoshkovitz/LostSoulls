@@ -12,7 +12,7 @@ namespace Game_Flow.CollectableObjects
 
         public void PlayAnimation()
         {
-            transform.DOShakePosition(duration, strength, vibrato, 90, false, true);
+            // TODO MAYBE ANIMATION IN FUTURE   
         }
     }
 }
