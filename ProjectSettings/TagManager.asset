@@ -8,6 +8,8 @@ TagManager:
   - Second Floor
   - First Floor
   - CollectableKey
+  - HighlightZone
+  - LetterZone
   layers:
   - Default
   - TransparentFX

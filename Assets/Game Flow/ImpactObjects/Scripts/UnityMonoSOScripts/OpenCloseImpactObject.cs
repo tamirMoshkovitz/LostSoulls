@@ -12,11 +12,18 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
         [SerializeField] private float strength = 0.2f;
         [SerializeField] private int vibrato = 10;
         [SerializeField] private bool isShowcase;
+        [SerializeField] private bool isLetter;
+        [SerializeField] private Renderer[] renderers;
+        [SerializeField] private Color highlightColor;
+        [SerializeField] private float width;
+        [SerializeField] private float scale;
         
         private bool _isOpen;
         private Animator _animator;
         
         public bool IsLocked { get; set; }
+        
+        public bool IsLetter => isLetter;
         
         public bool IsOpen => _isOpen;
 
@@ -53,6 +60,49 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
         public void PlayLockedAnimation()
         {
             transform.DOShakePosition(duration, strength, vibrato, 90, false, true);
+        }
+
+        public void HighlightObject()
+        {
+            foreach (var renderer in renderers)
+            {
+                if (renderer == null) continue;
+                var material = renderer.material;
+                if (material == null) continue;
+                if (material.HasProperty("_OutlineEnabled"))
+                {
+                    material.SetInt("_OutlineEnabled", 1);
+                }
+                material.EnableKeyword("DR_OUTLINE_ON");
+                if (material.HasProperty("_OutlineColor"))
+                {
+                    material.SetColor("_OutlineColor", highlightColor);
+                }
+                if (material.HasProperty("_OutlineWidth"))
+                {
+                    material.SetFloat("_OutlineWidth", width);
+                }
+                if (material.HasProperty("_OutlineScale"))
+                {
+                    material.SetFloat("_OutlineScale", scale);
+                }
+            }
+            
+        }
+        
+        public void UnHighlightObject()
+        {
+            foreach (var renderer in renderers)
+            {
+                if (renderer == null) continue;
+                var material = renderer.material;
+                if (material == null) continue;
+                if (material.HasProperty("_OutlineEnabled"))
+                {
+                    material.SetInt("_OutlineEnabled", 0);
+                }
+                material.DisableKeyword("DR_OUTLINE_ON");
+            }
         }
     }
 }
