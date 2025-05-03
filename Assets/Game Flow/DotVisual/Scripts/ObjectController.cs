@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using Core.Attributes;
 using Core.Managers;
 using Game_Flow.DotVisual.Scripts.States;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
@@ -11,7 +13,8 @@ namespace Game_Flow.DotVisual.Scripts
     public class ObjectController : MonoSingleton<ObjectController>
     {
         [SerializeField] private GameObject dotPrefab;
-        
+        [SerializeField] private List<MonoImpactObject> impactObjects;
+        [SerializeField,ReadOnly] MonoImpactObject currentImpactObject;
         private IObjeckLockingState _currentState;
         private Transform _origin;
         private InputSystem_Actions _inputSystemActions;
@@ -28,7 +31,7 @@ namespace Game_Flow.DotVisual.Scripts
             }
             _currentState = new FPState();
             _origin = GetComponent<UnityEngine.Camera>().transform;
-            _currentState.EnterState(_origin, dotPrefab);
+            _currentState.EnterState(_origin, dotPrefab, impactObjects, this);
             _inputSystemActions = new InputSystem_Actions();
         }
 
@@ -56,6 +59,7 @@ namespace Game_Flow.DotVisual.Scripts
         {
             _currentState?.Update();
             _currentState?.GetTarget(out _target);
+            currentImpactObject = _target;
             if (IsLocked)
             {
                 Vector3 targetMovement = _currentState.CalculateMovement(_input);
@@ -70,7 +74,7 @@ namespace Game_Flow.DotVisual.Scripts
             {
                 _currentState.ExitState();
                 _currentState = newState;
-                _currentState.EnterState(_origin, dotPrefab);
+                _currentState.EnterState(_origin, dotPrefab,impactObjects,this);
             }
         }
 
@@ -95,6 +99,33 @@ namespace Game_Flow.DotVisual.Scripts
         {
             _input = Vector2.zero;
         }
+        
+#if UNITY_EDITOR
+        private void OnDrawGizmos()
+        {
+            // only when playing
+            if (!Application.isPlaying || _currentState is not TopDownState topState) 
+                return;
+
+            // origin point (camera pivot)
+            if (_target == null) 
+                return;
+
+            Vector3 origin = _target.transform.position;
+
+            // draw the input direction in yellow
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(origin, origin + topState.DebugInputDir * 2f);
+
+            // if there’s a next target, draw a green sphere on it
+            if (topState.DebugNextTarget != null)
+            {
+                Gizmos.color = Color.green;
+                Gizmos.DrawWireSphere(topState.DebugNextTarget.transform.position, 0.5f);
+            }
+        }
+#endif
+
 
     }
 }

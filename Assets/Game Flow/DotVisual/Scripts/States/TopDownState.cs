@@ -11,8 +11,7 @@ namespace Game_Flow.DotVisual.Scripts.States
     {
         private const float Speed = 2f;
         private Vector3 _position;
-        private GameObject _dot;
-        private Renderer _dotRenderer;
+        // private Renderer _dotRenderer;
         private InputSystem_Actions _inputActions;
         private Vector2 _input;
         private MonoImpactObject _target;
@@ -22,12 +21,15 @@ namespace Game_Flow.DotVisual.Scripts.States
         private float _moveCooldown = 0.3f;
         private float _lastMoveTime = -Mathf.Infinity;
         private LayerMask _impactLayerMask = LayerMask.GetMask("ImpactObject");
-        private Grid _grid;
-        private (int row, int col) _currentCell;
+        
         private bool _isMoving = false;
-        
-        
-        public void EnterState(Transform origin, GameObject dotInstance)
+        private List<MonoImpactObject> _impactObjects;
+        private ObjectController _cameraMono;
+
+        public Vector3 DebugInputDir   { get;  set; }
+        public MonoImpactObject DebugNextTarget { get; set; }
+        public void EnterState(Transform origin, GameObject dotInstance, List<MonoImpactObject> impactObjects,
+            ObjectController objectController)
         {
             EventManager.LockStateChanged(this);
             _inputActions = new InputSystem_Actions();
@@ -35,19 +37,16 @@ namespace Game_Flow.DotVisual.Scripts.States
             _inputActions.Player.Enable();
             _inputReader = _inputActions.Player.Move;
             _position = origin.position;
-            _dot = dotInstance;
-            _dotRenderer = _dot.GetComponent<Renderer>();
             _inputReader.performed += OnMovePerformed;
             _inputReader.canceled += OnMoveCanceled;
-            _dotRenderer.enabled = true;
             Debug.Log("Entered top state");
-            
-            _grid = Object.FindFirstObjectByType<Grid>();
-            _currentCell = _grid.WorldToCell(_dot.transform.position);
+            _impactObjects = impactObjects;
+            _target = impactObjects[0];
+            _target.HighlightObject();
+            _cameraMono = objectController;
         }
         public void ExitState()
         {
-            _dotRenderer.enabled = false;
             _inputReader.performed -= OnMovePerformed;
             _inputReader.canceled -= OnMoveCanceled;            
             _inputActions.Player.Disable();
@@ -66,112 +65,103 @@ namespace Game_Flow.DotVisual.Scripts.States
         
         private void LockedUpdate()
         {
-            _dot.transform.parent = _target?.transform;
+            
         }
 
         private void UnLockedUpdate()
         {
-            if (_isMoving || _input == Vector2.zero || Time.time - _lastMoveTime < _moveCooldown)
+            if (_input == Vector2.zero || Time.time - _lastMoveTime < _moveCooldown)
                 return;
-            
-            Debug.Log("input: " + _input);
-            Vector3 inputDir = new Vector3(_input.x, 0, _input.y).normalized;
-            _lastMoveTime = Time.time;
-            _isMoving = true;
-            _dotRenderer.material.color = Color.red; // Default red unless target found
+            // 0) get raw stick into 3D
+            Vector3 raw3D = new Vector3(_input.x, 0f, _input.y);
 
-            CoroutineRunner.Instance.StartCoroutine(MoveUntilObjectFound(inputDir));
-            /**_position += new Vector3(-_input.x, 0, -_input.y) * Speed * Time.deltaTime;
-            if (Physics.Raycast(_position, Vector3.down, out var hit))
-            {
-                if (hit.transform.gameObject.layer == LayerMask.NameToLayer("ImpactObject"))
-                {
-                    _dotRenderer.material.color = Color.green;
-                    _target = hit.transform.gameObject.GetComponent<MonoImpactObject>();
-                    if (_target != null && _target.IsMoveable)
-                    {
-                        _target.HighlightObject();
-                    }
-                }
-                else
-                {
-                    if (_target != null)
-                    {
-                        _target.UnhighlightObject();
-                    }
-                    _dotRenderer.material.color = Color.red;
-                    _target = null;
-                }
-                _dot.transform.position = hit.point;
-            }**/
+            // 1) rotate by camera yaw
+            float camYaw = _cameraMono.transform.eulerAngles.y;
+            Quaternion yawRot = Quaternion.Euler(0f, camYaw, 0f);
+            Vector3 camRelative = yawRot * raw3D;
+
+            // 2) quantize on the XZ‐plane
+            Vector2 cam2D    = new Vector2(camRelative.x, camRelative.z);
+           
+            var inputDir = QuantizeTo8Directions(cam2D);
+            DebugInputDir  = inputDir;
+
+            if (inputDir == Vector3.zero)
+                return;
+
+            _lastMoveTime = Time.time;
+            var newTarget  = FindNearestInDirection(inputDir);
             
+            DebugNextTarget = newTarget;
+            var oldTarget = _target;
+
+            if (newTarget != null && newTarget != _target)
+            {
+                // we found a new one – unhighlight the old, highlight the new
+                oldTarget?.UnhighlightObject();
+                _target = newTarget;
+                if (_target.IsMoveable)
+                    _target.HighlightObject();
+            }
         }
         
-        private System.Collections.IEnumerator MoveUntilObjectFound(Vector3 direction)
+        
+        
+        private MonoImpactObject FindNearestInDirection(Vector3 dir)
         {
-            Debug.Log("Started coroutine to move dot...");
-            int dRow = 0, dCol = 0;
-            if (Vector3.Dot(direction, Vector3.forward) > 0.5f) dRow = +1;
-            else if (Vector3.Dot(direction, Vector3.back) > 0.5f) dRow = -1;
-            else if (Vector3.Dot(direction, Vector3.right) > 0.5f) dCol = +1;
-            else if (Vector3.Dot(direction, Vector3.left) > 0.5f) dCol = -1;
-            else { _isMoving = false; yield break; }
 
-            while (true)
+            MonoImpactObject best       = null;
+            float              bestAng   = float.MaxValue;
+            float              bestDistSq= float.MaxValue;
+
+            foreach (var obj in _impactObjects)
             {
-                var nextCell = (row: _currentCell.row + dRow, col: _currentCell.col + dCol);
-                Debug.Log($"Current cell: {_currentCell}, Next cell: {nextCell}");
-                // Stop if out of bounds
-                if (nextCell.row < 0 || nextCell.row >= _grid.Rows || nextCell.col < 0 || nextCell.col >= _grid.Cols)
-                    break;
+                // 2) skip the one already highlighted
+                if (obj == _target) continue;
 
-                List<(int row, int col)> check = new() { nextCell };
+                // 3) compute flat‐XZ vector from origin to candidate
+                Vector3 toObj = obj.transform.position - _target.transform.position;
+                toObj.y = 0;
+                float distSq = toObj.sqrMagnitude;
+                if (distSq < 0.0001f) continue;
 
-                if (_grid.IsCellsOccupied(check))
+                Vector3 toDir = toObj.normalized;
+                float   angle = Vector3.Angle(dir, toDir);
+
+                // only look in your forward hemisphere
+                if (angle > 90f) continue;
+
+                // pick the smallest angle (tie‐break by closer distance)
+                if (angle < bestAng || (Mathf.Approximately(angle, bestAng) && distSq < bestDistSq))
                 {
-                    _currentCell = nextCell;
-                    Vector3 newPos = _grid.GetWorldCenter(_currentCell);
-                    Debug.Log($"Moving dot to: {newPos}");
-                    _dot.transform.position = newPos;
-                    Debug.Log("Last target: " + _lastTarget);
-                    Debug.Log("Current target: " + _target);
-                    _target = _grid.GetOccupant(nextCell.row, nextCell.col);
-                    if (_lastTarget != null && _lastTarget != _target)
-                    {
-                        _lastTarget.UnhighlightObject();
-                    }
-                    _dotRenderer.material.color = Color.green;
-                    if (_target != null && _target.IsMoveable)
-                    {
-                        _target.HighlightObject();
-                    }
-
-                    _lastTarget = _target;
-                    Debug.Log($"Found target: {_target}");
-                    break;
+                    best       = obj;
+                    bestAng    = angle;
+                    bestDistSq = distSq;
                 }
-
-                _currentCell = nextCell;
-                _dot.transform.position = _grid.GetWorldCenter(_currentCell);
-                yield return new WaitForSeconds(0.05f);
             }
-            if (_target != null)
-            {
-                if (_lastTarget != null && _lastTarget != _target)
-                {
-                    _lastTarget.UnhighlightObject();
-                }
-
-                _lastTarget = _target;
-            }
-            else if (_lastTarget != null)
-            {
-                _lastTarget.UnhighlightObject();
-                _lastTarget = null;
-            }
-
-            _isMoving = false;
+            return best;
         }
+        
+        /// <summary>
+        /// Takes a raw input Vector2 (x,y) in [–1…1] and returns
+        /// one of the eight unit directions (E,NE,N,NW,W,SW,S,SE).
+        /// </summary>
+        private Vector3 QuantizeTo8Directions(Vector2 rawInput)
+        {
+
+            // 1) get 0–360° angle (where 0° = +X/East, 90° = +Y/North)
+            float angle = Mathf.Atan2(rawInput.y, rawInput.x) * Mathf.Rad2Deg;
+            if (angle < 0) angle += 360f;
+
+            // 2) snap to nearest multiple of 45°
+            int sector = Mathf.RoundToInt(angle / 45f) % 8;
+            float snappedAngle = sector * 45f * Mathf.Deg2Rad;
+
+            // 3) rebuild a unit vector from that snapped angle
+            Vector2 dir2D = new Vector2(Mathf.Cos(snappedAngle), Mathf.Sin(snappedAngle));
+            return new Vector3(dir2D.x, 0f, dir2D.y);
+        }
+
 
         private void OnMovePerformed(InputAction.CallbackContext context)
         {
@@ -190,7 +180,7 @@ namespace Game_Flow.DotVisual.Scripts.States
 
         public Vector3 CalculateMovement(Vector2 input)
         {
-            return new Vector3(-input.x, 0, -input.y) * Speed * Time.deltaTime;
+            return new Vector3(-input.x, 0, -input.y) * (Speed * Time.deltaTime);
         }
     }
 }

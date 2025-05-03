@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Core.Managers;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
 using UnityEngine;
@@ -11,9 +12,12 @@ namespace Game_Flow.DotVisual.Scripts.States
         private Renderer _dotRenderer;
         private float _minDistance = .75f;
         private MonoImpactObject _target;
+        
+        public Vector3 DebugInputDir   { get;  set; }
+        public MonoImpactObject DebugNextTarget { get; set; }
 
-
-        public void EnterState(Transform origin, GameObject dotInstance)
+        public void EnterState(Transform origin, GameObject dotInstance, List<MonoImpactObject> impactObjects,
+            ObjectController objectController)
         {
             EventManager.LockStateChanged(this);
             _origin = origin;
