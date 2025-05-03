@@ -3346,8 +3346,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 3.6210728, z: 1.6274077}
-  m_Center: {x: 0, y: 0.66390514, z: -0.31370372}
+  m_Size: {x: 8.692451, y: 13.573322, z: 1.6274077}
+  m_Center: {x: 0.87622404, y: 0.5998039, z: -0.31370372}
 --- !u!1001 &595201756
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6467,7 +6467,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 569664042453942489, guid: 8318e9627c51641d1b035534dab91d4b, type: 3}
       propertyPath: moveSpeed
-      value: 5
+      value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 569664042453942489, guid: 8318e9627c51641d1b035534dab91d4b, type: 3}
       propertyPath: woodSound
@@ -9409,7 +9409,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PositionAmount:
-    x: 1
+    x: 0.3
     y: 0
     z: 0
   RotationAmount:
@@ -11182,6 +11182,26 @@ PrefabInstance:
     - target: {fileID: 2623082061032235482, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
       propertyPath: m_Name
       value: Showcase
+      objectReference: {fileID: 0}
+    - target: {fileID: 3417930804541309904, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
+      propertyPath: m_Size.x
+      value: 9.002612
+      objectReference: {fileID: 0}
+    - target: {fileID: 3417930804541309904, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
+      propertyPath: m_Size.y
+      value: 15.696966
+      objectReference: {fileID: 0}
+    - target: {fileID: 3417930804541309904, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
+      propertyPath: m_Center.x
+      value: 2.079297
+      objectReference: {fileID: 0}
+    - target: {fileID: 3417930804541309904, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
+      propertyPath: m_Center.y
+      value: 2.545237
+      objectReference: {fileID: 0}
+    - target: {fileID: 3417930804541309904, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
+      propertyPath: m_Center.z
+      value: 1.011016
       objectReference: {fileID: 0}
     - target: {fileID: 5016510642606295233, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
       propertyPath: grid
