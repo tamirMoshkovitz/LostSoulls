@@ -12,6 +12,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
         [SerializeField] private float strength = 0.2f;
         [SerializeField] private int vibrato = 10;
         [SerializeField] private bool isShowcase;
+        [SerializeField] private bool isLetter;
         [SerializeField] private Renderer[] renderers;
         [SerializeField] private Color highlightColor;
         [SerializeField] private float width;
@@ -21,6 +22,8 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
         private Animator _animator;
         
         public bool IsLocked { get; set; }
+        
+        public bool IsLetter => isLetter;
         
         public bool IsOpen => _isOpen;
 

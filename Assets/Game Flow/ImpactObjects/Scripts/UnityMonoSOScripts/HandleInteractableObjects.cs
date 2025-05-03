@@ -28,7 +28,19 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                 Debug.Log("HighlightZone");
                 foreach (var openable in animatedObjects)
                 {
-                    if (openable != null)
+                    if (openable != null && !openable.IsLetter)
+                    {
+                        Debug.Log(openable.name);
+                        openable.HighlightObject();
+                    }
+                }
+            }
+            else if (other.CompareTag("LetterZone"))
+            {
+                Debug.Log("LetterZone");
+                foreach (var openable in animatedObjects)
+                {
+                    if (openable != null && openable.IsLetter)
                     {
                         Debug.Log(openable.name);
                         openable.HighlightObject();
