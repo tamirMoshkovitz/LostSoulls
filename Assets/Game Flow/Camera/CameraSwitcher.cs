@@ -17,6 +17,7 @@ namespace Game_Flow.Camera
         [SerializeField] private CinemachineCamera topDownCamera;
         [SerializeField] private UnityEngine.Camera mainCamera;
         [SerializeField] private GameObject ceiling;
+        [SerializeField] private ParticleSystem dollParticles;
 
         private InputSystem_Actions _inputActions;
         
@@ -49,16 +50,19 @@ namespace Game_Flow.Camera
 
         private void ToggleView(InputAction.CallbackContext ctx)
         {
-            if (!_canSwitchView || _cinemachineBrain.IsBlending) return; 
-            _isTopDown = !_isTopDown;
-            firstPersonCamera.gameObject.SetActive(!_isTopDown);
-            topDownCamera.gameObject.SetActive(_isTopDown);
-            ChangeViewMode();
-            EventManager.ViewModeChanged(_currentViewMode);
+            if (!_canSwitchView || _cinemachineBrain.IsBlending) return;
+            StartCoroutine(DelayedToggleView());
         }
 
         private void ToggleViewByDoll()
         {
+            StartCoroutine(DelayedToggleView());
+        }
+
+        private IEnumerator DelayedToggleView()
+        {
+            ChangeColorToRed();
+            yield return new WaitForSeconds(2f);
             _isTopDown = !_isTopDown;
             firstPersonCamera.gameObject.SetActive(!_isTopDown);
             topDownCamera.gameObject.SetActive(_isTopDown);
@@ -85,6 +89,7 @@ namespace Game_Flow.Camera
             yield return new WaitForSeconds(_cinemachineBrain.DefaultBlend.BlendTime * .18f);
             ceiling.gameObject.SetActive(false);
             ObjectController.Instance.ChangeState(new TopDownState());
+            
         }
         
         private IEnumerator SwitchToPerspective()
@@ -93,6 +98,27 @@ namespace Game_Flow.Camera
             ObjectController.Instance.ChangeState(new FPState());
             yield return new WaitForSeconds(_cinemachineBrain.DefaultBlend.BlendTime * .82f);
             ceiling.gameObject.SetActive(true);
+        }
+        
+        public void ChangeColorToRed()
+        {
+            Debug.Log("Change Color to Red");
+            var colorOverLifetime = dollParticles.colorOverLifetime;
+            colorOverLifetime.enabled = true;
+
+            Gradient gradient = new Gradient();
+            gradient.SetKeys(
+                new GradientColorKey[] {
+                    new GradientColorKey(Color.white, 0.0f),
+                    new GradientColorKey(Color.red, 1.0f)
+                },
+                new GradientAlphaKey[] {
+                    new GradientAlphaKey(1.0f, 0.0f),
+                    new GradientAlphaKey(1.0f, 1.0f)
+                }
+            );
+
+            colorOverLifetime.color = new ParticleSystem.MinMaxGradient(gradient);
         }
         
         private void HandleZoneChange(bool canSwitch)

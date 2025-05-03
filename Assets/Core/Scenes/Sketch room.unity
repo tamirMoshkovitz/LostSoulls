@@ -4281,7 +4281,6 @@ MonoBehaviour:
   grid: {fileID: 0}
   nonCollidingObjects: []
   initialCells: []
-  timePerMove: 0.3
   objectAudioSource: {fileID: 0}
   objectAudio: {fileID: 0}
 --- !u!65 &635983884
@@ -7099,6 +7098,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4353472292825980770, guid: c260300c2721b42f98790d0ac1ea98a7, type: 3}
   m_PrefabInstance: {fileID: 603274839}
   m_PrefabAsset: {fileID: 0}
+--- !u!198 &1298413352 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8384615647629069006, guid: c260300c2721b42f98790d0ac1ea98a7, type: 3}
+  m_PrefabInstance: {fileID: 603274839}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1315552471
 GameObject:
   m_ObjectHideFlags: 0
@@ -7401,7 +7405,6 @@ MonoBehaviour:
   grid: {fileID: 0}
   nonCollidingObjects: []
   initialCells: []
-  timePerMove: 0.3
   objectAudioSource: {fileID: 0}
   objectAudio: {fileID: 0}
 --- !u!65 &1349536931
@@ -9499,6 +9502,7 @@ MonoBehaviour:
   topDownCamera: {fileID: 1563805508}
   mainCamera: {fileID: 623489539}
   ceiling: {fileID: 2048909539}
+  dollParticles: {fileID: 1298413352}
 --- !u!4 &1712215436
 Transform:
   m_ObjectHideFlags: 0
