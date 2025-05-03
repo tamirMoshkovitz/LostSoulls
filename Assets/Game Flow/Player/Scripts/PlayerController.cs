@@ -218,6 +218,11 @@ namespace Game_Flow.Player.Scripts
             {
                 Debug.Log("Ray hit something!");
                 Debug.Log(hitInfo.collider.gameObject.name);
+                var switchObject = hitInfo.collider.gameObject.GetComponent<SwitchObject>();
+                if (switchObject != null)
+                {
+                    switchObject.ControlLights();
+                }
                 var collectable = hitInfo.collider.GetComponentInChildren<CollectableKeyObject>();
                 var tag = hitInfo.collider.gameObject.tag;
                 if (collectable != null)
