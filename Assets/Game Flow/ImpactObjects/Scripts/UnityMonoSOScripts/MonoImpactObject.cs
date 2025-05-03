@@ -29,7 +29,6 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
 
         [Header("Grid Occupation")]
         [SerializeField] private List<Vector2Int> initialCells = new(); // (row, col)
-        [SerializeField] private float timePerMove = 0.3f;
 
         [Header("Audio")]
         [SerializeField] private AudioSource objectAudioSource;
@@ -53,11 +52,6 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         
         
         public List<(int x, int y)> UsedCells {get; set;}
-        public float TimePerMove
-        {
-            get => timePerMove;
-            set => timePerMove = value;
-        }
 
         private void Start()
         {

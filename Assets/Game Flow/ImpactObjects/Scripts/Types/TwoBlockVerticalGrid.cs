@@ -1,15 +1,16 @@
+using System.Collections.Generic;
+using DG.Tweening;
 using Game_Flow.ImpactObjects.Scripts.Decorator_Interface;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
 using UnityEngine;
-using System.Collections.Generic;
 using Grid = Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts.Grid;
 
 namespace Game_Flow.ImpactObjects.Scripts.Types
 {
     public class TwoBlockVerticalGridImpactObject : ImpactObjectDecorator
     {
-        private readonly Grid grid;
-        private readonly float initialTimePerMove;
+        private readonly Grid   _grid;
+        private Tween           _moveTween;
 
         public TwoBlockVerticalGridImpactObject(
             IImpactObject inner,
@@ -18,57 +19,68 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             Grid grid
         ) : base(inner, mono, stats)
         {
-            this.grid = grid;
-            initialTimePerMove = mono.TimePerMove;
+            _grid               = grid;
         }
 
         public override void UpdateImpact(Vector3 direction)
         {
             base.UpdateImpact(direction);
 
-            // accumulate delta‐time until we should step
-            Mono.TimePerMove -= Time.deltaTime;
-            if (grid == null || Mono.TimePerMove >= 0f)
+            // 1) if a move‐tween is still active, don’t start another
+            if (_moveTween != null && _moveTween.IsActive() && !_moveTween.IsComplete())
                 return;
-            Mono.TimePerMove = initialTimePerMove;
 
-            // clear previous occupancy
-            grid.UnmarkOccupied(Mono);
-
-            // start from the cells the MonoImpactObject last occupied
+            // 2) clear out the old two‐cell footprint
             var oldCells = new List<(int row, int col)>(Mono.UsedCells);
-            var targetCells = new List<(int row, int col)>();
+            _grid.UnmarkOccupied(Mono);
 
-            // compute each cell's new row/col
+            // 3) compute target cells by shifting each old cell
+            var targetCells = new List<(int row, int col)>();
             foreach (var (row, col) in oldCells)
             {
-                var newCell = (row, col);
-                if (direction == Vector3.forward)   newCell.row += 1;
-                else if (direction == Vector3.back) newCell.row -= 1;
-                else if (direction == Vector3.right)newCell.col += 1;
-                else if (direction == Vector3.left) newCell.col -= 1;
-
-                targetCells.Add(newCell);
+                int r = row, c = col;
+                if      (direction == Vector3.forward) r += 1;
+                else if (direction == Vector3.back)    r -= 1;
+                else if (direction == Vector3.right)   c += 1;
+                else if (direction == Vector3.left)    c -= 1;
+                targetCells.Add((r, c));
             }
 
-            // if any target is out of bounds or occupied, block
-            if (grid.IsCellsOccupied(targetCells))
+            // 4) check bounds/occupancy
+            bool blocked = targetCells.Exists(tc =>
+                tc.row < 0 || tc.row >= _grid.Rows ||
+                tc.col < 0 || tc.col >= _grid.Cols
+            ) || _grid.IsCellsOccupied(targetCells);
+
+            if (blocked)
             {
                 Mono.IsBlocked = true;
-                // put old occupancy back so grid stays consistent
-                grid.MarkOccupied(Mono, oldCells);
+                _grid.MarkOccupied(Mono, oldCells);
                 return;
             }
-            // we can move: mark new cells, reposition, save state
-            Vector3 newPos = grid.MarkOccupied(Mono, targetCells);
-            Mono.transform.position = newPos;
-            Mono.UsedCells = targetCells;
+
+            // 5) occupy the new cells & get world center
+            Vector3 newPos = _grid.MarkOccupied(Mono, targetCells);
+
+            // 6) animate into place
+            Mono.ObjectAudio.PlaySound();
+            _moveTween = Mono.transform
+                .DOMove(newPos, Stats.timePerMove)
+                .SetEase(Ease.Linear)
+                .OnComplete(() =>
+                {
+                    // commit new occupancy
+                    Mono.ObjectAudio.StopSound();
+                    Mono.UsedCells = targetCells;
+                    _grid.MarkOccupied(Mono, Mono.UsedCells);
+                    _moveTween = null;
+                });
         }
 
         public override void StopImpact()
         {
             base.StopImpact();
-            // no additional snapping needed
+            // no additional snapping required
         }
     }
 }

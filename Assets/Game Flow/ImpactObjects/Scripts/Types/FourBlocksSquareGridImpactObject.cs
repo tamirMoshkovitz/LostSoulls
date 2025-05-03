@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DG.Tweening;
 using Game_Flow.ImpactObjects.Scripts.Decorator_Interface;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
 using UnityEngine;
@@ -8,8 +9,8 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
 {
     public class FourBlocksSquareGridImpactObject : ImpactObjectDecorator
     {
-        private readonly Grid _grid;
-        private readonly float _initialTimePerMove;
+        private readonly Grid   _grid;
+        private Tween           _moveTween;
 
         public FourBlocksSquareGridImpactObject(
             IImpactObject inner,
@@ -18,47 +19,61 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             Grid grid
         ) : base(inner, mono, stats)
         {
-            _grid = grid;
-            _initialTimePerMove = mono.TimePerMove;
+            _grid               = grid;
         }
 
         public override void UpdateImpact(Vector3 direction)
         {
             base.UpdateImpact(direction);
 
-            // Accumulate time until a discrete move is due
-            Mono.TimePerMove -= Time.deltaTime;
-            if (_grid == null || Mono.TimePerMove >= 0f)
+            // 1) if we're mid‐tween, skip starting another move
+            if (_moveTween != null && _moveTween.IsActive() && !_moveTween.IsComplete())
                 return;
-            Mono.TimePerMove = _initialTimePerMove;
 
-            // Clear the old 2×2 occupancy
+            // 2) clear out the old 2×2 footprint
+            var oldCells = new List<(int row, int col)>(Mono.UsedCells);
             _grid.UnmarkOccupied(Mono);
 
-            // Figure out our grid offset
+            // 3) determine the grid offset
             int dRow = 0, dCol = 0;
-            if (direction == Vector3.forward)   dRow = +1;
-            else if (direction == Vector3.back) dRow = -1;
-            else if (direction == Vector3.right) dCol = +1;
-            else if (direction == Vector3.left)  dCol = -1;
+            if      (direction == Vector3.forward) dRow = +1;
+            else if (direction == Vector3.back)    dRow = -1;
+            else if (direction == Vector3.right)   dCol = +1;
+            else if (direction == Vector3.left)    dCol = -1;
 
-            // Shift each of our four cells
-            var oldCells    = new List<(int row, int col)>(Mono.UsedCells);
+            // 4) build the list of target cells
             var targetCells = new List<(int row, int col)>();
             foreach (var (r, c) in oldCells)
                 targetCells.Add((r + dRow, c + dCol));
 
-            // If any target cell is invalid or occupied, revert and block
-            if (_grid.IsCellsOccupied(targetCells))
+            // 5) if any cell is out of bounds or occupied, revert and bail
+            bool blocked = targetCells.Exists(tc =>
+                tc.row < 0 || tc.row >= _grid.Rows ||
+                tc.col < 0 || tc.col >= _grid.Cols
+            ) || _grid.IsCellsOccupied(targetCells);
+
+            if (blocked)
             {
                 Mono.IsBlocked = true;
                 _grid.MarkOccupied(Mono, oldCells);
                 return;
             }
-            // Otherwise occupy the new 2×2 cells and snap to their center
+
+            // 6) occupy new footprint & get world center
             Vector3 worldCenter = _grid.MarkOccupied(Mono, targetCells);
-            Mono.transform.position = worldCenter;
-            Mono.UsedCells = targetCells;
+
+            // 7) tween into place, then commit
+            Mono.ObjectAudio.PlaySound();
+            _moveTween = Mono.transform
+                .DOMove(worldCenter, Stats.timePerMove)
+                .SetEase(Ease.Linear)
+                .OnComplete(() =>
+                {
+                    Mono.UsedCells = targetCells;
+                    _grid.MarkOccupied(Mono, Mono.UsedCells);
+                    _moveTween = null;
+                    Mono.ObjectAudio.StopSound();
+                });
         }
     }
 }

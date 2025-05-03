@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43ca12de648f84702a634458bf3324c0, type: 3}
   m_Name: ImpactObjectStats
   m_EditorClassIdentifier: 
-  speed: 3
   bufferForRaycast: 0.2
   impactObjectLayerMask:
     serializedVersion: 2
@@ -20,3 +19,4 @@ MonoBehaviour:
   objectBorderLayerMask:
     serializedVersion: 2
     m_Bits: 65536
+  timePerMove: 1.4
