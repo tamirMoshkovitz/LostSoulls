@@ -2720,7 +2720,7 @@ MonoBehaviour:
   width: 5
   scale: 1
   objectAudioSource: {fileID: 439574697}
-  audioClip: {fileID: 8300000, guid: 0b33d3fed1204158890749687159fa1d, type: 3}
+  audioClip: {fileID: 8300000, guid: 83e78bff6409b4ed3a8ea76c63fa55f9, type: 3}
 --- !u!95 &439574693
 Animator:
   serializedVersion: 7
@@ -2921,7 +2921,7 @@ MonoBehaviour:
   width: 5
   scale: 1
   objectAudioSource: {fileID: 459861034}
-  audioClip: {fileID: 8300000, guid: 0b33d3fed1204158890749687159fa1d, type: 3}
+  audioClip: {fileID: 8300000, guid: 83e78bff6409b4ed3a8ea76c63fa55f9, type: 3}
 --- !u!65 &459861031
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5769,7 +5769,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &638027268
 Transform:
   m_ObjectHideFlags: 0
@@ -7794,7 +7794,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &830028739
 Transform:
   m_ObjectHideFlags: 0
@@ -10352,7 +10352,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1315552472
 Transform:
   m_ObjectHideFlags: 0
@@ -12757,7 +12757,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1621271550
 Transform:
   m_ObjectHideFlags: 0
