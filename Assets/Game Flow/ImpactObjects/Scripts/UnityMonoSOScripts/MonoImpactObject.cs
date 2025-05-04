@@ -74,6 +74,11 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                 if (type == ImpactObjectTypes.MovingShader)
                 {
                     IsMoveable = true;
+                    foreach(var renderer in renderers)
+                    {
+                        if (renderer == null) continue;
+                        renderer.enabled = false;
+                    }
                 }
             }
 
@@ -174,9 +179,11 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             foreach (var renderer in renderers)
             {
                 if (renderer == null) continue;
+                renderer.enabled = true;
                 var material = renderer.material;
                 if (material == null) continue;
-                if (material.HasProperty("_OutlineEnabled"))
+                material.color = impactColor;
+                /**if (material.HasProperty("_OutlineEnabled"))
                 {
                     material.SetInt("_OutlineEnabled", 1);
                 }
@@ -192,7 +199,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                 if (material.HasProperty("_OutlineScale"))
                 {
                     material.SetFloat("_OutlineScale", scale);
-                }
+                }**/
             }
         }
         
@@ -202,20 +209,17 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             foreach (var renderer in renderers)
             {
                 if (renderer == null) continue;
+                renderer.enabled = false;
                 var material = renderer.material;
                 if (material == null) continue;
-                if (material.HasProperty("_OutlineEnabled"))
+                /**if (material.HasProperty("_OutlineEnabled"))
                 {
                     material.SetInt("_OutlineEnabled", 0);
                 }
-                material.DisableKeyword("DR_OUTLINE_ON");
+                material.DisableKeyword("DR_OUTLINE_ON");**/
             }
         }
-        
-        private Color GetHDRColor(Color baseColor, float intensity)
-        {
-            return new Color(baseColor.r * intensity, baseColor.g * intensity, baseColor.b * intensity, baseColor.a);
-        }
+    
         
 
     }

@@ -30,7 +30,8 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
                 if (renderer == null) continue;
                 var material = renderer.material;
                 if (material == null) continue;
-                if (material.HasProperty("_OutlineEnabled"))
+                material.color = _lockedColor;
+                /**if (material.HasProperty("_OutlineEnabled"))
                 {
                     material.SetInt("_OutlineEnabled", 1);
                 }
@@ -46,11 +47,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
                 if (material.HasProperty("_OutlineScale"))
                 {
                     material.SetFloat("_OutlineScale", _scale);
-                }
-            }
-            if (_light != null)
-            {
-                _light.enabled = true;
+                }**/
             }
         }
 
@@ -62,16 +59,14 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
                 if (renderer == null) continue;
                 var material = renderer.material;
                 if (material == null) continue;
-                if (material.HasProperty("_OutlineEnabled"))
+                material.color = _impactColor;
+                /**if (material.HasProperty("_OutlineEnabled"))
                 {
                     material.SetInt("_OutlineEnabled", 0);
                 }
-                material.DisableKeyword("DR_OUTLINE_ON");
+                material.DisableKeyword("DR_OUTLINE_ON");**/
             }
-            if (_light != null)
-            {
-                _light.enabled = false;
-            }
+            
         }
     }
 }
