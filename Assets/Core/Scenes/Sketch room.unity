@@ -15709,6 +15709,10 @@ PrefabInstance:
       propertyPath: 'renderers.Array.data[0]'
       value: 
       objectReference: {fileID: 807343255}
+    - target: {fileID: 5198601476261451984, guid: 967d4f2a243a04236af3099c13d31df9, type: 3}
+      propertyPath: decoratorOrder.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5935749010837156241, guid: 967d4f2a243a04236af3099c13d31df9, type: 3}
       propertyPath: m_Name
       value: RightBox
