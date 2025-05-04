@@ -35,14 +35,12 @@ namespace Game_Flow.Camera
         private void OnEnable()
         {
             _inputActions.Player.Enable();
-            // _inputActions.Player.SwitchView.performed += ToggleView;
             EventManager.OnDollPlaced += ToggleViewByDoll;
             EventManager.OnPlayerZoneChanged += HandleZoneChange;
         }
 
         private void OnDisable()
         {
-            // _inputActions.Player.SwitchView.performed -= ToggleView;
             EventManager.OnPlayerZoneChanged -= HandleZoneChange;
             EventManager.OnDollPlaced -= ToggleViewByDoll;
             _inputActions.Player.Disable();

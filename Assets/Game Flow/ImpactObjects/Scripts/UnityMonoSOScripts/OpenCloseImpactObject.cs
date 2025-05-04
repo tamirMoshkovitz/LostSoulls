@@ -1,4 +1,5 @@
 ﻿using DG.Tweening;
+using Game_Flow.ImpactObjects.Scripts.Audio;
 using Game_Flow.ImpactObjects.Scripts.Decorator_Interface;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
 using Unity.VisualScripting;
@@ -18,8 +19,13 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
         [SerializeField] private float width;
         [SerializeField] private float scale;
         
+        [Header("Audio")]
+        [SerializeField] private AudioSource objectAudioSource;
+        [SerializeField] private AudioClip audioClip;
+        
         private bool _isOpen;
         private Animator _animator;
+        private OpenCloseObjectAudio _objectAudio;
         
         public bool IsLocked { get; set; }
         
@@ -39,6 +45,8 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             {
                 IsLocked = false;
             }
+            
+            _objectAudio = new OpenCloseObjectAudio(objectAudioSource, audioClip);
         }
 
         public void OpenImpactObject()
@@ -47,6 +55,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             _animator.SetTrigger("IsOpen");
             //_animator.SetBool("IsOpen", true);
             Debug.Log("OpenImpactObject");
+            _objectAudio.PlaySound();
         }
         
         public void CloseImpactObject()
@@ -55,6 +64,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             _animator.SetTrigger("IsClose");
             //_animator.SetBool("IsOpen", false);
             Debug.Log("CloseImpactObject");
+            _objectAudio.PlaySound();
         }
         
         public void PlayLockedAnimation()
@@ -103,6 +113,11 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
                 }
                 material.DisableKeyword("DR_OUTLINE_ON");
             }
+        }
+
+        private void StopSound()
+        {
+            _objectAudio.StopSound();
         }
     }
 }
