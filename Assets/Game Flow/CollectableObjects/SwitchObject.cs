@@ -1,5 +1,6 @@
 using System.Collections;
 using Core.Audio;
+using Core.Managers;
 using Game_Flow.ImpactObjects.Scripts.Audio;
 using UnityEngine;
 
@@ -17,6 +18,12 @@ namespace Game_Flow.CollectableObjects
         {
             _objectAudio = new OpenCloseObjectAudio(audioSource, clip);
             _objectAudio.SetVolume(0.3f);
+            EventManager.OnDollPlaced += turnOnLightsInTopDownState;
+        }
+
+        public void turnOnLightsInTopDownState()
+        {
+            objectToSwitch.SetActive(true);
         }
         public void ControlLights()
         {
