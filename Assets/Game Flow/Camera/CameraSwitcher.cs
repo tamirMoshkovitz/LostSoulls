@@ -59,9 +59,9 @@ namespace Game_Flow.Camera
 
         private IEnumerator DelayedToggleView()
         {
-            ChangeColorToRed();
-            ChangeParticleSize();
-            ChangeParticleVelocity();
+            // ChangeColorToRed();
+            // ChangeParticleSize();
+            // ChangeParticleVelocity();
             yield return new WaitForSeconds(2f);
             _isTopDown = !_isTopDown;
             firstPersonCamera.gameObject.SetActive(!_isTopDown);
@@ -151,23 +151,12 @@ namespace Game_Flow.Camera
             var velocityOverLifetime = dollParticles.velocityOverLifetime;
             velocityOverLifetime.enabled = true;
 
-            // Create curves for all velocity components
-            AnimationCurve curveX = new AnimationCurve();
-            curveX.AddKey(0.0f, 0.0f);    // No X velocity
-            curveX.AddKey(1.0f, 0.0f);
+            // Set constant velocities
+            velocityOverLifetime.x = 0.02f;
+            velocityOverLifetime.y = 8.02f;
+            velocityOverLifetime.z = 0.09f;
 
-            AnimationCurve curveY = new AnimationCurve();
-            curveY.AddKey(0.0f, 0.0f);    // No Y velocity
-            curveY.AddKey(1.0f, 8.0f);
-
-            AnimationCurve curveZ = new AnimationCurve();
-            curveZ.AddKey(0.0f, 0.0f);   // -2 Z velocity
-            curveZ.AddKey(1.0f, 0.0f);
-
-            // Apply the curves to all velocity components
-            velocityOverLifetime.x = new ParticleSystem.MinMaxCurve(1.0f, curveX);
-            velocityOverLifetime.y = new ParticleSystem.MinMaxCurve(1.0f, curveY);
-            velocityOverLifetime.z = new ParticleSystem.MinMaxCurve(1.0f, curveZ);
+            // Set the simulation space if needed
             velocityOverLifetime.space = ParticleSystemSimulationSpace.World;
         }
         
