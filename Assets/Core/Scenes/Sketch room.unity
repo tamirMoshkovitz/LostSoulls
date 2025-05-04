@@ -2326,7 +2326,7 @@ PrefabInstance:
     - target: {fileID: -8063854002086913113, guid: 54680fc83bf1e4755af65f3d94b44138, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: abb245258caf2483d84e9c22359a5855, type: 2}
+      objectReference: {fileID: 2100000, guid: 71f99ce933dd149369a4a6a5e615b9fa, type: 2}
     - target: {fileID: -8015084782860779022, guid: 54680fc83bf1e4755af65f3d94b44138, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -8521,7 +8521,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: a634c8184e15140bd891cb4b6ab890c7, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 5812d12baee3c4a3680c762bc1277267, type: 2}
+      objectReference: {fileID: 2100000, guid: a6da5085e0b3349f6bb444a46d509cd6, type: 2}
     - target: {fileID: 919132149155446097, guid: a634c8184e15140bd891cb4b6ab890c7, type: 3}
       propertyPath: m_Name
       value: Wall paper
@@ -11493,7 +11493,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: a634c8184e15140bd891cb4b6ab890c7, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3e290e87e192c472c8c8379eb49b6e8e, type: 2}
+      objectReference: {fileID: 2100000, guid: a6da5085e0b3349f6bb444a46d509cd6, type: 2}
     - target: {fileID: 919132149155446097, guid: a634c8184e15140bd891cb4b6ab890c7, type: 3}
       propertyPath: m_Name
       value: Wall paper (1)
@@ -15823,6 +15823,10 @@ PrefabInstance:
       propertyPath: 'renderers.Array.data[0]'
       value: 
       objectReference: {fileID: 783082761}
+    - target: {fileID: 7824055008579595005, guid: b747f9500f7b540fea995dc19e3b13f0, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: b6e2ba80645ec49fe9db100a6916d8d9, type: 2}
     m_RemovedComponents:
     - {fileID: 4836953150304509030, guid: b747f9500f7b540fea995dc19e3b13f0, type: 3}
     m_RemovedGameObjects: []
