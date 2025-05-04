@@ -43,7 +43,7 @@ namespace Game_Flow.Player.Scripts
         private bool _isMovementLocked;
         private string _currentFloor = FirstFloorTag;
         private bool _collectedDoll = false;
-        private bool hasStarted = false;
+        private bool _hasStarted = false;
         public bool IsMovementLocked {get => _isMovementLocked; set => _isMovementLocked = value;}
         
         public Vector3 Velocity => _velocity;
@@ -179,9 +179,9 @@ namespace Game_Flow.Player.Scripts
         {
             Debug.Log("Pressed Open Button");
             
-            if (!hasStarted)
+            if (!_hasStarted)
             {
-                hasStarted = true;
+                _hasStarted = true;
                 OpeningSceneController.Instance.OnStartPressed();
                 _isMovementLocked = false;
             }
