@@ -18,7 +18,7 @@ namespace Game_Flow.CollectableObjects
         {
             itemsUpdater.ClearAll();
             callback?.Invoke();
-            
+            dollAnimationScript.gameObject.SetActive(true);
         }
         
     }
