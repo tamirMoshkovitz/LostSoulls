@@ -30,16 +30,15 @@ namespace Game_Flow.Player.Scripts
         [SerializeField] private AudioSource stepsAudioSource;
         [SerializeField] private AudioSource BGAudioSource;
         [SerializeField] private ItemsUpdater itemsUpdater;
-        
-        [Header("Rumble")]
-        [SerializeField] private float rumbleDuration = 0.5f;
+
+        [Header("Rumble")] [SerializeField] private float rumbleDuration = 0.5f;
         [SerializeField] private float lowFrequency = 0.1f;
         [SerializeField] private float highFrequency = 0.5f;
 
         private const string FirstFloorTag = "First Floor";
         private const string SecondFloorTag = "Second Floor";
         private const string StairsTag = "Stairs";
-        
+
         private CharacterController _controller;
         private InputSystem_Actions _inputActions;
         private PlayerAudio _playerAudio;
@@ -50,13 +49,19 @@ namespace Game_Flow.Player.Scripts
         private string _currentFloor = FirstFloorTag;
         private bool _collectedDoll = false;
         private bool _hasStarted = false;
-        public bool IsMovementLocked {get => _isMovementLocked; set => _isMovementLocked = value;}
-        
+        private bool _isTopDown = false;
+
+        public bool IsMovementLocked
+        {
+            get => _isMovementLocked;
+            set => _isMovementLocked = value;
+        }
+
         public Vector3 Velocity => _velocity;
         public bool IsGrounded => _isGrounded;
-        
+
         public InputSystem_Actions InputActions => _inputActions;
-        
+
         private HandleInteractableObjects _interactableObjectsHandler;
         private GameObject _lastInteractableHit;
 
@@ -69,13 +74,13 @@ namespace Game_Flow.Player.Scripts
             _inputActions.Player.Disable();
             _inputActions.OpeningScene.Enable();
             Physics.IgnoreLayerCollision(
-                LayerMask.NameToLayer("Player"), 
-                LayerMask.NameToLayer("BorderImpactObject"), 
+                LayerMask.NameToLayer("Player"),
+                LayerMask.NameToLayer("BorderImpactObject"),
                 true
             );
             Physics.IgnoreLayerCollision(
-                LayerMask.NameToLayer("Player"), 
-                LayerMask.NameToLayer("ImpactObject"), 
+                LayerMask.NameToLayer("Player"),
+                LayerMask.NameToLayer("ImpactObject"),
                 true
             );
             IsMovementLocked = true;
@@ -91,8 +96,10 @@ namespace Game_Flow.Player.Scripts
             _inputActions.Player.Open.performed += OnOpenPerformed;
             _inputActions.OpeningScene.Open.performed += OnOpenPerformed;
             EventManager.OnLockStateChanged += HandleLockStateChanged;
-            _playerAudio = new PlayerAudio(stepsAudioSource, BGAudioSource, whiteNoise, concreteFloorSound, woodFloorSound, woodStairsSound);
+            _playerAudio = new PlayerAudio(stepsAudioSource, BGAudioSource, whiteNoise, concreteFloorSound,
+                woodFloorSound, woodStairsSound);
             _playerAudio.PlayWhiteNoise();
+            EventManager.OnDollPlaced += OnTopDown;
 
         }
 
@@ -106,14 +113,18 @@ namespace Game_Flow.Player.Scripts
             _inputActions.Player.Disable();
             EventManager.OnLockStateChanged -= HandleLockStateChanged;
             _playerAudio = null;
+            EventManager.OnDollPlaced -= OnTopDown;
         }
 
         void Update()
         {
             HandleMovement();
-            RumbleWhenObjectFound();
+            if (!_isTopDown)
+            {
+                RumbleWhenObjectFound();
+            }
         }
-        
+
         private void HandleLockStateChanged(IObjeckLockingState state)
         {
             _isMovementLocked = state is TopDownState;
@@ -303,7 +314,10 @@ namespace Game_Flow.Player.Scripts
             EventManager.DollPlaced();
             _interactableObjectsHandler.CloseAllOpenedObjects();
         }
-        
-        
+
+        private void OnTopDown()
+        {
+            _isTopDown = true;
+        }
     }
 }
