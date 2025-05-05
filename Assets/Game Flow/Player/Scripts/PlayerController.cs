@@ -210,10 +210,35 @@ namespace Game_Flow.Player.Scripts
             
             Debug.DrawRay(gameObject.GetComponentInChildren<CinemachineCamera>().transform.position, gameObject.GetComponentInChildren<CinemachineCamera>().transform.forward, Color.magenta, 2f);
             Ray ray = new Ray(gameObject.GetComponentInChildren<CinemachineCamera>().transform.position, gameObject.GetComponentInChildren<CinemachineCamera>().transform.forward);
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, 2f, LayerMask.GetMask("AnimationObject")))
+            if (Physics.Raycast(ray, out RaycastHit hitInfo, 2f, LayerMask.GetMask("AnimationObject")) && (_interactableObjectsHandler.InHighlightZone || _interactableObjectsHandler.InLetterZone))
             {
                 Debug.Log("Ray hit something!");
-                
+                Debug.Log(hitInfo.collider.gameObject.name);
+                var openable = hitInfo.collider.GetComponentInChildren<OpenCloseImpactObject>();
+                if (openable != null)
+                {
+                    if (openable.IsLocked)
+                    {
+                        openable.PlayLockedAnimation();
+                        Debug.Log("Object is locked");
+                        return;
+                    }
+                    if (openable.IsOpen)
+                    {
+                        Debug.Log("Closing");
+                        openable.CloseImpactObject();
+                    }
+                    else
+                    {
+                        Debug.Log("Opening");
+                        itemsUpdater.ClearAll();
+                        openable.OpenImpactObject();
+                    }
+                }
+            }
+            else if (Physics.Raycast(ray, out hitInfo, 2f, LayerMask.GetMask("AnimationObject")) && (_interactableObjectsHandler.InHighlightZone || _interactableObjectsHandler.InLetterZone))
+            {
+                Debug.Log("Ray hit something!");
                 Debug.Log(hitInfo.collider.gameObject.name);
                 var openable = hitInfo.collider.GetComponentInChildren<OpenCloseImpactObject>();
                 if (openable != null)
