@@ -45,6 +45,13 @@ namespace Core.Managers
             OnViewModeChanged?.Invoke(newMode);
         }
         
+        public static event Action <float, float, float> OnStartRumble;
+
+        public static void StartRumble(float duration, float lowFrequency, float highFrequency)
+        {
+            OnStartRumble?.Invoke(duration, lowFrequency, highFrequency);
+        }
+        
         public static void DollPlaced()
         {
             OnDollPlaced?.Invoke();

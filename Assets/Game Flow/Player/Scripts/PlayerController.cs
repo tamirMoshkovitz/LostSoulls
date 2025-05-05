@@ -1,3 +1,4 @@
+using Core.Input_System;
 using Core.Managers;
 using Game_Flow.CollectableObjects;
 using Game_Flow.DotVisual.Scripts;
@@ -29,6 +30,11 @@ namespace Game_Flow.Player.Scripts
         [SerializeField] private AudioSource stepsAudioSource;
         [SerializeField] private AudioSource BGAudioSource;
         [SerializeField] private ItemsUpdater itemsUpdater;
+        
+        [Header("Rumble")]
+        [SerializeField] private float rumbleDuration = 0.5f;
+        [SerializeField] private float lowFrequency = 0.1f;
+        [SerializeField] private float highFrequency = 0.5f;
 
         private const string FirstFloorTag = "First Floor";
         private const string SecondFloorTag = "Second Floor";
@@ -52,7 +58,8 @@ namespace Game_Flow.Player.Scripts
         public InputSystem_Actions InputActions => _inputActions;
         
         private HandleInteractableObjects _interactableObjectsHandler;
-        
+        private GameObject _lastInteractableHit;
+
 
         void Awake()
         {
@@ -104,6 +111,7 @@ namespace Game_Flow.Player.Scripts
         void Update()
         {
             HandleMovement();
+            RumbleWhenObjectFound();
         }
         
         private void HandleLockStateChanged(IObjeckLockingState state)
@@ -174,6 +182,18 @@ namespace Game_Flow.Player.Scripts
         {
             _movementInput = Vector2.zero;
         }
+
+        private void RumbleWhenObjectFound() //TODO: fix exception on destroy
+        {
+            Debug.DrawRay(gameObject.GetComponentInChildren<CinemachineCamera>().transform.position, gameObject.GetComponentInChildren<CinemachineCamera>().transform.forward, Color.red);
+            Ray ray = new Ray(gameObject.GetComponentInChildren<CinemachineCamera>().transform.position, gameObject.GetComponentInChildren<CinemachineCamera>().transform.forward);
+            if (Physics.Raycast(ray, out RaycastHit hitInfo, 2f, LayerMask.GetMask("AnimationObject", "CollectableObject")))
+            {
+                if (_lastInteractableHit != null && _lastInteractableHit.Equals(hitInfo.collider.gameObject)) return;
+                EventManager.StartRumble(rumbleDuration, lowFrequency, highFrequency);
+                _lastInteractableHit = hitInfo.collider.gameObject;
+            }
+        }
         
         private void OnOpenPerformed(InputAction.CallbackContext context)
         {
@@ -193,6 +213,7 @@ namespace Game_Flow.Player.Scripts
             if (Physics.Raycast(ray, out RaycastHit hitInfo, 2f, LayerMask.GetMask("AnimationObject")))
             {
                 Debug.Log("Ray hit something!");
+                
                 Debug.Log(hitInfo.collider.gameObject.name);
                 var openable = hitInfo.collider.GetComponentInChildren<OpenCloseImpactObject>();
                 if (openable != null)

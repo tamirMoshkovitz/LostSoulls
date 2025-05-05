@@ -10137,6 +10137,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2139923645}
     - target: {fileID: 569664042453942489, guid: 8318e9627c51641d1b035534dab91d4b, type: 3}
+      propertyPath: lowFrequency
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 569664042453942489, guid: 8318e9627c51641d1b035534dab91d4b, type: 3}
       propertyPath: BGAudioSource
       value: 
       objectReference: {fileID: 1355722146}
@@ -10144,6 +10148,14 @@ PrefabInstance:
       propertyPath: concreteSound
       value: 
       objectReference: {fileID: 8300000, guid: 7ac786adf4614545b972c5f972673ca0, type: 3}
+    - target: {fileID: 569664042453942489, guid: 8318e9627c51641d1b035534dab91d4b, type: 3}
+      propertyPath: highFrequency
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 569664042453942489, guid: 8318e9627c51641d1b035534dab91d4b, type: 3}
+      propertyPath: rumbleDuration
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 569664042453942489, guid: 8318e9627c51641d1b035534dab91d4b, type: 3}
       propertyPath: woodFloorSound
       value: 
@@ -10251,6 +10263,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8520636754364356879, guid: 8318e9627c51641d1b035534dab91d4b, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1355722154}
+    - targetCorrespondingSourceObject: {fileID: 8520636754364356879, guid: 8318e9627c51641d1b035534dab91d4b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1355722160}
   m_SourcePrefab: {fileID: 100100000, guid: 8318e9627c51641d1b035534dab91d4b, type: 3}
 --- !u!1 &1231218742
 GameObject:
@@ -11432,6 +11447,18 @@ MonoBehaviour:
   - {fileID: 422471556}
   - {fileID: 8599708153770497673}
   - {fileID: 4933064101702156908}
+--- !u!114 &1355722160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355722138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c89a686211f24fbc84e2881c2be69e08, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1367946661
 GameObject:
   m_ObjectHideFlags: 0
