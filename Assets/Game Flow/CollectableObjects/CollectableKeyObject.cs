@@ -17,12 +17,15 @@ namespace Game_Flow.CollectableObjects
         [Header("Audio")]
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private AudioClip audioClip;
+
+        [SerializeField] private AudioSource bellSource;
         
         private OpenCloseObjectAudio _objectAudio;
 
         private void Start()
         {
             _objectAudio = new OpenCloseObjectAudio(audioSource, audioClip);
+            bellSource.volume = .25f;
         }
 
         public void OnCollect()
@@ -30,6 +33,7 @@ namespace Game_Flow.CollectableObjects
             showcaseDoor1.IsLocked = false;
             showcaseDoor2.IsLocked = false;
             itemsUpdater.AddItem(2);
+            bellSource.Stop();
             _objectAudio.PlaySound();
             StartCoroutine(DelayDestroy());
         }

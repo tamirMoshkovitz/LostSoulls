@@ -13186,6 +13186,7 @@ MonoBehaviour:
   itemsUpdater: {fileID: 2139923645}
   audioSource: {fileID: 8234590672770442074}
   audioClip: {fileID: 8300000, guid: 83e78bff6409b4ed3a8ea76c63fa55f9, type: 3}
+  bellSource: {fileID: 8773104114465378275}
 --- !u!114 &1610800491
 MonoBehaviour:
   m_ObjectHideFlags: 0
