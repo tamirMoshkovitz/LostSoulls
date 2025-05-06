@@ -11028,6 +11028,10 @@ PrefabInstance:
       value: 0.85
       objectReference: {fileID: 0}
     - target: {fileID: 569664042453942489, guid: 8318e9627c51641d1b035534dab91d4b, type: 3}
+      propertyPath: rightDoor
+      value: 
+      objectReference: {fileID: 8599708153770497673}
+    - target: {fileID: 569664042453942489, guid: 8318e9627c51641d1b035534dab91d4b, type: 3}
       propertyPath: woodSound
       value: 
       objectReference: {fileID: 8300000, guid: 6790e8b4f1be45938959405401ec434f, type: 3}
