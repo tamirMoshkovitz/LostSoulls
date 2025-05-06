@@ -30,6 +30,7 @@ namespace Game_Flow.Player.Scripts
         [SerializeField] private AudioSource stepsAudioSource;
         [SerializeField] private AudioSource BGAudioSource;
         [SerializeField] private ItemsUpdater itemsUpdater;
+        [SerializeField] private OpenCloseImpactObject rightDoor;
 
         [Header("Rumble")] [SerializeField] private float rumbleDuration = 0.5f;
         [SerializeField] private float lowFrequency = 0.1f;
@@ -290,7 +291,7 @@ namespace Game_Flow.Player.Scripts
                     collectable.OnCollect();
                 }
                 var collectableDoll = hitInfo.collider.GetComponentInChildren<CollectableDollObject>();
-                if (collectableDoll != null)
+                if (collectableDoll != null && rightDoor.IsOpen)
                 {
                     collectableDoll.OnCollect();
                     _collectedDoll = true;
