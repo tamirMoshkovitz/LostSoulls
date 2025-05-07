@@ -40,6 +40,12 @@ namespace Game_Flow.CollectableObjects
         
         private IEnumerator DelayDestroy()
         {
+            GetComponent<Collider>().enabled = false;
+            GetComponent<Renderer>().enabled = false;
+            foreach (Transform child in GetComponentInChildren<Transform>())
+            {
+                child.gameObject.SetActive(false);
+            }
             yield return new WaitForSeconds(0.5f);
             Destroy(gameObject);
         }
