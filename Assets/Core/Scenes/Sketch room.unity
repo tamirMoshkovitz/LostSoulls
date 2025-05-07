@@ -1129,7 +1129,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 115148640}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -1236,10 +1236,10 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 0.014453293, y: 1.9497621, z: 2.5917413}
-  m_Center: {x: 0, y: 0.44567016, z: 0.022073595}
+  m_Size: {x: 0.014453293, y: 3.5047357, z: 4.346725}
+  m_Center: {x: -0.000000042385757, y: 0.5982533, z: 0.08648276}
 --- !u!95 &115148644
 Animator:
   serializedVersion: 7
@@ -1269,7 +1269,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 115148640}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6fc7d7dd5cc74b189d75ab35e6667591, type: 3}
   m_Name: 
@@ -1284,6 +1284,7 @@ MonoBehaviour:
   highlightColor: {r: 1, g: 1, b: 1, a: 0}
   width: 5
   scale: 1
+  otherLetter: {fileID: 0}
   objectAudioSource: {fileID: 115148642}
   audioClip: {fileID: 8300000, guid: db7394fbd0af14345945c3980abd62ce, type: 3}
 --- !u!23 &115148646
@@ -1894,11 +1895,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 2167856958751095269, guid: 8804a82ec22eb4ff08d0ac09124f33af, type: 3}
---- !u!23 &223182742 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 7259347462099736773, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
-  m_PrefabInstance: {fileID: 467618560227226727}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &224371060
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3478,10 +3474,12 @@ MonoBehaviour:
   vibrato: 10
   isShowcase: 0
   isLetter: 1
-  renderers: []
-  highlightColor: {r: 1, g: 1, b: 1, a: 0}
+  renderers:
+  - {fileID: 115148646}
+  highlightColor: {r: 0.58431375, g: 0.5019608, b: 0.4392157, a: 1}
   width: 5
   scale: 1
+  otherLetter: {fileID: 459861030}
   objectAudioSource: {fileID: 439574697}
   audioClip: {fileID: 8300000, guid: db7394fbd0af14345945c3980abd62ce, type: 3}
 --- !u!95 &439574693
@@ -3525,8 +3523,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.014453293, y: 1.9497621, z: 2.5917413}
-  m_Center: {x: 0, y: 0.44567016, z: 0.022073595}
+  m_Size: {x: 0.014453293, y: 3.8027527, z: 4.6168966}
+  m_Center: {x: -0.0000003814535, y: 0.5888805, z: 0.09032985}
 --- !u!82 &439574697
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3678,10 +3676,12 @@ MonoBehaviour:
   vibrato: 10
   isShowcase: 0
   isLetter: 1
-  renderers: []
-  highlightColor: {r: 1, g: 1, b: 1, a: 0}
+  renderers:
+  - {fileID: 1065283508}
+  highlightColor: {r: 0.58431375, g: 0.5019608, b: 0.4392157, a: 1}
   width: 5
   scale: 1
+  otherLetter: {fileID: 439574692}
   objectAudioSource: {fileID: 459861034}
   audioClip: {fileID: 8300000, guid: 51bc794f84acb44d892a79590a71cc89, type: 3}
 --- !u!65 &459861031
@@ -9393,11 +9393,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 00080dc985c384c958d10334084f31e4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 4.819
+      value: 4.826
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 00080dc985c384c958d10334084f31e4, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.433
+      value: 1.451
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 00080dc985c384c958d10334084f31e4, type: 3}
       propertyPath: m_LocalPosition.z
@@ -10286,7 +10286,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1065283502}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
@@ -10393,10 +10393,10 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
-  m_Size: {x: 0.01445331, y: 1.9117413, z: 2.8546252}
-  m_Center: {x: -0.00000013903498, y: 0.5579932, z: 0.042227995}
+  m_Size: {x: 0.01445331, y: 4.029588, z: 4.4003563}
+  m_Center: {x: -0.0000011219802, y: 0.6113771, z: 0.014628211}
 --- !u!95 &1065283506
 Animator:
   serializedVersion: 7
@@ -10426,7 +10426,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1065283502}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6fc7d7dd5cc74b189d75ab35e6667591, type: 3}
   m_Name: 
@@ -10441,6 +10441,7 @@ MonoBehaviour:
   highlightColor: {r: 1, g: 1, b: 1, a: 0}
   width: 5
   scale: 1
+  otherLetter: {fileID: 0}
   objectAudioSource: {fileID: 1065283504}
   audioClip: {fileID: 8300000, guid: 51bc794f84acb44d892a79590a71cc89, type: 3}
 --- !u!23 &1065283508
@@ -12538,6 +12539,8 @@ MonoBehaviour:
   - {fileID: 422471556}
   - {fileID: 8599708153770497673}
   - {fileID: 4933064101702156908}
+  - {fileID: 439574692}
+  - {fileID: 459861030}
 --- !u!114 &1355722160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16688,11 +16691,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 8730313837761956936, guid: 88ea7df5c8b494a3b8f29536d5d8799a, type: 3}
---- !u!23 &1915478478 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 4515284314064708098, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
-  m_PrefabInstance: {fileID: 467618560227226727}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1915478479 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3153612408385404930, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
@@ -18043,12 +18041,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 6af0db3c64b340db86f64d58a8b68914, type: 3}
     - target: {fileID: 1002509706882985159, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
+      propertyPath: highlightColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1002509706882985159, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
       propertyPath: highlightColor.b
-      value: 0.9968553
+      value: 0.8235294
       objectReference: {fileID: 0}
     - target: {fileID: 1002509706882985159, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
       propertyPath: highlightColor.g
-      value: 0.9968553
+      value: 0.8980392
       objectReference: {fileID: 0}
     - target: {fileID: 1002509706882985159, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
       propertyPath: highlightColor.r
@@ -18060,12 +18062,12 @@ PrefabInstance:
       objectReference: {fileID: 4933064101702156912}
     - target: {fileID: 1002509706882985159, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
       propertyPath: renderers.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1002509706882985159, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
       propertyPath: 'renderers.Array.data[0]'
       value: 
-      objectReference: {fileID: 223182742}
+      objectReference: {fileID: 2105198614}
     - target: {fileID: 1435450761021633499, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
       propertyPath: scale
       value: 1
@@ -18079,16 +18081,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 6af0db3c64b340db86f64d58a8b68914, type: 3}
     - target: {fileID: 1435450761021633499, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
+      propertyPath: highlightColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1435450761021633499, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
       propertyPath: highlightColor.b
-      value: 0.95941603
+      value: 0.8235294
       objectReference: {fileID: 0}
     - target: {fileID: 1435450761021633499, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
       propertyPath: highlightColor.g
-      value: 0.95941603
+      value: 0.8980392
       objectReference: {fileID: 0}
     - target: {fileID: 1435450761021633499, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
       propertyPath: highlightColor.r
-      value: 0.9685534
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1435450761021633499, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
       propertyPath: objectAudioSource
@@ -18100,12 +18106,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1435450761021633499, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
       propertyPath: renderers.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1435450761021633499, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
       propertyPath: 'renderers.Array.data[0]'
       value: 
-      objectReference: {fileID: 1915478478}
+      objectReference: {fileID: 169300552}
     - target: {fileID: 2163415414648832593, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
       propertyPath: m_Size.x
       value: 1.3505113

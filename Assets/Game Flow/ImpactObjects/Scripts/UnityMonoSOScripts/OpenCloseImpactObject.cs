@@ -18,6 +18,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
         [SerializeField] private Color highlightColor;
         [SerializeField] private float width;
         [SerializeField] private float scale;
+        [SerializeField] private OpenCloseImpactObject otherLetter;
         
         [Header("Audio")]
         [SerializeField] private AudioSource objectAudioSource;
@@ -47,6 +48,11 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             }
             
             _objectAudio = new OpenCloseObjectAudio(objectAudioSource, audioClip);
+            foreach (var renderer in renderers)
+            {
+                if (renderer == null) continue;
+                renderer.enabled = false;
+            }
         }
 
         public void OpenImpactObject()
@@ -56,6 +62,12 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             //_animator.SetBool("IsOpen", true);
             Debug.Log("OpenImpactObject");
             _objectAudio.PlaySound();
+            if (isLetter && otherLetter != null)
+            {
+                otherLetter.OpenImpactObject();
+                otherLetter.UnHighlightObject();
+                UnHighlightObject();
+            }
         }
         
         public void CloseImpactObject()
@@ -65,6 +77,12 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             //_animator.SetBool("IsOpen", false);
             Debug.Log("CloseImpactObject");
             _objectAudio.PlaySound();
+            if (isLetter && otherLetter != null)
+            {
+                otherLetter.CloseImpactObject();
+                otherLetter.HighlightObject();
+                HighlightObject();
+            }
         }
         
         public void PlayLockedAnimation()
@@ -77,9 +95,11 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             foreach (var renderer in renderers)
             {
                 if (renderer == null) continue;
+                renderer.enabled = true;
                 var material = renderer.material;
                 if (material == null) continue;
-                if (material.HasProperty("_OutlineEnabled"))
+                material.color = highlightColor;
+                /**if (material.HasProperty("_OutlineEnabled"))
                 {
                     material.SetInt("_OutlineEnabled", 1);
                 }
@@ -95,7 +115,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
                 if (material.HasProperty("_OutlineScale"))
                 {
                     material.SetFloat("_OutlineScale", scale);
-                }
+                }**/
             }
             
         }
@@ -105,13 +125,14 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             foreach (var renderer in renderers)
             {
                 if (renderer == null) continue;
-                var material = renderer.material;
+                renderer.enabled = false;
+                /**var material = renderer.material;
                 if (material == null) continue;
                 if (material.HasProperty("_OutlineEnabled"))
                 {
                     material.SetInt("_OutlineEnabled", 0);
                 }
-                material.DisableKeyword("DR_OUTLINE_ON");
+                material.DisableKeyword("DR_OUTLINE_ON");**/
             }
         }
 
