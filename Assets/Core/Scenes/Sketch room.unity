@@ -12949,7 +12949,6 @@ MonoBehaviour:
   - {fileID: 8599708153770497673}
   - {fileID: 4933064101702156908}
   - {fileID: 439574692}
-  - {fileID: 0}
   switchObject: {fileID: 1498226368}
 --- !u!114 &1355722160
 MonoBehaviour:
