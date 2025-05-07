@@ -64,7 +64,6 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             _objectAudio.PlaySound();
             if (isLetter && otherLetter != null)
             {
-                otherLetter.OpenImpactObject();
                 otherLetter.UnHighlightObject();
                 UnHighlightObject();
             }
@@ -79,7 +78,6 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             _objectAudio.PlaySound();
             if (isLetter && otherLetter != null)
             {
-                otherLetter.CloseImpactObject();
                 otherLetter.HighlightObject();
                 HighlightObject();
             }
