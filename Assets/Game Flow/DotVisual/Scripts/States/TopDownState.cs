@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Core.Managers;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
 using UnityEngine;
@@ -17,6 +18,7 @@ namespace Game_Flow.DotVisual.Scripts.States
         private MonoImpactObject _target;
         private MonoImpactObject _lastTarget;
         private InputAction _inputReader;
+        private Grid grid;
         
         private float _moveCooldown = 0.3f;
         private float _lastMoveTime = -Mathf.Infinity;
@@ -31,6 +33,7 @@ namespace Game_Flow.DotVisual.Scripts.States
         public void EnterState(Transform origin, GameObject dotInstance, List<MonoImpactObject> impactObjects,
             ObjectController objectController)
         {
+            grid = objectController.Grid;
             EventManager.LockStateChanged(this);
             _inputActions = new InputSystem_Actions();
             _inputActions.Enable();
@@ -79,11 +82,9 @@ namespace Game_Flow.DotVisual.Scripts.States
             float camYaw = _cameraMono.transform.eulerAngles.y;
             Quaternion yawRot = Quaternion.Euler(0f, camYaw, 0f);
             Vector3 camRelative = yawRot * raw3D;
+            var cam2D = new Vector2(camRelative.x, camRelative.z);
 
-            // 2) quantize on the XZ‐plane
-            Vector2 cam2D    = new Vector2(camRelative.x, camRelative.z);
-           
-            var inputDir = QuantizeTo8Directions(cam2D);
+            var inputDir = QuantizeTo4Directions(cam2D);
             DebugInputDir  = inputDir;
 
             if (inputDir == Vector3.zero)
@@ -109,53 +110,98 @@ namespace Game_Flow.DotVisual.Scripts.States
         
         private MonoImpactObject FindNearestInDirection(Vector3 dir)
         {
+            if (_target == null || _target.UsedCells == null || _target.UsedCells.Count == 0)
+                return _target;
 
-            MonoImpactObject best       = null;
-            float              bestAng   = float.MaxValue;
-            float              bestDistSq= float.MaxValue;
+            dir = dir.normalized;
+            int rowDelta = 0, colDelta = 0;
 
-            foreach (var obj in _impactObjects)
+            if (dir.x > 0.5f) colDelta = 1;         // RIGHT
+            else if (dir.x < -0.5f) colDelta = -1;  // LEFT
+            else if (dir.z > 0.5f) rowDelta = 1;    // UP
+            else if (dir.z < -0.5f) rowDelta = -1;  // DOWN
+            else
+                return _target; // Invalid direction
+
+            var edgeCells = GetEdgeCellsInDirection(_target.UsedCells, rowDelta, colDelta);
+
+            // How far can we step outward from the edge?
+            int maxSteps = Mathf.Max(grid.Rows, grid.Cols);
+
+            for (int step = 1; step <= maxSteps; step++)
             {
-                // 2) skip the one already highlighted
-                if (obj == _target) continue;
+                HashSet<MonoImpactObject> foundTargets = new();
 
-                // 3) compute flat‐XZ vector from origin to candidate
-                Vector3 toObj = obj.transform.position - _target.transform.position;
-                toObj.y = 0;
-                float distSq = toObj.sqrMagnitude;
-                if (distSq < 0.0001f) continue;
-
-                Vector3 toDir = toObj.normalized;
-                float   angle = Vector3.Angle(dir, toDir);
-
-                // only look in your forward hemisphere
-                if (angle > 90f) continue;
-
-                // pick the smallest angle (tie‐break by closer distance)
-                if (angle < bestAng || (Mathf.Approximately(angle, bestAng) && distSq < bestDistSq))
+                foreach (var (row, col) in edgeCells)
                 {
-                    best       = obj;
-                    bestAng    = angle;
-                    bestDistSq = distSq;
+                    int checkRow = row + step * rowDelta;
+                    int checkCol = col + step * colDelta;
+
+                    if (!grid.IsValidCell(checkRow, checkCol))
+                        continue;
+
+                    var occupant = grid.GetOccupant(checkRow, checkCol);
+                    if (occupant != null && occupant != _target)
+                        foundTargets.Add(occupant);
+                }
+
+                if (foundTargets.Count > 0)
+                {
+                    var list = foundTargets.ToList();
+                    return list[Random.Range(0, list.Count)];
                 }
             }
-            return best;
+
+            return _target;
         }
+
+
         
-        /// <summary>
-        /// Takes a raw input Vector2 (x,y) in [–1…1] and returns
-        /// one of the eight unit directions (E,NE,N,NW,W,SW,S,SE).
-        /// </summary>
-        private Vector3 QuantizeTo8Directions(Vector2 rawInput)
+        private List<(int row, int col)> GetEdgeCellsInDirection(List<(int row, int col)> usedCells, int rowDelta, int colDelta)
+        {
+            var result = new List<(int row, int col)>();
+
+            if (colDelta != 0) // LEFT or RIGHT
+            {
+                var grouped = usedCells.GroupBy(cell => cell.row);
+                foreach (var group in grouped)
+                {
+                    var edgeCell = (colDelta > 0)
+                        ? group.OrderByDescending(c => c.col).First()
+                        : group.OrderBy(c => c.col).First();
+
+                    result.Add(edgeCell);
+                }
+            }
+            else if (rowDelta != 0) // UP or DOWN
+            {
+                var grouped = usedCells.GroupBy(cell => cell.col);
+                foreach (var group in grouped)
+                {
+                    var edgeCell = (rowDelta > 0)
+                        ? group.OrderByDescending(c => c.row).First()
+                        : group.OrderBy(c => c.row).First();
+
+                    result.Add(edgeCell);
+                }
+            }
+
+            return result;
+        }
+
+
+
+        
+        private Vector3 QuantizeTo4Directions(Vector2 rawInput)
         {
 
             // 1) get 0–360° angle (where 0° = +X/East, 90° = +Y/North)
             float angle = Mathf.Atan2(rawInput.y, rawInput.x) * Mathf.Rad2Deg;
             if (angle < 0) angle += 360f;
 
-            // 2) snap to nearest multiple of 45°
-            int sector = Mathf.RoundToInt(angle / 45f) % 8;
-            float snappedAngle = sector * 45f * Mathf.Deg2Rad;
+            // 2) snap to nearest multiple of 90°
+            int sector = Mathf.RoundToInt(angle / 90f) % 4;
+            float snappedAngle = sector * 90f * Mathf.Deg2Rad;
 
             // 3) rebuild a unit vector from that snapped angle
             Vector2 dir2D = new Vector2(Mathf.Cos(snappedAngle), Mathf.Sin(snappedAngle));
