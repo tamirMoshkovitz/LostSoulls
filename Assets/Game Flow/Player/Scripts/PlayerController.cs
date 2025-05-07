@@ -51,6 +51,8 @@ namespace Game_Flow.Player.Scripts
         private bool _collectedDoll = false;
         private bool _hasStarted = false;
         private bool _isTopDown = false;
+        private WalkingSurface _walkingSurface = WalkingSurface.ConcreteFloor;
+
 
         public bool IsMovementLocked
         {
@@ -153,20 +155,19 @@ namespace Game_Flow.Player.Scripts
             _controller.Move(move * moveSpeed * Time.deltaTime);
             if (move.magnitude > 0.1f)
             {
-                WalkingSurface surface = WalkingSurface.ConcreteFloor;
                 switch (_currentFloor)
                 {
                     case FirstFloorTag:
-                        surface = WalkingSurface.ConcreteFloor;
+                        _walkingSurface = WalkingSurface.ConcreteFloor;
                         break;
                     case StairsTag:
-                        surface = WalkingSurface.WoodenStairs;
+                        _walkingSurface = WalkingSurface.WoodenStairs;
                         break;
                     case SecondFloorTag:
-                        surface = WalkingSurface.WoodenFloor;
+                        _walkingSurface = WalkingSurface.WoodenFloor;
                         break;
                 }
-                _playerAudio.PlayFootstepSound(surface);
+                _playerAudio.PlayFootstepSound(_walkingSurface);
             }
 
             else
