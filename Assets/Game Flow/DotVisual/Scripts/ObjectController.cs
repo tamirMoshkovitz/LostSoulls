@@ -6,6 +6,7 @@ using Game_Flow.DotVisual.Scripts.States;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Grid = Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts.Grid;
 
 namespace Game_Flow.DotVisual.Scripts
 {
@@ -15,6 +16,7 @@ namespace Game_Flow.DotVisual.Scripts
         [SerializeField] private GameObject dotPrefab;
         [SerializeField] private List<MonoImpactObject> impactObjects;
         [SerializeField,ReadOnly] MonoImpactObject currentImpactObject;
+        [SerializeField] Grid grid;
         private IObjeckLockingState _currentState;
         private Transform _origin;
         private InputSystem_Actions _inputSystemActions;
@@ -22,6 +24,7 @@ namespace Game_Flow.DotVisual.Scripts
         private MonoImpactObject _target;
         private bool _isLocked;
         public bool IsLocked { get => _isLocked; private set => _isLocked = value;}
+        public Grid Grid => grid;
 
         private void Awake()
         {
