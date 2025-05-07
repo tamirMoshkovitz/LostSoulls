@@ -3,6 +3,7 @@ using Core.Audio;
 using Core.Managers;
 using Game_Flow.ImpactObjects.Scripts.Audio;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Game_Flow.CollectableObjects
 {
@@ -11,6 +12,8 @@ namespace Game_Flow.CollectableObjects
         [SerializeField] private GameObject objectToSwitch;
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private AudioClip clip;
+        [FormerlySerializedAs("renderer")] [SerializeField] private Renderer[] renderers;
+        [SerializeField] private Color highlightColor;
         
         private OpenCloseObjectAudio _objectAudio;
         
@@ -19,6 +22,10 @@ namespace Game_Flow.CollectableObjects
             _objectAudio = new OpenCloseObjectAudio(audioSource, clip);
             _objectAudio.SetVolume(0.3f);
             EventManager.OnDollPlaced += turnOnLightsInTopDownState;
+            foreach (var renderer in renderers)
+            {
+                renderer.enabled = false;
+            }
         }
 
         public void turnOnLightsInTopDownState()
@@ -36,6 +43,29 @@ namespace Game_Flow.CollectableObjects
             _objectAudio.PlaySound();
             yield return new WaitForSeconds(.5f);
             _objectAudio.StopSound();
+        }
+
+        public void HighlightObject()
+        {
+            if (renderers == null) return;
+            foreach (var rend in renderers)
+            {
+                if (rend == null) continue;
+                rend.enabled = true;
+                var material = rend.material;
+                if (material == null) continue;
+                material.color = highlightColor;
+            }
+        }
+        
+        public void UnHighlightObject()
+        {
+            if (renderers == null) return;
+            foreach (var rend in renderers)
+            {
+                if (rend == null) continue;
+                rend.enabled = false;
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using Game_Flow.CollectableObjects;
 using Game_Flow.ImpactObjects.Scripts.Types;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
     public class HandleInteractableObjects : MonoBehaviour
     {
         [SerializeField] private OpenCloseImpactObject[] animatedObjects;
+        [SerializeField] private SwitchObject switchObject;
 
         public bool InHighlightZone { get; private set; }
         public bool InLetterZone { get; private set; }
@@ -51,6 +53,10 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                         openable.HighlightObject();
                     }
                 }
+                if (switchObject != null)
+                {
+                    switchObject.HighlightObject();
+                }
             }
         }
         
@@ -78,6 +84,10 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                     {
                         openable.UnHighlightObject();
                     }
+                }
+                if (switchObject != null)
+                {
+                    switchObject.UnHighlightObject();
                 }
             }
         }
