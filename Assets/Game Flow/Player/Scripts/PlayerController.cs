@@ -270,7 +270,7 @@ namespace Game_Flow.Player.Scripts
                     else
                     {
                         Debug.Log("Opening");
-                        itemsUpdater.ClearAll();
+                        itemsUpdater.RemoveItem(2);
                         openable.OpenImpactObject();
                     }
                 }

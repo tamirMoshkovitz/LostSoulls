@@ -17971,9 +17971,9 @@ MonoBehaviour:
   container: {fileID: 1484126088}
   itemIconPrefab: {fileID: 7814712767020956567, guid: 9b2e4e5ee8b3a4ce99f6256a02c19ad7, type: 3}
   itemSprites:
-  - {fileID: -1512439706, guid: a8c22d8286dcf4e9f898868b2db592a1, type: 3}
-  - {fileID: 1022095065, guid: 9a82c9028706b4e06bf189cdec764612, type: 3}
-  - {fileID: 1278284224, guid: f36800341a1fe4a3ba0dca5866efeebf, type: 3}
+  - {fileID: 21300000, guid: 242304bc7118b41b2828097eabf4615c, type: 3}
+  - {fileID: 21300000, guid: 242304bc7118b41b2828097eabf4615c, type: 3}
+  - {fileID: 21300000, guid: 133792ce82e1d4462bcb81b1363dd577, type: 3}
 --- !u!114 &2139923646
 MonoBehaviour:
   m_ObjectHideFlags: 0
