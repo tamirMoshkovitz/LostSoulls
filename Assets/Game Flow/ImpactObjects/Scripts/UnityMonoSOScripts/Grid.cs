@@ -62,7 +62,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             }
         }
 
-        private bool IsValidCell(int row, int col)
+        public bool IsValidCell(int row, int col)
         {
             return row >= 0 && row < rows && col >= 0 && col < cols;
         }
@@ -167,6 +167,8 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                 return occupiedCenters[row][col];
             return null;
         }
+        
+        
 
     }
 }
