@@ -206,6 +206,10 @@ namespace Game_Flow.Player.Scripts
                 EventManager.StartRumble(rumbleDuration, lowFrequency, highFrequency);
                 _lastInteractableHit = hitInfo.collider.gameObject;
             }
+            else
+            {
+                _lastInteractableHit = null;
+            }
         }
         
         private void OnOpenPerformed(InputAction.CallbackContext context)
