@@ -99,11 +99,11 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
-    - _Exponent: 1
+    - _Exponent: 0.53
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Intensity: 1
+    - _Intensity: 0.42
     - _Metallic: 0
     - _NoiseIntensity: 0
     - _OcclusionStrength: 1
