@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using Core.Managers;
 using Game_Flow.ImpactObjects.Scripts.Types;
 using NUnit.Framework;
@@ -74,9 +75,15 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
             this.PlaySound();
         }
 
-        public void HideLetterContent()
+        public IEnumerator HideLetterContent(float readingDuration)
         {
+            var clips = pictureAnimator.runtimeAnimatorController.animationClips;
+            var paintingClip = clips.FirstOrDefault(c => c.name == "Picture Sprite Animation");
+            float pictureAnimationLength = paintingClip != null ? paintingClip.length : 0f;
+            yield return new WaitForSeconds(readingDuration - pictureAnimationLength);
             letterContent.SetActive(false);
+            PlayPaintingAnimation();
+            StartCoroutine(ExitPaintingCamera());
         }
     }
 }

@@ -23,15 +23,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
         {
             letterMain.ShowLetterContentAndPlaySound();
             float letterDuration = letterMain.GetComponent<AudioSource>().clip.length;
-            StartCoroutine(HideLetterContent(letterDuration));
-        }
-        
-        private IEnumerator HideLetterContent(float duration)
-        {
-            yield return new WaitForSeconds(duration);
-            letterMain.HideLetterContent();
-            letterMain.PlayPaintingAnimation();
-            StartCoroutine(letterMain.ExitPaintingCamera());
+            StartCoroutine(letterMain.HideLetterContent(letterDuration));
         }
     }
 }
