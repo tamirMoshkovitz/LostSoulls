@@ -72,7 +72,13 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
         public void ShowLetterContentAndPlaySound()
         {
             letterContent.SetActive(true);
-            this.PlaySound();
+            StartCoroutine(PlayNarrator());
+        }
+
+        private IEnumerator PlayNarrator()
+        {
+            yield return new WaitForSeconds(1f);
+            PlaySound();
         }
 
         public IEnumerator HideLetterContent(float readingDuration)
