@@ -26,7 +26,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
         
         private bool _isOpen;
         private Animator _animator;
-        private OpenCloseObjectAudio _objectAudio;
+        private OpenCloseObjectAudio _objectAudio = null;
         
         public bool IsLocked { get; set; }
         
@@ -47,7 +47,10 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
                 IsLocked = false;
             }
             
-            _objectAudio = new OpenCloseObjectAudio(objectAudioSource, audioClip);
+            if (objectAudioSource != null && audioClip != null)
+            {
+                _objectAudio = new OpenCloseObjectAudio(objectAudioSource, audioClip);
+            }
             foreach (var renderer in renderers)
             {
                 if (renderer == null) continue;
@@ -55,13 +58,14 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             }
         }
 
-        public void OpenImpactObject()
+        public virtual void OpenImpactObject()
         {
             _isOpen = true;
+            if (_animator == null) _animator = gameObject.GetComponent<Animator>();
             _animator.SetTrigger("IsOpen");
             //_animator.SetBool("IsOpen", true);
             Debug.Log("OpenImpactObject");
-            _objectAudio.PlaySound();
+            _objectAudio?.PlaySound();
             if (isLetter && otherLetter != null)
             {
                 otherLetter.UnHighlightObject();
@@ -75,7 +79,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             _animator.SetTrigger("IsClose");
             //_animator.SetBool("IsOpen", false);
             Debug.Log("CloseImpactObject");
-            _objectAudio.PlaySound();
+            _objectAudio?.PlaySound();
             if (isLetter && otherLetter != null)
             {
                 otherLetter.HighlightObject();
@@ -134,9 +138,14 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             }
         }
 
-        private void StopSound()
+        public void StopSound()
         {
-            _objectAudio.StopSound();
+            _objectAudio?.StopSound();
+        }
+
+        public void PlaySound()
+        {
+            _objectAudio?.PlaySound();
         }
     }
 }

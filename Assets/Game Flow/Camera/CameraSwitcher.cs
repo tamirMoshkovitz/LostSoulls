@@ -16,6 +16,7 @@ namespace Game_Flow.Camera
     {
         [SerializeField] private CinemachineCamera firstPersonCamera;
         [SerializeField] private CinemachineCamera topDownCamera;
+        [SerializeField] private CinemachineCamera paintingCamera;
         [SerializeField] private UnityEngine.Camera mainCamera;
         [SerializeField] private GameObject ceiling;
         [SerializeField] private UnityEngine.ParticleSystem p1;
@@ -41,12 +42,16 @@ namespace Game_Flow.Camera
             _inputActions.Player.Enable();
             EventManager.OnDollPlaced += ToggleViewByDoll;
             EventManager.OnPlayerZoneChanged += HandleZoneChange;
+            EventManager.OnShowPainting += SwitchToPaintingCamera;
+            EventManager.OnExitPainting += ExitPaintingCamera;
         }
 
         private void OnDisable()
         {
             EventManager.OnPlayerZoneChanged -= HandleZoneChange;
             EventManager.OnDollPlaced -= ToggleViewByDoll;
+            EventManager.OnShowPainting -= SwitchToPaintingCamera;
+            EventManager.OnExitPainting -= ExitPaintingCamera;
             _inputActions.Player.Disable();
         }
 
@@ -103,6 +108,16 @@ namespace Game_Flow.Camera
             ObjectController.Instance.ChangeState(new FPState());
             yield return new WaitForSeconds(_cinemachineBrain.DefaultBlend.BlendTime * .82f);
             ceiling.gameObject.SetActive(true);
+        }
+
+        private void SwitchToPaintingCamera()
+        {
+            paintingCamera.gameObject.SetActive(true);
+        }
+        
+        private void ExitPaintingCamera()
+        {
+            paintingCamera.gameObject.SetActive(false);
         }
         
         // public void ChangeColorToRed()

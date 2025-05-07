@@ -56,5 +56,19 @@ namespace Core.Managers
         {
             OnDollPlaced?.Invoke();
         }
+        
+        public static event Action OnShowPainting;
+
+        public static void ShowPainting()
+        {
+            OnShowPainting?.Invoke();
+        }
+        
+        public static event Action OnExitPainting; 
+        public static void ExitPainting()
+        {
+            OnExitPainting?.Invoke();
+        }
+        
     }
 }
