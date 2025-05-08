@@ -16,6 +16,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
         [SerializeField] private OpenCloseImpactObject letterBottom;
         [SerializeField] private GameObject letterContent;
         [SerializeField] private Animator pictureAnimator;
+        [SerializeField] private GameObject subtitles;
         public override void OpenImpactObject()
         {
             // turn off the collider
@@ -69,6 +70,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
                 yield return null;
             }
 
+            letterContent.SetActive(false);
             EventManager.ExitPainting();
         }
 
@@ -82,6 +84,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
         {
             yield return new WaitForSeconds(1f);
             PlaySound();
+            subtitles.SetActive(true);
         }
 
         public IEnumerator HideLetterContent(float readingDuration)
@@ -90,7 +93,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
             var paintingClip = clips.FirstOrDefault(c => c.name == "Picture Sprite Animation");
             float pictureAnimationLength = paintingClip != null ? paintingClip.length : 0f;
             yield return new WaitForSeconds(readingDuration - pictureAnimationLength);
-            letterContent.SetActive(false);
+            letterContent.GetComponent<Renderer>().enabled = false;
             PlayPaintingAnimation();
             StartCoroutine(ExitPaintingCamera());
         }
