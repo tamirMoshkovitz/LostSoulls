@@ -18,6 +18,9 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
         [SerializeField] private Animator pictureAnimator;
         public override void OpenImpactObject()
         {
+            // turn off the collider
+            GetComponent<BoxCollider>().enabled = false;
+            
             //show painting
             SwitchToPaintingCamera();
             
