@@ -1904,7 +1904,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1523233348546473193, guid: 97671aa7febb4479e9da7ee411c6f6d7, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3794338095150666620, guid: 97671aa7febb4479e9da7ee411c6f6d7, type: 3}
       propertyPath: UVModule.fps
@@ -2157,7 +2157,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4894060506057249070, guid: 82a8e9ef0ebd94e10be5c6c5af04cabf, type: 3}
       propertyPath: UVModule.tilesX
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4894060506057249070, guid: 82a8e9ef0ebd94e10be5c6c5af04cabf, type: 3}
       propertyPath: ShapeModule.type
@@ -2257,7 +2257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4894060506057249070, guid: 82a8e9ef0ebd94e10be5c6c5af04cabf, type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 1.6
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 4894060506057249070, guid: 82a8e9ef0ebd94e10be5c6c5af04cabf, type: 3}
       propertyPath: NoiseModule.scrollSpeed.scalar
@@ -10222,7 +10222,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4894060506057249070, guid: 82a8e9ef0ebd94e10be5c6c5af04cabf, type: 3}
       propertyPath: UVModule.tilesX
-      value: 7
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4894060506057249070, guid: 82a8e9ef0ebd94e10be5c6c5af04cabf, type: 3}
       propertyPath: ShapeModule.type
@@ -10322,7 +10322,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4894060506057249070, guid: 82a8e9ef0ebd94e10be5c6c5af04cabf, type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 1.6
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 4894060506057249070, guid: 82a8e9ef0ebd94e10be5c6c5af04cabf, type: 3}
       propertyPath: NoiseModule.scrollSpeed.scalar
