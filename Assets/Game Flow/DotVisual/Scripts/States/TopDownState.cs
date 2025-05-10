@@ -47,6 +47,7 @@ namespace Game_Flow.DotVisual.Scripts.States
             _target = impactObjects[0];
             _target.HighlightObject();
             _cameraMono = objectController;
+            _lastTarget = _target;
         }
         public void ExitState()
         {
@@ -99,6 +100,7 @@ namespace Game_Flow.DotVisual.Scripts.States
             if (newTarget != null && newTarget != _target)
             {
                 // we found a new one – unhighlight the old, highlight the new
+                _lastTarget = oldTarget;
                 oldTarget?.UnhighlightObject();
                 _target = newTarget;
                 if (_target.IsMoveable)
@@ -112,7 +114,6 @@ namespace Game_Flow.DotVisual.Scripts.States
         {
             if (_target == null || _target.UsedCells == null || _target.UsedCells.Count == 0)
                 return _target;
-
             dir = dir.normalized;
             int rowDelta = 0, colDelta = 0;
 
@@ -148,7 +149,14 @@ namespace Game_Flow.DotVisual.Scripts.States
                 if (foundTargets.Count > 0)
                 {
                     var list = foundTargets.ToList();
-                    return list[Random.Range(0, list.Count)];
+
+                    // If there’s more than one target, exclude _lastTarget
+                    if (list.Count > 1 && _lastTarget != null)
+                        list.Remove(_lastTarget);
+
+                    // Choose randomly from the remaining options
+                    var newTarget = list[Random.Range(0, list.Count)];
+                    return newTarget;
                 }
             }
 
@@ -181,7 +189,7 @@ namespace Game_Flow.DotVisual.Scripts.States
                     var edgeCell = (rowDelta > 0)
                         ? group.OrderByDescending(c => c.row).First()
                         : group.OrderBy(c => c.row).First();
-
+                    
                     result.Add(edgeCell);
                 }
             }
