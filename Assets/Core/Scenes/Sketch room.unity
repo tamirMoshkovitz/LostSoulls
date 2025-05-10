@@ -2025,7 +2025,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1523233348546473193, guid: 97671aa7febb4479e9da7ee411c6f6d7, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3794338095150666620, guid: 97671aa7febb4479e9da7ee411c6f6d7, type: 3}
       propertyPath: UVModule.fps
@@ -7552,6 +7552,11 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 638027267}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!198 &639316270 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3794338095150666620, guid: 97671aa7febb4479e9da7ee411c6f6d7, type: 3}
+  m_PrefabInstance: {fileID: 322331826}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &652136821
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16396,10 +16401,10 @@ MonoBehaviour:
   paintingCamera: {fileID: 760193595}
   mainCamera: {fileID: 623489539}
   ceiling: {fileID: 2048909539}
-  p1: {fileID: 1382117169}
-  p2: {fileID: 1182771131}
-  p3: {fileID: 0}
-  p4: {fileID: 0}
+  p1: {fileID: 1967549906}
+  p2: {fileID: 639316270}
+  p3: {fileID: 1382117169}
+  p4: {fileID: 1182771131}
 --- !u!4 &1712215436
 Transform:
   m_ObjectHideFlags: 0
@@ -17841,6 +17846,11 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 7037310156548303157, guid: fecb4edd1001441cf93bc6ef96993aad, type: 3}
+--- !u!198 &1967549906 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 8384615647629069006, guid: c260300c2721b42f98790d0ac1ea98a7, type: 3}
+  m_PrefabInstance: {fileID: 603274839}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1971509913
 GameObject:
   m_ObjectHideFlags: 0
