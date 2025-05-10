@@ -4,6 +4,7 @@ using Core.Managers;
 using Game_Flow.ImpactObjects.Scripts.Types;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game_Flow.ImpactObjects.Scripts.Letter
 {
@@ -16,7 +17,15 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
         [SerializeField] private OpenCloseImpactObject letterBottom;
         [SerializeField] private GameObject letterContent;
         [SerializeField] private Animator pictureAnimator;
-        [SerializeField] private GameObject subtitles;
+        
+        private Image image;
+        
+        private void Awake()
+        {
+            image = letterContent.GetComponent<Image>();
+        }
+        
+        
         public override void OpenImpactObject()
         {
             // turn off the collider
@@ -56,7 +65,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
             EventManager.ShowPainting();
         }
 
-        public IEnumerator ExitPaintingCamera()
+        public IEnumerator ExitLetterState()
         {
             // Wait until the Animator has transitioned to the desired state
             while (!pictureAnimator.GetCurrentAnimatorStateInfo(0).IsName("Picture Sprite Animation"))
@@ -70,6 +79,8 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
                 yield return null;
             }
 
+            yield return new WaitForSeconds(2f);
+
             letterContent.SetActive(false);
             EventManager.ExitPainting();
         }
@@ -77,14 +88,14 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
         public void ShowLetterContentAndPlaySound()
         {
             letterContent.SetActive(true);
+            StartCoroutine(FadeCanvasImage(1f, 1.5f));
             StartCoroutine(PlayNarrator());
         }
 
         private IEnumerator PlayNarrator()
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
             PlaySound();
-            subtitles.SetActive(true);
         }
 
         public IEnumerator HideLetterContent(float readingDuration)
@@ -93,9 +104,28 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
             var paintingClip = clips.FirstOrDefault(c => c.name == "Picture Sprite Animation");
             float pictureAnimationLength = paintingClip != null ? paintingClip.length : 0f;
             yield return new WaitForSeconds(readingDuration - pictureAnimationLength);
-            letterContent.GetComponent<Renderer>().enabled = false;
+            StartCoroutine(FadeCanvasImage(0f, 1f));
             PlayPaintingAnimation();
-            StartCoroutine(ExitPaintingCamera());
+            StartCoroutine(ExitLetterState());
+        }
+
+        private IEnumerator FadeCanvasImage(float targetAlpha, float duration)
+        {
+            float startAlpha = image.color.a;
+            float time = 0f;
+
+            Color startColor = image.color;
+            Color endColor = new Color(startColor.r, startColor.g, startColor.b, targetAlpha);
+
+            while (time < duration)
+            {
+                time += Time.deltaTime;
+                float t = Mathf.Clamp01(time / duration);
+                image.color = Color.Lerp(startColor, endColor, t);
+                yield return null;
+            }
+
+            image.color = endColor; // Ensure exact target at end
         }
     }
 }
