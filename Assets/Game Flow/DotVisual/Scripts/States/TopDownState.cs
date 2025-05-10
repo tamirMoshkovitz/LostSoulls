@@ -145,7 +145,8 @@ namespace Game_Flow.DotVisual.Scripts.States
                     if (occupant != null && occupant != _target)
                         foundTargets.Add(occupant);
                 }
-
+                foundTargets.Remove(_target);
+                
                 if (foundTargets.Count > 0)
                 {
                     var list = foundTargets.ToList();
@@ -165,37 +166,47 @@ namespace Game_Flow.DotVisual.Scripts.States
 
 
         
+        // Updated GetEdgeCellsInDirection with direction-specific tie-breakers
         private List<(int row, int col)> GetEdgeCellsInDirection(List<(int row, int col)> usedCells, int rowDelta, int colDelta)
         {
             var result = new List<(int row, int col)>();
-
+    
             if (colDelta != 0) // LEFT or RIGHT
             {
-                var grouped = usedCells.GroupBy(cell => cell.row);
-                foreach (var group in grouped)
-                {
-                    var edgeCell = (colDelta > 0)
-                        ? group.OrderByDescending(c => c.col).First()
-                        : group.OrderBy(c => c.col).First();
+                // Group by column and find the maximum group size
+                var colGroups = usedCells.GroupBy(cell => cell.col);
+                int maxCount = colGroups.Max(g => g.Count());
+                var candidates = colGroups.Where(g => g.Count() == maxCount);
 
-                    result.Add(edgeCell);
-                }
+                // Tie-breaker: moving right -> choose leftmost column; moving left -> rightmost
+                IGrouping<int, (int row, int col)> chosenGroup;
+                if (colDelta > 0) // RIGHT
+                    chosenGroup = candidates.OrderBy(g => g.Key).First();
+                else // LEFT
+                    chosenGroup = candidates.OrderByDescending(g => g.Key).First();
+
+                result.AddRange(chosenGroup);
             }
             else if (rowDelta != 0) // UP or DOWN
             {
-                var grouped = usedCells.GroupBy(cell => cell.col);
-                foreach (var group in grouped)
-                {
-                    var edgeCell = (rowDelta > 0)
-                        ? group.OrderByDescending(c => c.row).First()
-                        : group.OrderBy(c => c.row).First();
-                    
-                    result.Add(edgeCell);
-                }
+                // Group by row and find the maximum group size
+                var rowGroups = usedCells.GroupBy(cell => cell.row);
+                int maxCount = rowGroups.Max(g => g.Count());
+                var candidates = rowGroups.Where(g => g.Count() == maxCount);
+
+                // Tie-breaker: moving up -> choose bottommost row; moving down -> topmost
+                IGrouping<int, (int row, int col)> chosenGroup;
+                if (rowDelta > 0) // UP
+                    chosenGroup = candidates.OrderBy(g => g.Key).First();
+                else // DOWN
+                    chosenGroup = candidates.OrderByDescending(g => g.Key).First();
+
+                result.AddRange(chosenGroup);
             }
 
             return result;
         }
+
 
 
 
