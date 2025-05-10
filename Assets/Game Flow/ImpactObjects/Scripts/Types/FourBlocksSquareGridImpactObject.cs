@@ -58,12 +58,22 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
                 _grid.MarkOccupied(Mono, oldCells);
                 return;
             }
-
+            
+            var renderers = _grid.GetHighlightZones(oldCells);
+            foreach (var renderer in renderers)
+            {
+                if (renderer == null) continue;
+                renderer.enabled = false;
+                var material = renderer.material;
+                if (material == null) continue;
+            }
             // 6) occupy new footprint & get world center
             Vector3 worldCenter = _grid.MarkOccupied(Mono, targetCells);
-
             // 7) tween into place, then commit
             Mono.ObjectAudio.PlaySound();
+            Mono.IsMoving = true;
+            _grid.HighlightZones(oldCells, Mono.ImpactColor);
+            _grid.UnhighlightZones(oldCells);
             _moveTween = Mono.transform
                 .DOMove(worldCenter, Stats.timePerMove)
                 .SetEase(Ease.Linear)
@@ -73,6 +83,8 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
                     _grid.MarkOccupied(Mono, Mono.UsedCells);
                     _moveTween = null;
                     Mono.ObjectAudio.StopSound();
+                    Mono.IsMoving = false;
+                    _grid.HighlightZones(Mono.UsedCells, Mono.ImpactColor);
                 });
         }
     }

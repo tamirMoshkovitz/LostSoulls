@@ -28,6 +28,8 @@ namespace Game_Flow.DotVisual.Scripts
         public Grid Grid => grid;
         public BoxCombinationHandler BoxCombinationHandler => boxCombinationHandler;
 
+        public MonoImpactObject CurrentImpactObject => currentImpactObject;
+
         private void Awake()
         {
             if (dotPrefab != null)

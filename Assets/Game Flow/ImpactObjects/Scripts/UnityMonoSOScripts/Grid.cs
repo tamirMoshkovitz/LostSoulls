@@ -24,6 +24,8 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         private Renderer _renderer;
 
         public List<List<Vector3>> AllGridCenters => new(allGridCenters);
+        
+        private Dictionary<(int row, int col), List<Renderer>> highlightMap = new();
 
         void Awake()
         {
@@ -166,6 +168,67 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             if (IsValidCell(row, col))
                 return occupiedCenters[row][col];
             return null;
+        }
+        
+        
+        /// <summary>
+        /// Register a highlight zone GameObject to this grid cell.
+        /// </summary>
+        public void RegisterHighlightZone(Renderer highlight)
+        {
+            var cell = WorldToCell(highlight.transform.position);
+            if (!highlightMap.ContainsKey(cell))
+                highlightMap[cell] = new List<Renderer>();
+
+            highlightMap[cell].Add(highlight);
+        }
+
+        /// <summary>
+        /// Returns highlight zone GameObjects for the given cells.
+        /// </summary>
+        public List<Renderer> GetHighlightZones(IEnumerable<(int row, int col)> cells)
+        {
+            var result = new List<Renderer>();
+            foreach (var cell in cells)
+            {
+                if (highlightMap.TryGetValue(cell, out var list))
+                    result.AddRange(list);
+            }
+            return result;
+        }
+        
+        /// <summary>
+        /// Highlights the zones in the given cells with the specified color.
+        /// </summary>
+        public void HighlightZones(IEnumerable<(int row, int col)> cells, Color color)
+        {
+            foreach (var go in GetHighlightZones(cells))
+            {
+                if (go == null) continue;
+                var renderers = go.GetComponentsInChildren<Renderer>();
+                foreach (var rend in renderers)
+                {
+                    rend.enabled = true;
+                    if (rend.material != null)
+                        rend.material.color = color;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Unhighlights the zones in the given cells.
+        /// </summary>
+        public void UnhighlightZones(IEnumerable<(int row, int col)> cells)
+        {
+            foreach (var go in GetHighlightZones(cells))
+            {
+                if (go == null) continue;
+                var renderers = go.GetComponentsInChildren<Renderer>();
+                foreach (var rend in renderers)
+                {
+                    rend.enabled = false;
+                }
+            }
         }
         
         

@@ -27,7 +27,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Decorator_Interface
                 ImpactObjectTypes.ThreeBlockHorizontalGrid => new ThreeBlockHorizontalGridImpactObject(inner,mono,stats,grid),
                 ImpactObjectTypes.ThreeBlockVerticalGrid => new ThreeBlockVerticalGridImpactObject(inner,mono,stats,grid),
                 ImpactObjectTypes.FourBlocksSquareGrid => new FourBlocksSquareGridImpactObject(inner,mono,stats,grid),
-                ImpactObjectTypes.MovingShader => new MovingShaderImpactObject(inner,mono,stats),
+                ImpactObjectTypes.MovingShader => new MovingShaderImpactObject(inner,mono,stats,grid),
                 ImpactObjectTypes.LShapeImpactObject => new LShapeImpactObject(inner,mono,stats,grid),
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };

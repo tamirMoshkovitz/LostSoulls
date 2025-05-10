@@ -1,12 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Game_Flow.ImpactObjects.Scripts.Audio;
 using Game_Flow.ImpactObjects.Scripts.Decorator_Interface;
 using Game_Flow.ImpactObjects.Scripts.Types;
-using Unity.Mathematics;
 using UnityEngine;
-using UnityEngine.Rendering;
 using UnityEngine.Serialization;
 
 namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
@@ -14,7 +11,6 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
     public class MonoImpactObject : MonoBehaviour
     {
         [Header("Material components")]
-        [SerializeField] private Renderer[] renderers;
         [SerializeField] private Color impactColor;
         [SerializeField] private Color lockedColor;
         [FormerlySerializedAs("intensity")] [SerializeField] private float scale = 100f;
@@ -39,7 +35,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         private MoovingObjectAudio _objectAudio;
         public MoovingObjectAudio ObjectAudio => _objectAudio;
 
-        public Renderer[] Renderers => renderers;
+        public Renderer[] Renderers => grid.GetHighlightZones(UsedCells).ToArray();
         public Color ImpactColor => impactColor;
         public Color LockedColor => lockedColor;
         public float Scale => scale;
@@ -51,9 +47,11 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         
         
         public List<(int x, int y)> UsedCells {get; set;}
+        public bool IsMoving { get; set; }
 
         private void Start()
         {
+            IsMoving = false;
             _objectAudio = new MoovingObjectAudio(objectAudioSource, objectAudio);
             _impactObject = new BasicImpactObject(this, stats);
             UsedCells = initialCells.Select(cell => (cell.x, cell.y)).ToList();
@@ -70,11 +68,6 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                 if (type == ImpactObjectTypes.MovingShader)
                 {
                     IsMoveable = true;
-                    foreach(var renderer in renderers)
-                    {
-                        if (renderer == null) continue;
-                        renderer.enabled = false;
-                    }
                 }
             }
 
@@ -116,6 +109,10 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
 
         public void UpdateObject(Vector3 direction)
         {
+            if (!IsMoving)
+            {
+                grid.HighlightZones(UsedCells,lockedColor);
+            }
             if (_updated || direction.Equals(Vector3.zero)) return;
             _updated = true;
             Vector3 snapped = GetClosestCardinalDirection(direction);
@@ -172,29 +169,14 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         public void HighlightObject()
         {
             if (! IsMoveable) return;
-            foreach (var renderer in renderers)
-            {
-                if (renderer == null) continue;
-                renderer.enabled = true;
-                var material = renderer.material;
-                if (material == null) continue;
-                material.color = impactColor;
-            }
+            grid.HighlightZones(UsedCells,impactColor);
         }
+        
         
         public void UnhighlightObject()
         {
-            if (! IsMoveable) return;
-            foreach (var renderer in renderers)
-            {
-                if (renderer == null) continue;
-                renderer.enabled = false;
-                var material = renderer.material;
-                if (material == null) continue;
-            }
+            grid.UnhighlightZones(UsedCells);
         }
-    
         
-
     }
 }

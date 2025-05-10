@@ -1,8 +1,11 @@
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Linq;
 using DG.Tweening;
+using Game_Flow.DotVisual.Scripts;
 using Game_Flow.ImpactObjects.Scripts.Decorator_Interface;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
+using Unity.VisualScripting;
 using UnityEngine;
 using Grid = Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts.Grid;
 
@@ -32,8 +35,8 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             // 1) if we're mid-tween, don't start another move
             if (_moveTween != null && _moveTween.IsActive() && !_moveTween.IsComplete())
                 return;
-
             // 2) unmark our old cell so grid.IsCellsOccupied() sees us as free
+            var oldCells = new List<(int row, int col)>(Mono.UsedCells);
             grid.UnmarkOccupied(Mono);
 
             // 3) figure out the target cell
@@ -56,6 +59,10 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             var cells = new List<(int, int)> { targetCell };
             if (!grid.IsCellsOccupied(cells))
             {
+                
+                Mono.IsMoving = true;
+                grid.HighlightZones(oldCells, Mono.ImpactColor);
+                grid.UnhighlightZones(oldCells);
                 Vector3 newPosition = grid.MarkOccupied(Mono, cells);
                 Mono.ObjectAudio.PlaySound();
 
@@ -64,8 +71,11 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
                     .SetEase(Ease.Linear)
                     .OnComplete(() =>
                     {
-                        // commit cell & re-mark
                         UpdateImpactObjectState(cells, targetCell);
+                        Mono.IsMoving = false;
+                        grid.HighlightZones(Mono.UsedCells, Mono.ImpactColor);
+                        
+                        // commit cell & re-mark
                     });
 
                 return;

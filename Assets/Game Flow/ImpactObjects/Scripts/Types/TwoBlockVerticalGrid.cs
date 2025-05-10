@@ -58,22 +58,36 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
                 _grid.MarkOccupied(Mono, oldCells);
                 return;
             }
+            
+            var renderers = _grid.GetHighlightZones(oldCells);
+            foreach (var renderer in renderers)
+            {
+                if (renderer == null) continue;
+                renderer.enabled = false;
+                var material = renderer.material;
+                if (material == null) continue;
+            }
 
             // 5) occupy the new cells & get world center
             Vector3 newPos = _grid.MarkOccupied(Mono, targetCells);
 
             // 6) animate into place
             Mono.ObjectAudio.PlaySound();
+            Mono.IsMoving = true;
+            _grid.HighlightZones(oldCells, Mono.ImpactColor);
+            _grid.UnhighlightZones(oldCells);
             _moveTween = Mono.transform
                 .DOMove(newPos, Stats.timePerMove)
                 .SetEase(Ease.Linear)
                 .OnComplete(() =>
                 {
-                    // commit new occupancy
                     Mono.ObjectAudio.StopSound();
                     Mono.UsedCells = targetCells;
                     _grid.MarkOccupied(Mono, Mono.UsedCells);
                     _moveTween = null;
+                    Mono.IsMoving = false;
+                    _grid.HighlightZones(Mono.UsedCells, Mono.ImpactColor);
+                    // commit new occupancy
                 });
         }
 

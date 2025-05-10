@@ -24,7 +24,6 @@ namespace Game_Flow.DotVisual.Scripts.States
         private float _lastMoveTime = -Mathf.Infinity;
         private LayerMask _impactLayerMask = LayerMask.GetMask("ImpactObject");
         
-        private bool _isMoving = false;
         private List<MonoImpactObject> _impactObjects;
         private ObjectController _cameraMono;
         private BoxCombinationHandler _boxCombintaionHandler;
@@ -66,23 +65,16 @@ namespace Game_Flow.DotVisual.Scripts.States
                 _target.UnhighlightObject();
                 return;
             }
-            if (ObjectController.Instance.IsLocked)
+            if (!ObjectController.Instance.IsLocked)
             {
-                LockedUpdate();
-                return;
+                UnLockedUpdate();
             }
-            UnLockedUpdate();
-        }
-        
-
-        private void LockedUpdate()
-        {
             
         }
 
         private void UnLockedUpdate()
         {
-            if (_input == Vector2.zero || Time.time - _lastMoveTime < _moveCooldown)
+            if (_input == Vector2.zero || Time.time - _lastMoveTime < _moveCooldown || _target.IsMoving)
                 return;
             // 0) get raw stick into 3D
             Vector3 raw3D = new Vector3(_input.x, 0f, _input.y);
