@@ -6,7 +6,6 @@ namespace Game_Flow.ImpactObjects.Scripts.Decorator_Interface
 {
     public enum ImpactObjectTypes
     {
-        Soul = 4,
         OneBlockGrid = 5,
         TwoBlockHorizontalGrid = 6,
         TwoBlockVerticalGrid = 7,
@@ -22,7 +21,6 @@ namespace Game_Flow.ImpactObjects.Scripts.Decorator_Interface
         {
             return type switch
             {
-                ImpactObjectTypes.Soul => new SoulImpactObject(inner,mono,stats),
                 ImpactObjectTypes.OneBlockGrid => new OneBlockGridImpactObject(inner,mono,stats,grid),
                 ImpactObjectTypes.TwoBlockHorizontalGrid => new TwoBlockHorizontalGridImpactObject(inner,mono,stats,grid),
                 ImpactObjectTypes.TwoBlockVerticalGrid => new TwoBlockVerticalGridImpactObject(inner,mono,stats,grid),

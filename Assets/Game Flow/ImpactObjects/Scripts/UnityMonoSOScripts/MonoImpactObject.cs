@@ -46,8 +46,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         public float Width => width;
         
         public bool IsMoveable { get; set; }
-
-        public bool IsSoul {get; private set;}
+        
         public bool IsBlocked { get; set; } = false;
         
         
@@ -56,13 +55,10 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         private void Start()
         {
             _objectAudio = new MoovingObjectAudio(objectAudioSource, objectAudio);
-            IsSoul = false;
             _impactObject = new BasicImpactObject(this, stats);
             UsedCells = initialCells.Select(cell => (cell.x, cell.y)).ToList();
             foreach (var type in decoratorOrder)
             {
-                if (type == ImpactObjectTypes.Soul)
-                    IsSoul = true;
 
                 _impactObject = ImpactObjectFactory.CreateImpactObject(type, _impactObject, this, stats, grid);
 
