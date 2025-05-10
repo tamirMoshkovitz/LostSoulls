@@ -27,6 +27,7 @@ namespace Game_Flow.DotVisual.Scripts.States
         private bool _isMoving = false;
         private List<MonoImpactObject> _impactObjects;
         private ObjectController _cameraMono;
+        private BoxCombinationHandler _boxCombintaionHandler;
 
         public Vector3 DebugInputDir   { get;  set; }
         public MonoImpactObject DebugNextTarget { get; set; }
@@ -48,6 +49,7 @@ namespace Game_Flow.DotVisual.Scripts.States
             _target.HighlightObject();
             _cameraMono = objectController;
             _lastTarget = _target;
+            _boxCombintaionHandler = objectController.BoxCombinationHandler;
         }
         public void ExitState()
         {
@@ -59,6 +61,11 @@ namespace Game_Flow.DotVisual.Scripts.States
 
         public void Update()
         {
+            if (_boxCombintaionHandler.GameFinished)
+            {
+                _target.UnhighlightObject();
+                return;
+            }
             if (ObjectController.Instance.IsLocked)
             {
                 LockedUpdate();
@@ -67,6 +74,7 @@ namespace Game_Flow.DotVisual.Scripts.States
             UnLockedUpdate();
         }
         
+
         private void LockedUpdate()
         {
             

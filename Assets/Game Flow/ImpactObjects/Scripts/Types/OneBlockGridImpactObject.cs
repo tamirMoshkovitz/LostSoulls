@@ -65,12 +65,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
                     .OnComplete(() =>
                     {
                         // commit cell & re-mark
-                        Mono.UsedCells = cells;
-                        currentCell    = targetCell;
-                        grid.MarkOccupied(Mono, Mono.UsedCells);
-
-                        Mono.ObjectAudio.StopSound();
-                        _moveTween = null;
+                        UpdateImpactObjectState(cells, targetCell);
                     });
 
                 return;
@@ -78,6 +73,16 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
 
             // 6) if blocked, just re-mark and exit
             grid.MarkOccupied(Mono, Mono.UsedCells);
+        }
+
+        private void UpdateImpactObjectState(List<(int, int)> cells, (int row, int col) targetCell)
+        {
+            Mono.UsedCells = cells;
+            currentCell    = targetCell;
+            grid.MarkOccupied(Mono, Mono.UsedCells);
+
+            Mono.ObjectAudio.StopSound();
+            _moveTween = null;
         }
     }
 }

@@ -69,6 +69,12 @@ namespace Core.Managers
         {
             OnExitPainting?.Invoke();
         }
-        
+
+        public static event Action FinishGame;
+
+        public static void OnFinishGame()
+        {
+            FinishGame?.Invoke();
+        }
     }
 }

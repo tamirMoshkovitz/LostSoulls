@@ -53,6 +53,8 @@ namespace Game_Flow.Player.Scripts
         private bool _isTopDown = false;
         private WalkingSurface _walkingSurface = WalkingSurface.ConcreteFloor;
 
+        private bool _putDoll = false;
+
 
         public bool IsMovementLocked
         {
@@ -135,7 +137,7 @@ namespace Game_Flow.Player.Scripts
 
         void HandleMovement()
         {
-            if (_isMovementLocked || ObjectController.Instance.IsLocked) {return;}
+            if (_isMovementLocked || ObjectController.Instance.IsLocked || _putDoll) {return;}
             // Ground check
             _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
             
@@ -278,7 +280,7 @@ namespace Game_Flow.Player.Scripts
                 if (collectableManDoll != null && _collectedDoll)
                 {
                     collectableManDoll.OnCollect(OnDollPlaced);
-                    _collectedDoll = true;
+                    _putDoll = true;
                 }
                 
             }

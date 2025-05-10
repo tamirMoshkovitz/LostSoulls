@@ -15,8 +15,9 @@ namespace Game_Flow.DotVisual.Scripts
     {
         [SerializeField] private GameObject dotPrefab;
         [SerializeField] private List<MonoImpactObject> impactObjects;
-        [SerializeField,ReadOnly] MonoImpactObject currentImpactObject;
-        [SerializeField] Grid grid;
+        [SerializeField,ReadOnly] private MonoImpactObject currentImpactObject;
+        [SerializeField] private Grid grid;
+        [SerializeField] private BoxCombinationHandler boxCombinationHandler;
         private IObjeckLockingState _currentState;
         private Transform _origin;
         private InputSystem_Actions _inputSystemActions;
@@ -25,6 +26,7 @@ namespace Game_Flow.DotVisual.Scripts
         private bool _isLocked;
         public bool IsLocked { get => _isLocked; private set => _isLocked = value;}
         public Grid Grid => grid;
+        public BoxCombinationHandler BoxCombinationHandler => boxCombinationHandler;
 
         private void Awake()
         {
@@ -63,7 +65,7 @@ namespace Game_Flow.DotVisual.Scripts
             _currentState?.Update();
             _currentState?.GetTarget(out _target);
             currentImpactObject = _target;
-            if (IsLocked)
+            if (IsLocked && !BoxCombinationHandler.GameFinished)
             {
                 Vector3 targetMovement = _currentState.CalculateMovement(_input);
                 _target?.UpdateObject(targetMovement);
