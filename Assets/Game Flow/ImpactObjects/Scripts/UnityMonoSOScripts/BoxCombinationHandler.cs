@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections.Generic;
 using DG.Tweening;
 
@@ -24,6 +25,9 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         public bool GameFinished { get; private set; }
 
         private bool _combining;
+        private Tween _doTween;
+
+        
 
         private void Update()
         {
@@ -47,22 +51,26 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         private void FinishGame()
         {
             if (GameFinished) return;
-            GameFinished = true;
-
-            // Play any activation particles
-            foreach (var ps in deActivate)
+            if(!thisPart.IsMoving && !otherPart.IsMoving)
             {
-                ps.Stop();
+                GameFinished = true;
+
+                // Play any activation particles
+                foreach (var ps in deActivate)
+                {
+                    ps.Stop();
+                }
+            
+                foreach (var ps in activate)
+                {
+                    ps.gameObject.SetActive(true);
+                    ps.Play();
+                }
+
+                // Start combine animation
+                AnimateCombine();
             }
             
-            foreach (var ps in activate)
-            {
-                ps.gameObject.SetActive(true);
-                ps.Play();
-            }
-
-            // Start combine animation
-            AnimateCombine();
         }
 
         private void AnimateCombine()
