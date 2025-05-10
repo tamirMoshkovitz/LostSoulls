@@ -1036,6 +1036,56 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "EndingScene",
+            "id": "da2dfc96-3862-44e5-a66f-bb28f0ac81de",
+            "actions": [
+                {
+                    "name": "Restart",
+                    "type": "Button",
+                    "id": "c45174e1-628b-4e56-9933-a83da63ec0db",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "f1edd547-6626-48eb-ad7c-541e4dde2034",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Restart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f7422ef1-5d42-44a3-b6a0-95fed6230f79",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Restart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f39e529a-ae48-46b9-9241-271d044bff06",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Restart",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": [

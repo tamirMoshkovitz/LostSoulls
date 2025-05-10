@@ -1,11 +1,31 @@
 ﻿using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 namespace Core.Managers
 {
     public class GameRestart : MonoBehaviour
     {
-        public void RestartGame()
+        private InputSystem_Actions _inputActions;
+        
+        void Awake()
+        {
+            _inputActions = new InputSystem_Actions();
+            _inputActions.EndingScene.Enable();
+        }
+        
+        private void OnEnable()
+        {
+            _inputActions.EndingScene.Restart.performed += OnRestartPerformed;
+        }
+        
+        private void OnDisable()
+        {
+            _inputActions.EndingScene.Restart.performed -= OnRestartPerformed;
+            _inputActions.EndingScene.Disable();
+        }
+        
+        private void OnRestartPerformed(InputAction.CallbackContext context)
         {
             Debug.Log("Restarting Game");
             SceneManager.LoadScene("Sketch room");
