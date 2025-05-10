@@ -9,9 +9,6 @@ namespace Core.Managers
     public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         private static T _instance;
-    
-        private static bool _isQuitting;
-
 
         public static T Instance
         {
@@ -19,26 +16,33 @@ namespace Core.Managers
             {
                 if (_instance != null)
                     return _instance;
-                if (_isQuitting) 
-                    return null;
-                _instance = FindAnyObjectByType<T>();
+
+                _instance = FindFirstObjectByType<T>();
                 if (_instance == null)
                 {
                     var singletonObject = new GameObject(typeof(T).Name);
                     _instance = singletonObject.AddComponent<T>();
-                    DontDestroyOnLoad(singletonObject); // Don't destroy the object when loading a new scene
-                }
+                    DontDestroyOnLoad(singletonObject);            }
 
                 return _instance;
             }
         }
 
-        private void OnApplicationQuit()
-        {
-            _isQuitting = true;
-        }
-
         // Ensure no other instances can be created by having the constructor as protected
         protected MonoSingleton() { }
+        protected virtual void Awake()
+        {
+            if (!_instance)
+            {
+                _instance = this as T;
+                DontDestroyOnLoad(gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
     }
+
+
 }

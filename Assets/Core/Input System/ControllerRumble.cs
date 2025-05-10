@@ -5,13 +5,17 @@ using UnityEngine.InputSystem;
 
 namespace Core.Input_System
 {
-    public class ControllerRumble: MonoSingleton<ControllerRumble>
+    public class ControllerRumble: MonoBehaviour
     {
         private Gamepad _gamepad;
         
         private void OnEnable()
         {
             EventManager.OnStartRumble += RumblePulse;
+        }
+        private void OnDisable()
+        {
+            EventManager.OnStartRumble -= RumblePulse;
         }
         
         private void RumblePulse(float duration, float lowFrequency, float highFrequency)

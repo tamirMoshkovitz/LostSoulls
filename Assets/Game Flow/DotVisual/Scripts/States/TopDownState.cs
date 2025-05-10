@@ -65,7 +65,7 @@ namespace Game_Flow.DotVisual.Scripts.States
                 _target.UnhighlightObject();
                 return;
             }
-            if (!ObjectController.Instance.IsLocked)
+            if (!_cameraMono.IsLocked)
             {
                 UnLockedUpdate();
             }
