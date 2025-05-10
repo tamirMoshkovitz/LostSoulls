@@ -183,23 +183,6 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                 var material = renderer.material;
                 if (material == null) continue;
                 material.color = impactColor;
-                /**if (material.HasProperty("_OutlineEnabled"))
-                {
-                    material.SetInt("_OutlineEnabled", 1);
-                }
-                material.EnableKeyword("DR_OUTLINE_ON");
-                if (material.HasProperty("_OutlineColor"))
-                {
-                    material.SetColor("_OutlineColor", impactColor);
-                }
-                if (material.HasProperty("_OutlineWidth"))
-                {
-                    material.SetFloat("_OutlineWidth", width);
-                }
-                if (material.HasProperty("_OutlineScale"))
-                {
-                    material.SetFloat("_OutlineScale", scale);
-                }**/
             }
         }
         
@@ -212,11 +195,6 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                 renderer.enabled = false;
                 var material = renderer.material;
                 if (material == null) continue;
-                /**if (material.HasProperty("_OutlineEnabled"))
-                {
-                    material.SetInt("_OutlineEnabled", 0);
-                }
-                material.DisableKeyword("DR_OUTLINE_ON");**/
             }
         }
     

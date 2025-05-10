@@ -63,7 +63,6 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             _isOpen = true;
             if (_animator == null) _animator = gameObject.GetComponent<Animator>();
             _animator.SetTrigger("IsOpen");
-            //_animator.SetBool("IsOpen", true);
             Debug.Log("OpenImpactObject");
             _objectAudio?.PlaySound();
             if (isLetter && otherLetter != null)
@@ -77,7 +76,6 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
         {
             _isOpen = false;
             _animator.SetTrigger("IsClose");
-            //_animator.SetBool("IsOpen", false);
             Debug.Log("CloseImpactObject");
             _objectAudio?.PlaySound();
             if (isLetter && otherLetter != null)
@@ -101,23 +99,6 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
                 var material = renderer.material;
                 if (material == null) continue;
                 material.color = highlightColor;
-                /**if (material.HasProperty("_OutlineEnabled"))
-                {
-                    material.SetInt("_OutlineEnabled", 1);
-                }
-                material.EnableKeyword("DR_OUTLINE_ON");
-                if (material.HasProperty("_OutlineColor"))
-                {
-                    material.SetColor("_OutlineColor", highlightColor);
-                }
-                if (material.HasProperty("_OutlineWidth"))
-                {
-                    material.SetFloat("_OutlineWidth", width);
-                }
-                if (material.HasProperty("_OutlineScale"))
-                {
-                    material.SetFloat("_OutlineScale", scale);
-                }**/
             }
             
         }
@@ -128,13 +109,6 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             {
                 if (renderer == null) continue;
                 renderer.enabled = false;
-                /**var material = renderer.material;
-                if (material == null) continue;
-                if (material.HasProperty("_OutlineEnabled"))
-                {
-                    material.SetInt("_OutlineEnabled", 0);
-                }
-                material.DisableKeyword("DR_OUTLINE_ON");**/
             }
         }
 

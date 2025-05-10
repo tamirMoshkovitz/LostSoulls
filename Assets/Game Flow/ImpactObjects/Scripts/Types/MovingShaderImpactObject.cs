@@ -31,23 +31,6 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
                 var material = renderer.material;
                 if (material == null) continue;
                 material.color = _lockedColor;
-                /**if (material.HasProperty("_OutlineEnabled"))
-                {
-                    material.SetInt("_OutlineEnabled", 1);
-                }
-                material.EnableKeyword("DR_OUTLINE_ON");
-                if (material.HasProperty("_OutlineColor"))
-                {
-                    material.SetColor("_OutlineColor", _lockedColor);
-                }
-                if (material.HasProperty("_OutlineWidth"))
-                {
-                    material.SetFloat("_OutlineWidth", _width);
-                }
-                if (material.HasProperty("_OutlineScale"))
-                {
-                    material.SetFloat("_OutlineScale", _scale);
-                }**/
             }
         }
 
@@ -60,11 +43,6 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
                 var material = renderer.material;
                 if (material == null) continue;
                 material.color = _impactColor;
-                /**if (material.HasProperty("_OutlineEnabled"))
-                {
-                    material.SetInt("_OutlineEnabled", 0);
-                }
-                material.DisableKeyword("DR_OUTLINE_ON");**/
             }
             
         }
