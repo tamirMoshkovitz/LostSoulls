@@ -10,9 +10,14 @@ namespace Game_Flow.CollectableObjects
 {
     public class CollectableKeyObject : MonoBehaviour
     {
+        
         [SerializeField] private OpenCloseImpactObject showcaseDoor1;
         [SerializeField] private OpenCloseImpactObject showcaseDoor2;
         [SerializeField] private ItemsUpdater itemsUpdater;
+        
+        [Header("Outline")]
+        [SerializeField] private Renderer[] renderers;
+        [SerializeField] private Color highlightColor;
         
         [Header("Audio")]
         [SerializeField] private AudioSource audioSource;
@@ -26,6 +31,11 @@ namespace Game_Flow.CollectableObjects
         {
             _objectAudio = new OpenCloseObjectAudio(audioSource, audioClip);
             bellSource.volume = .25f;
+            foreach (var renderer in renderers)
+            {
+                if (renderer == null) continue;
+                renderer.enabled = false;
+            }
         }
 
         public void OnCollect()
@@ -48,6 +58,29 @@ namespace Game_Flow.CollectableObjects
             }
             yield return new WaitForSeconds(0.5f);
             Destroy(gameObject);
+        }
+        
+        public void HighlightObject()
+        {
+            if (renderers == null) return;
+            foreach (var rend in renderers)
+            {
+                if (rend == null) continue;
+                rend.enabled = true;
+                var material = rend.material;
+                if (material == null) continue;
+                material.color = highlightColor;
+            }
+        }
+        
+        public void UnHighlightObject()
+        {
+            if (renderers == null) return;
+            foreach (var rend in renderers)
+            {
+                if (rend == null) continue;
+                rend.enabled = false;
+            }
         }
     }
 }

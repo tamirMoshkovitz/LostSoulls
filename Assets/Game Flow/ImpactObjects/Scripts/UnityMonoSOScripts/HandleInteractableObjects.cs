@@ -9,6 +9,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
     {
         [SerializeField] private OpenCloseImpactObject[] animatedObjects;
         [SerializeField] private SwitchObject switchObject;
+        [SerializeField] private CollectableKeyObject collectableKeyObject;
 
         public bool InHighlightZone { get; private set; }
         public bool InLetterZone { get; private set; }
@@ -39,6 +40,10 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                         Debug.Log(openable.name);
                         openable.HighlightObject();
                     }
+                }
+                if (collectableKeyObject != null)
+                {
+                    collectableKeyObject.HighlightObject();
                 }
             }
             else if (other.CompareTag("LetterZone"))
@@ -72,6 +77,10 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                     {
                         openable.UnHighlightObject();
                     }
+                }
+                if (collectableKeyObject != null)
+                {
+                    collectableKeyObject.UnHighlightObject();
                 }
             }
             else if (other.CompareTag("LetterZone"))

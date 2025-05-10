@@ -6010,6 +6010,11 @@ Light:
   m_LightUnit: 1
   m_LuxAtDistance: 1
   m_EnableSpotReflector: 1
+--- !u!23 &543908671 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8528853607838968469, guid: 66d3751d5b14e4b01a76c44f1fce889a, type: 3}
+  m_PrefabInstance: {fileID: 2100048330}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &545631054 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -1396686632117512683, guid: 8804a82ec22eb4ff08d0ac09124f33af, type: 3}
@@ -12826,7 +12831,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1315552472
 Transform:
   m_ObjectHideFlags: 0
@@ -13407,6 +13412,7 @@ MonoBehaviour:
   - {fileID: 4933064101702156908}
   - {fileID: 439574692}
   switchObject: {fileID: 1498226368}
+  collectableKeyObject: {fileID: 1610800487}
 --- !u!114 &1355722160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15378,6 +15384,11 @@ MonoBehaviour:
   showcaseDoor1: {fileID: 8599708153770497673}
   showcaseDoor2: {fileID: 4933064101702156908}
   itemsUpdater: {fileID: 2139923645}
+  renderers:
+  - {fileID: 2133971255}
+  - {fileID: 1675081654}
+  - {fileID: 543908671}
+  highlightColor: {r: 1, g: 0.8980392, b: 0.8235294, a: 1}
   audioSource: {fileID: 8234590672770442074}
   audioClip: {fileID: 8300000, guid: 83e78bff6409b4ed3a8ea76c63fa55f9, type: 3}
   bellSource: {fileID: 8773104114465378275}
@@ -16230,6 +16241,11 @@ Canvas:
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 5d5df39d7498e42d1b74000efa015c79, type: 3}
   m_PrefabInstance: {fileID: 37893880}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1675081654 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7918335002988649766, guid: 66d3751d5b14e4b01a76c44f1fce889a, type: 3}
+  m_PrefabInstance: {fileID: 2100048330}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1684599160
 GameObject:
@@ -19399,6 +19415,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &2133971255 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 3833836350996402130, guid: 66d3751d5b14e4b01a76c44f1fce889a, type: 3}
+  m_PrefabInstance: {fileID: 2100048330}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2136372327 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8253601718421504814, guid: fecb4edd1001441cf93bc6ef96993aad, type: 3}
