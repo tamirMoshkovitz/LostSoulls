@@ -14,6 +14,7 @@ namespace Game_Flow.CollectableObjects
         [SerializeField] private AudioClip clip;
         [FormerlySerializedAs("renderer")] [SerializeField] private Renderer[] renderers;
         [SerializeField] private Color highlightColor;
+        [SerializeField] private Animator animator;
         
         private OpenCloseObjectAudio _objectAudio;
         
@@ -36,6 +37,15 @@ namespace Game_Flow.CollectableObjects
         {
             objectToSwitch.SetActive(!objectToSwitch.activeSelf);
             StartCoroutine(PlaySound());
+            if (animator == null) return;
+            if (objectToSwitch.activeSelf)
+            {
+                animator.SetTrigger("IsOn");
+            }
+            else
+            {
+                animator.SetTrigger("IsOff");
+            }
         }
 
         private IEnumerator PlaySound()
