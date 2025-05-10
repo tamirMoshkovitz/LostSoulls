@@ -31,6 +31,10 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.O))
+            {
+                FinishGame();
+            }
             if (_combining || GameFinished) return;
 
             // Example trigger: thisPart adjacent to otherPart

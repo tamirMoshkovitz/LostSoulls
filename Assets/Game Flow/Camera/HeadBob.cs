@@ -10,6 +10,7 @@ namespace Camera
         [SerializeField] private PlayerController controller;
         [SerializeField] private float bobSpeed = 14f;
         [SerializeField] private float bobAmount = 0.05f;
+        [SerializeField] private ObjectController objectController;
 
         private float _defaultY;
         private float _timer;
@@ -43,7 +44,7 @@ namespace Camera
         
         void Update()
         {
-            if (ObjectController.Instance.IsLocked)
+            if (objectController.IsLocked)
                 return;
             
             bool isMoving = _moveInput.sqrMagnitude > 0.01f;

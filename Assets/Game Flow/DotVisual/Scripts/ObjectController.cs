@@ -11,7 +11,7 @@ using Grid = Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts.Grid;
 namespace Game_Flow.DotVisual.Scripts
 {
     [RequireComponent(typeof(UnityEngine.Camera))]
-    public class ObjectController : MonoSingleton<ObjectController>
+    public class ObjectController : MonoBehaviour
     {
         [SerializeField] private GameObject dotPrefab;
         [SerializeField] private List<MonoImpactObject> impactObjects;

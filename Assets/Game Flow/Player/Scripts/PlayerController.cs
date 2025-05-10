@@ -15,7 +15,7 @@ namespace Game_Flow.Player.Scripts
 {
     [RequireComponent(typeof(CharacterController))]
     [RequireComponent(typeof(AudioSource))]
-    public class PlayerController : MonoSingleton<PlayerController>
+    public class PlayerController : MonoBehaviour
     {
         [SerializeField] private float moveSpeed = 5f;
         [SerializeField] private float gravity = -9.81f;
@@ -31,6 +31,8 @@ namespace Game_Flow.Player.Scripts
         [SerializeField] private AudioSource BGAudioSource;
         [SerializeField] private ItemsUpdater itemsUpdater;
         [SerializeField] private OpenCloseImpactObject rightDoor;
+        [SerializeField] private OpeningSceneController openingSceneController;
+        [SerializeField] private ObjectController objectController;
 
         [Header("Rumble")] [SerializeField] private float rumbleDuration = 0.5f;
         [SerializeField] private float lowFrequency = 0.1f;
@@ -105,6 +107,7 @@ namespace Game_Flow.Player.Scripts
                 woodFloorSound, woodStairsSound);
             _playerAudio.PlayWhiteNoise();
             EventManager.OnDollPlaced += OnTopDown;
+            
 
         }
 
@@ -119,6 +122,23 @@ namespace Game_Flow.Player.Scripts
             EventManager.OnLockStateChanged -= HandleLockStateChanged;
             _playerAudio = null;
             EventManager.OnDollPlaced -= OnTopDown;
+            _inputActions.Player.Disable();
+            _inputActions.OpeningScene.Disable(); 
+        }
+
+        void OnDestroy()
+        {
+            _inputActions.Player.Move.performed -= OnMovePerformed;
+            _inputActions.Player.Move.canceled -= OnMoveCanceled;
+            _inputActions.Player.Jump.performed -= OnJumpPerformed;
+            _inputActions.Player.Open.performed -= OnOpenPerformed;
+            _inputActions.OpeningScene.Open.performed -= OnOpenPerformed;
+            _inputActions.Player.Disable();
+            EventManager.OnLockStateChanged -= HandleLockStateChanged;
+            _playerAudio = null;
+            EventManager.OnDollPlaced -= OnTopDown;
+            _inputActions.Player.Disable();
+            _inputActions.OpeningScene.Disable(); 
         }
 
         void Update()
@@ -137,7 +157,7 @@ namespace Game_Flow.Player.Scripts
 
         void HandleMovement()
         {
-            if (_isMovementLocked || ObjectController.Instance.IsLocked || _putDoll) {return;}
+            if (_isMovementLocked || objectController.IsLocked || _putDoll) {return;}
             // Ground check
             _isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
             
@@ -221,7 +241,7 @@ namespace Game_Flow.Player.Scripts
             if (!_hasStarted)
             {
                 _hasStarted = true;
-                OpeningSceneController.Instance.OnStartPressed();
+                openingSceneController.OnStartPressed();
                 _isMovementLocked = false;
             }
             

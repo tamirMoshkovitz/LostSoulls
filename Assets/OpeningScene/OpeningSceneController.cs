@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 
 namespace OpeningScene
 {
-    public class OpeningSceneController : MonoSingleton<OpeningSceneController>
+    public class OpeningSceneController : MonoBehaviour
     {
         private static readonly int Open = Animator.StringToHash("Open");
         private static readonly int Close = Animator.StringToHash("Close");
@@ -16,6 +16,7 @@ namespace OpeningScene
         [SerializeField] private Vector3 moveTarget;
         [SerializeField] private float moveDuration = 2f;
         [SerializeField] private FirstPersonCameraRotation firstPersonCameraRotation;
+        [SerializeField] private PlayerController playerController;
         
         private bool hasStarted = false;
         public void OnStartPressed()
@@ -39,8 +40,8 @@ namespace OpeningScene
                 yield return null;
             }
             doorAnimator.SetTrigger(Close);
-            PlayerController.Instance.IsMovementLocked = false;
-            var actions = PlayerController.Instance.InputActions;
+            playerController.IsMovementLocked = false;
+            var actions = playerController.InputActions;
             actions.OpeningScene.Disable();
             actions.Player.Enable();
             var cameraActions = firstPersonCameraRotation.InputActions;

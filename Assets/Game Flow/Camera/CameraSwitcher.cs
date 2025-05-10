@@ -23,6 +23,8 @@ namespace Game_Flow.Camera
         [SerializeField] private UnityEngine.ParticleSystem p2;
         [SerializeField] private UnityEngine.ParticleSystem p3;
         [SerializeField] private UnityEngine.ParticleSystem p4;
+        [SerializeField] private PlayerController playerController;
+        [SerializeField] private ObjectController objectController;
 
         private InputSystem_Actions _inputActions;
         
@@ -95,17 +97,17 @@ namespace Game_Flow.Camera
         
         private IEnumerator SwitchToOrtho()
         {
-            PlayerController.Instance.IsMovementLocked = true;
+            playerController.IsMovementLocked = true;
             yield return new WaitForSeconds(_cinemachineBrain.DefaultBlend.BlendTime * .18f);
             ceiling.gameObject.SetActive(false);
-            ObjectController.Instance.ChangeState(new TopDownState());
+            objectController.ChangeState(new TopDownState());
             
         }
         
         private IEnumerator SwitchToPerspective()
         {
             mainCamera.fieldOfView = 60f;
-            ObjectController.Instance.ChangeState(new FPState());
+            objectController.ChangeState(new FPState());
             yield return new WaitForSeconds(_cinemachineBrain.DefaultBlend.BlendTime * .82f);
             ceiling.gameObject.SetActive(true);
         }
