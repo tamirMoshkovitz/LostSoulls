@@ -1,4 +1,5 @@
-﻿using Unity.Cinemachine;
+﻿using Core.Input_System;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
@@ -21,7 +22,7 @@ namespace Game_Flow.Camera
 		
 		void Awake()
 		{
-			_inputActions = new InputSystem_Actions();
+			_inputActions = InputSystemBuffer.Instance.InputSystem;;
 		}
 
 		void OnEnable()

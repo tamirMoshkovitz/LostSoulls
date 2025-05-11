@@ -1,3 +1,4 @@
+using Core.Input_System;
 using Game_Flow.DotVisual.Scripts;
 using Game_Flow.Player.Scripts;
 using UnityEngine;
@@ -25,7 +26,7 @@ namespace Camera
         
         void Awake()
         {
-            _inputActions = new InputSystem_Actions();
+            _inputActions = InputSystemBuffer.Instance.InputSystem;;
         }
         
         void OnEnable()

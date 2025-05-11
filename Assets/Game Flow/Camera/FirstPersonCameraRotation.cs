@@ -1,3 +1,4 @@
+using Core.Input_System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,7 +17,7 @@ namespace Camera
 
         void Awake()
         {
-            _inputActions = new InputSystem_Actions();
+            _inputActions = InputSystemBuffer.Instance.InputSystem;;
             Cursor.lockState = CursorLockMode.Locked;
         }
 

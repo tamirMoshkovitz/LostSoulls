@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Core.Attributes;
+using Core.Input_System;
 using Core.Managers;
 using Game_Flow.DotVisual.Scripts.States;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
@@ -39,7 +40,7 @@ namespace Game_Flow.DotVisual.Scripts
             _currentState = new FPState();
             _origin = GetComponent<UnityEngine.Camera>().transform;
             _currentState.EnterState(_origin, dotPrefab, impactObjects, this);
-            _inputSystemActions = new InputSystem_Actions();
+            _inputSystemActions = InputSystemBuffer.Instance.InputSystem;;
         }
 
         private void OnEnable()

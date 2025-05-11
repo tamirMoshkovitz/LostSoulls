@@ -77,7 +77,7 @@ namespace Game_Flow.Player.Scripts
         void Awake()
         {
             _controller = GetComponent<CharacterController>();
-            _inputActions = new InputSystem_Actions();
+            _inputActions = InputSystemBuffer.Instance.InputSystem;;
             _inputActions.Enable();
             _inputActions.Player.Disable();
             _inputActions.OpeningScene.Enable();
@@ -93,6 +93,9 @@ namespace Game_Flow.Player.Scripts
             );
             IsMovementLocked = true;
             _interactableObjectsHandler = gameObject.GetComponent<HandleInteractableObjects>();
+            _playerAudio = new PlayerAudio(stepsAudioSource, BGAudioSource, whiteNoise, concreteFloorSound,
+                woodFloorSound, woodStairsSound);
+            _playerAudio.PlayWhiteNoise();
         }
 
         void OnEnable()
@@ -104,9 +107,6 @@ namespace Game_Flow.Player.Scripts
             _inputActions.Player.Open.performed += OnOpenPerformed;
             _inputActions.OpeningScene.Open.performed += OnOpenPerformed;
             EventManager.OnLockStateChanged += HandleLockStateChanged;
-            _playerAudio = new PlayerAudio(stepsAudioSource, BGAudioSource, whiteNoise, concreteFloorSound,
-                woodFloorSound, woodStairsSound);
-            _playerAudio.PlayWhiteNoise();
             EventManager.OnDollPlaced += OnTopDown;
         }
 
@@ -119,7 +119,6 @@ namespace Game_Flow.Player.Scripts
             _inputActions.OpeningScene.Open.performed -= OnOpenPerformed;
             _inputActions.Player.Disable();
             EventManager.OnLockStateChanged -= HandleLockStateChanged;
-            _playerAudio = null;
             EventManager.OnDollPlaced -= OnTopDown;
             _inputActions.Player.Disable();
             _inputActions.OpeningScene.Disable(); 
@@ -134,7 +133,6 @@ namespace Game_Flow.Player.Scripts
             _inputActions.OpeningScene.Open.performed -= OnOpenPerformed;
             _inputActions.Player.Disable();
             EventManager.OnLockStateChanged -= HandleLockStateChanged;
-            _playerAudio = null;
             EventManager.OnDollPlaced -= OnTopDown;
             _inputActions.Player.Disable();
             _inputActions.OpeningScene.Disable(); 

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Core.Input_System;
 using Core.Managers;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
 using UnityEngine;
@@ -35,7 +36,7 @@ namespace Game_Flow.DotVisual.Scripts.States
         {
             grid = objectController.Grid;
             EventManager.LockStateChanged(this);
-            _inputActions = new InputSystem_Actions();
+            _inputActions = InputSystemBuffer.Instance.InputSystem;;
             _inputActions.Enable();
             _inputActions.Player.Enable();
             _inputReader = _inputActions.Player.Move;

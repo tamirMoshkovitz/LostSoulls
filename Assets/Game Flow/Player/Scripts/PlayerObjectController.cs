@@ -1,4 +1,5 @@
-﻿using Core.Managers;
+﻿using Core.Input_System;
+using Core.Managers;
 using Game_Flow.Camera;
 using Game_Flow.DotVisual.Scripts;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
@@ -23,7 +24,7 @@ namespace Game_Flow.Player.Scripts
 
         private void OnEnable()
         {
-            _inputActions = new InputSystem_Actions();
+            _inputActions = InputSystemBuffer.Instance.InputSystem;
             _inputActions.Player.Enable();
             _inputActions.Player.Lock.started += OnLock;
             _inputActions.Player.Lock.canceled += OnLock;

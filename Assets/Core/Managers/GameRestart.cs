@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Core.Input_System;
+using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
@@ -10,7 +11,7 @@ namespace Core.Managers
         
         void Awake()
         {
-            _inputActions = new InputSystem_Actions();
+            _inputActions = InputSystemBuffer.Instance.InputSystem;
             _inputActions.EndingScene.Enable();
         }
         
@@ -28,6 +29,7 @@ namespace Core.Managers
         private void OnRestartPerformed(InputAction.CallbackContext context)
         {
             Debug.Log("Restarting Game");
+            _inputActions.EndingScene.Disable();
             SceneManager.LoadScene("Sketch room");
         }
     }
