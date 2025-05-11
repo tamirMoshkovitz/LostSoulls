@@ -114,6 +114,7 @@ namespace Game_Flow.DotVisual.Scripts.States
                 // we found a new one – unhighlight the old, highlight the new
                 _lastTarget = oldTarget;
                 oldTarget?.UnhighlightObject();
+                oldTarget?.StopAudio();
                 _target = newTarget;
                 if (_target.IsMoveable)
                     _target.HighlightObject();

@@ -245,9 +245,9 @@ namespace Game_Flow.Player.Scripts
             {
                 _hasStarted = true;
                 openingSceneController.OnStartPressed();
-                _isMovementLocked = false;
                 DOVirtual.DelayedCall(3.5f, () =>
                 {
+                    _isMovementLocked = false;
                     _inputActions.Player.Move.performed += OnMovePerformed;
                     _inputActions.Player.Move.canceled += OnMoveCanceled;
                 });
