@@ -79,6 +79,10 @@ namespace Game_Flow.DotVisual.Scripts
                 _target?.UpdateObject(targetMovement);
                 Debug.Log(_input);
             }
+            else if(_currentState is TopDownState && !_target.IsMoving)
+            {
+                _target?.StopAudio();
+            }
         }
         
         public void ChangeState(IObjeckLockingState newState)

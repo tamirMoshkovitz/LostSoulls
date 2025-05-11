@@ -56,6 +56,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             {
                 Mono.IsBlocked = true;
                 _grid.MarkOccupied(Mono, oldCells);
+                Mono.ObjectAudio.StopSound();
                 return;
             }
             
@@ -85,7 +86,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
                     // re-mark so future checks see us
                     _grid.MarkOccupied(Mono, Mono.UsedCells);
                     
-                    Mono.ObjectAudio.StopSound();
+                    
                     _moveTween = null;
                     Mono.IsMoving = false;
                     _grid.HighlightZones(Mono.UsedCells, Mono.ImpactColor);

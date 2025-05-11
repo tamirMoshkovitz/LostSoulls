@@ -9,5 +9,6 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         public LayerMask impactObjectLayerMask;
         public LayerMask objectBorderLayerMask;
         public float timePerMove;
+        public float littleDelay;
     }
 }

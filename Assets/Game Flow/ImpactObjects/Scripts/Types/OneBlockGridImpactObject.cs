@@ -35,6 +35,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             // 1) if we're mid-tween, don't start another move
             if (_moveTween != null && _moveTween.IsActive() && !_moveTween.IsComplete())
                 return;
+            
             // 2) unmark our old cell so grid.IsCellsOccupied() sees us as free
             var oldCells = new List<(int row, int col)>(Mono.UsedCells);
             grid.UnmarkOccupied(Mono);
@@ -74,7 +75,6 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
                         UpdateImpactObjectState(cells, targetCell);
                         Mono.IsMoving = false;
                         grid.HighlightZones(Mono.UsedCells, Mono.ImpactColor);
-                        
                         // commit cell & re-mark
                     });
 
@@ -82,6 +82,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             }
 
             // 6) if blocked, just re-mark and exit
+            Mono.ObjectAudio.StopSound();
             grid.MarkOccupied(Mono, Mono.UsedCells);
         }
 
@@ -90,8 +91,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             Mono.UsedCells = cells;
             currentCell    = targetCell;
             grid.MarkOccupied(Mono, Mono.UsedCells);
-
-            Mono.ObjectAudio.StopSound();
+            
             _moveTween = null;
         }
     }

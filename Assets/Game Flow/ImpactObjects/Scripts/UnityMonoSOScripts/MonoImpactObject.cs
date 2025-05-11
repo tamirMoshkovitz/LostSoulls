@@ -112,8 +112,9 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             if (!IsMoving)
             {
                 grid.HighlightZones(UsedCells,lockedColor);
+                if(direction.Equals(Vector3.zero)) objectAudioSource.Stop();
             }
-            if (_updated || direction.Equals(Vector3.zero)) return;
+            if (_updated || direction.Equals(Vector3.zero) || IsMoving) return;
             _updated = true;
             Vector3 snapped = GetClosestCardinalDirection(direction);
             IsBlocked = false;
@@ -177,6 +178,10 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         {
             grid.UnhighlightZones(UsedCells);
         }
-        
+
+        public void StopAudio()
+        {
+            objectAudioSource.Stop();
+        }
     }
 }

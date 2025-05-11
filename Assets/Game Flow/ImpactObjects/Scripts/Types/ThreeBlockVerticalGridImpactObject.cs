@@ -56,6 +56,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             {
                 Mono.IsBlocked = true;
                 _grid.MarkOccupied(Mono, oldCells);
+                Mono.ObjectAudio.StopSound();
                 return;
             }
             

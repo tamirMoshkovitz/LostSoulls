@@ -56,6 +56,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             {
                 Mono.IsBlocked = true;
                 _grid.MarkOccupied(Mono, oldCells);
+                Mono.ObjectAudio.StopSound();
                 return;
             }
             
@@ -81,7 +82,6 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
                 .SetEase(Ease.Linear)
                 .OnComplete(() =>
                 {
-                    Mono.ObjectAudio.StopSound();
                     Mono.UsedCells = targetCells;
                     _grid.MarkOccupied(Mono, Mono.UsedCells);
                     _moveTween = null;
