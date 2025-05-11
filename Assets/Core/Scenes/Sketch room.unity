@@ -571,11 +571,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.7145052, y: 0.33056426, z: 1.3636081}
   m_Center: {x: -0.03511572, y: 0.118220925, z: 0.019061685}
---- !u!23 &103295196 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 4495562709459415644, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
-  m_PrefabInstance: {fileID: 8129111984758330504}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &108817346
 GameObject:
   m_ObjectHideFlags: 0
@@ -1330,11 +1325,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &142705080 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 3533688742776731339, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
-  m_PrefabInstance: {fileID: 8129111984758330504}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &169300550
 GameObject:
   m_ObjectHideFlags: 0
@@ -5291,11 +5281,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -1636931414818939400, guid: 88ea7df5c8b494a3b8f29536d5d8799a, type: 3}
---- !u!23 &484586938 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 6941091781584300447, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
-  m_PrefabInstance: {fileID: 8129111984758330504}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &484995705
 GameObject:
   m_ObjectHideFlags: 0
@@ -21036,11 +21021,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 4.2235203, y: 5.7115574, z: 3.0690708}
   m_Center: {x: -12.863879, y: 2.8557787, z: -2.4654646}
---- !u!23 &1851175372 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 2990501538716452950, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
-  m_PrefabInstance: {fileID: 8129111984758330504}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1856921882
 GameObject:
   m_ObjectHideFlags: 0
@@ -23055,11 +23035,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 7587180844927783993, guid: 8804a82ec22eb4ff08d0ac09124f33af, type: 3}
---- !u!23 &2070131884 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 5975929825717843698, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
-  m_PrefabInstance: {fileID: 8129111984758330504}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2084710223
 GameObject:
   m_ObjectHideFlags: 0
@@ -25531,12 +25506,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 0b33d3fed1204158890749687159fa1d, type: 3}
     - target: {fileID: 2179065726985273528, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
-      propertyPath: highlightColor.b
+      propertyPath: highlightColor.a
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2179065726985273528, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: highlightColor.b
+      value: 0.8235294
+      objectReference: {fileID: 0}
+    - target: {fileID: 2179065726985273528, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: highlightColor.g
-      value: 1
+      value: 0.8980392
       objectReference: {fileID: 0}
     - target: {fileID: 2179065726985273528, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: highlightColor.r
@@ -25548,12 +25527,12 @@ PrefabInstance:
       objectReference: {fileID: 1758860754}
     - target: {fileID: 2179065726985273528, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: renderers.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2179065726985273528, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: 'renderers.Array.data[0]'
       value: 
-      objectReference: {fileID: 2070131884}
+      objectReference: {fileID: 1113585371}
     - target: {fileID: 2440027103090775414, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: scale
       value: 1
@@ -25567,16 +25546,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 0b33d3fed1204158890749687159fa1d, type: 3}
     - target: {fileID: 2440027103090775414, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: highlightColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2440027103090775414, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: highlightColor.b
-      value: 0.98433596
+      value: 0.8235294
       objectReference: {fileID: 0}
     - target: {fileID: 2440027103090775414, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: highlightColor.g
-      value: 0.98433596
+      value: 0.8980392
       objectReference: {fileID: 0}
     - target: {fileID: 2440027103090775414, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: highlightColor.r
-      value: 0.99371064
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2440027103090775414, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: objectAudioSource
@@ -25584,12 +25567,16 @@ PrefabInstance:
       objectReference: {fileID: 664542037}
     - target: {fileID: 2440027103090775414, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: renderers.Array.size
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2440027103090775414, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: 'renderers.Array.data[0]'
       value: 
-      objectReference: {fileID: 484586938}
+      objectReference: {fileID: 1955360620}
+    - target: {fileID: 2440027103090775414, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: 'renderers.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1110067380}
     - target: {fileID: 2749441695987297310, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
@@ -25607,16 +25594,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 0b33d3fed1204158890749687159fa1d, type: 3}
     - target: {fileID: 4089448528036262738, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: highlightColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4089448528036262738, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: highlightColor.b
-      value: 0.965646
+      value: 0.8235294
       objectReference: {fileID: 0}
     - target: {fileID: 4089448528036262738, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: highlightColor.g
-      value: 0.965646
+      value: 0.8980392
       objectReference: {fileID: 0}
     - target: {fileID: 4089448528036262738, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: highlightColor.r
-      value: 0.9748427
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4089448528036262738, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: objectAudioSource
@@ -25624,12 +25615,12 @@ PrefabInstance:
       objectReference: {fileID: 741239118}
     - target: {fileID: 4089448528036262738, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: renderers.Array.size
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4089448528036262738, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: 'renderers.Array.data[0]'
       value: 
-      objectReference: {fileID: 142705080}
+      objectReference: {fileID: 813181230}
     - target: {fileID: 4697148523510266339, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: scale
       value: 1
@@ -25643,16 +25634,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 0b33d3fed1204158890749687159fa1d, type: 3}
     - target: {fileID: 4697148523510266339, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: highlightColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4697148523510266339, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: highlightColor.b
-      value: 0.97808623
+      value: 0.8235294
       objectReference: {fileID: 0}
     - target: {fileID: 4697148523510266339, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: highlightColor.g
-      value: 0.97808623
+      value: 0.8980392
       objectReference: {fileID: 0}
     - target: {fileID: 4697148523510266339, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: highlightColor.r
-      value: 0.99371064
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4697148523510266339, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: objectAudioSource
@@ -25660,12 +25655,16 @@ PrefabInstance:
       objectReference: {fileID: 1918786192}
     - target: {fileID: 4697148523510266339, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: renderers.Array.size
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4697148523510266339, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: 'renderers.Array.data[0]'
       value: 
-      objectReference: {fileID: 1851175372}
+      objectReference: {fileID: 2011773430}
+    - target: {fileID: 4697148523510266339, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: 'renderers.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1729534563}
     - target: {fileID: 5630608640009170337, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.025
@@ -25719,16 +25718,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 0b33d3fed1204158890749687159fa1d, type: 3}
     - target: {fileID: 6355023164986296569, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: highlightColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6355023164986296569, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: highlightColor.b
-      value: 0.97808623
+      value: 0.8235294
       objectReference: {fileID: 0}
     - target: {fileID: 6355023164986296569, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: highlightColor.g
-      value: 0.97808623
+      value: 0.8980392
       objectReference: {fileID: 0}
     - target: {fileID: 6355023164986296569, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: highlightColor.r
-      value: 0.99371064
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6355023164986296569, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: objectAudioSource
@@ -25736,12 +25739,16 @@ PrefabInstance:
       objectReference: {fileID: 1563765521}
     - target: {fileID: 6355023164986296569, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: renderers.Array.size
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6355023164986296569, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: 'renderers.Array.data[0]'
       value: 
-      objectReference: {fileID: 103295196}
+      objectReference: {fileID: 290044686}
+    - target: {fileID: 6355023164986296569, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: 'renderers.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1619654467}
     - target: {fileID: 6740831351110513942, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: m_Name
       value: Dresser
