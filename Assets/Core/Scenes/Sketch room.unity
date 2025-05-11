@@ -13047,7 +13047,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8170647495204071474, guid: 82a8e9ef0ebd94e10be5c6c5af04cabf, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8496655947561873414, guid: 82a8e9ef0ebd94e10be5c6c5af04cabf, type: 3}
       propertyPath: m_LocalScale.x
@@ -27941,7 +27941,7 @@ PrefabInstance:
     - target: {fileID: 2122277583604030836, guid: 967d4f2a243a04236af3099c13d31df9, type: 3}
       propertyPath: audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 40ad3bccc50b9411c971867a4c08b5cb, type: 3}
+      objectReference: {fileID: 8300000, guid: 751092bee4ade4315bfd0e42cbb121f5, type: 3}
     - target: {fileID: 2122277583604030836, guid: 967d4f2a243a04236af3099c13d31df9, type: 3}
       propertyPath: otherPart
       value: 
