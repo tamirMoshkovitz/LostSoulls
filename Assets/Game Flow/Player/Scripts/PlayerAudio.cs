@@ -76,7 +76,12 @@ namespace Game_Flow.Player.Scripts
 
         public void StopFootstepSound()
         {
-            if (_stepsAudioSource != null && _stepsAudioSource.isPlaying)
+            if (_stepsAudioSource == null)
+            {
+                Debug.LogWarning("Steps audio source is null.");
+                return;
+            }
+            if (_stepsAudioSource.isPlaying)
             {
                 _stepsAudioSource.Stop();
             }
@@ -85,6 +90,11 @@ namespace Game_Flow.Player.Scripts
         private void StopFootstepSound(ViewMode mode)
         {
             StopFootstepSound();
+        }
+        
+        public void Cleanup()
+        {
+            EventManager.OnViewModeChanged -= StopFootstepSound;
         }
     }
 }
