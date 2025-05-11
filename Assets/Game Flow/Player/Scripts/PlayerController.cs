@@ -102,8 +102,6 @@ namespace Game_Flow.Player.Scripts
         void OnEnable()
         {
             //_inputActions.Player.Enable();
-            _inputActions.Player.Move.performed += OnMovePerformed;
-            _inputActions.Player.Move.canceled += OnMoveCanceled;
             _inputActions.Player.Jump.performed += OnJumpPerformed;
             DOVirtual.DelayedCall(0.5f, () =>
             {
@@ -248,6 +246,11 @@ namespace Game_Flow.Player.Scripts
                 _hasStarted = true;
                 openingSceneController.OnStartPressed();
                 _isMovementLocked = false;
+                DOVirtual.DelayedCall(3.5f, () =>
+                {
+                    _inputActions.Player.Move.performed += OnMovePerformed;
+                    _inputActions.Player.Move.canceled += OnMoveCanceled;
+                });
             }
             
             if (_isMovementLocked) return;
