@@ -17,6 +17,10 @@ namespace OpeningScene
         [SerializeField] private float moveDuration = 2f;
         [SerializeField] private FirstPersonCameraRotation firstPersonCameraRotation;
         [SerializeField] private PlayerController playerController;
+        [Header("Audio")]
+        [SerializeField] private AudioSource objectAudioSource;
+        [SerializeField] private AudioClip openSound;
+        [SerializeField] private AudioClip closeSound;
         
         private bool hasStarted = false;
         public void OnStartPressed()
@@ -30,6 +34,7 @@ namespace OpeningScene
         {
             EventManager.OnEnterRoom();
             doorAnimator.SetTrigger(Open);
+            objectAudioSource?.PlayOneShot(openSound);
             yield return new WaitForSeconds(1.5f);
             float elapsed = 0f;
             Vector3 start = player.position;
@@ -41,12 +46,14 @@ namespace OpeningScene
                 yield return null;
             }
             doorAnimator.SetTrigger(Close);
+            objectAudioSource?.PlayOneShot(closeSound);
             playerController.IsMovementLocked = false;
             var actions = playerController.InputActions;
             actions.OpeningScene.Disable();
             actions.Player.Enable();
             var cameraActions = firstPersonCameraRotation.InputActions;
             cameraActions.Player.Enable();
+            //objectAudioSource?.Stop();
         }
     }
 }

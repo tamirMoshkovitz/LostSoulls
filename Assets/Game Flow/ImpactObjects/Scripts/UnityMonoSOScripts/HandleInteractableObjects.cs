@@ -21,6 +21,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                 var openable = animatedObject.GetComponentInChildren<OpenCloseImpactObject>();
                 if (openable != null && openable.IsOpen)
                 {
+                    openable.PlayAudio = false;
                     openable.CloseImpactObject();
                     openable.UnHighlightObject();
                 }

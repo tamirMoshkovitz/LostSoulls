@@ -35,6 +35,8 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
         public bool IsLetter => isLetter;
         
         public bool IsOpen => _isOpen;
+        
+        public bool PlayAudio { get; set; } = true;
 
         void Start()
         {
@@ -88,7 +90,10 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             _isOpen = false;
             _animator.SetTrigger("IsClose");
             Debug.Log("CloseImpactObject");
-            _objectAudio?.PlaySound();
+            if (PlayAudio)
+            {
+                _objectAudio?.PlaySound();
+            }
             if (isLetter && otherLetter != null)
             {
                 otherLetter.HighlightObject();
