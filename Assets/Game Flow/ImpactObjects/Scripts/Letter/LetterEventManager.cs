@@ -21,7 +21,6 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
         [SerializeField] private GameObject letterContent;
         [SerializeField] private Animator pictureAnimator;
         [SerializeField] private GameObject letterSubtitles;
-        [SerializeField] private SwitchObject lightSwitch;
         [SerializeField] private CollectableKeyObject key;
         
         private Image _image;
@@ -63,8 +62,6 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
         public IEnumerator PlayPaintingAnimation()
         {
             yield return new WaitForSeconds(2f);
-            lightSwitch.TurnLightsOn();
-            yield return new WaitForSeconds(1.5f);
             pictureAnimator.SetTrigger(Play);
         }
         
