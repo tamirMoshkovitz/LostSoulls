@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Linq;
+using Core.Input_System;
 using Core.Managers;
 using Game_Flow.CollectableObjects;
 using Game_Flow.ImpactObjects.Scripts.Types;
 using NUnit.Framework;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace Game_Flow.ImpactObjects.Scripts.Letter
@@ -22,15 +24,19 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
         [SerializeField] private SwitchObject lightSwitch;
         
         private Image _image;
+        private InputSystem_Actions _inputSystem;
 
         private void Awake()
         {
             _image = letterContent.GetComponent<Image>();
+            _inputSystem = InputSystemBuffer.Instance.InputSystem;
         }
         
         
         public override void OpenImpactObject()
         {
+            _inputSystem.Player.Disable();
+            
             // turn off the collider
             GetComponent<BoxCollider>().enabled = false;
             
@@ -87,6 +93,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
             
             letterContent.SetActive(false);
             EventManager.ExitPainting();
+            _inputSystem.Player.Enable();
         }
 
         public void ShowLetterContentAndPlaySound()
