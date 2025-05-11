@@ -50,6 +50,17 @@ namespace Game_Flow.DotVisual.Scripts.States
             _cameraMono = objectController;
             _lastTarget = _target;
             _boxCombintaionHandler = objectController.BoxCombinationHandler;
+            
+            var lightsToDisable = objectController.LightsToDisableInTopDownView;
+            foreach(var light in lightsToDisable)
+            {
+                light.gameObject.SetActive(false);
+            }
+            var lightsToEnable = objectController.LightsToEnableInTopDownView;
+            foreach(var light in lightsToEnable)
+            {
+                light.gameObject.SetActive(true);
+            }
         }
         public void ExitState()
         {

@@ -19,6 +19,11 @@ namespace Game_Flow.DotVisual.Scripts
         [SerializeField,ReadOnly] private MonoImpactObject currentImpactObject;
         [SerializeField] private Grid grid;
         [SerializeField] private BoxCombinationHandler boxCombinationHandler;
+        [SerializeField] private List<GameObject> lightsToDisableInTopDownView;
+        [SerializeField] private List<GameObject> lightsToEnableInTopDownView;
+        
+        public List<GameObject> LightsToDisableInTopDownView => lightsToDisableInTopDownView;
+        public List<GameObject> LightsToEnableInTopDownView => lightsToEnableInTopDownView;
         private IObjeckLockingState _currentState;
         private Transform _origin;
         private InputSystem_Actions _inputSystemActions;
