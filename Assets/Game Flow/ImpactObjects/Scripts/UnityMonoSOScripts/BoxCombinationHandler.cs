@@ -1,9 +1,10 @@
 
 using System;
 using System.Collections.Generic;
+using Core.Audio;
 using Core.Managers;
 using DG.Tweening;
-
+using Game_Flow.ImpactObjects.Scripts.Audio;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -25,6 +26,8 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         [SerializeField] private float leftBoxPoint;
         
         [SerializeField] private SceneFader sceneFader;
+        [SerializeField] private AudioSource audioSource;
+        [SerializeField] private AudioClip audioClip;
         public bool GameFinished { get; private set; }
 
         private bool _combining;
@@ -60,6 +63,8 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             if (GameFinished) return;
             if(!thisPart.IsMoving && !otherPart.IsMoving)
             {
+                ObjectAudio objectAudio = new MoovingObjectAudio(audioSource, audioClip);
+                objectAudio.PlaySound();
                 GameFinished = true;
 
                 // Play any activation particles
@@ -75,12 +80,13 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
                 }
 
                 // Start combine animation
-                AnimateCombine();
+                
+                AnimateCombine(objectAudio);
             }
             
         }
 
-        private void AnimateCombine()
+        private void AnimateCombine(ObjectAudio objectAudio)
         {
             _combining = true;
 
@@ -100,6 +106,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             seq.Join(otherPart.transform.DOMove(targetB, combineDuration).SetEase(combineEase));
             seq.OnComplete(() =>
             {
+                objectAudio.StopSound();
                 sceneFader.FadeToScene("Ending Scene");
             });
         }

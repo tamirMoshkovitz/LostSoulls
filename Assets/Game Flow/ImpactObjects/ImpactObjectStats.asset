@@ -20,3 +20,4 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 65536
   timePerMove: 1.4
+  littleDelay: 0.02
