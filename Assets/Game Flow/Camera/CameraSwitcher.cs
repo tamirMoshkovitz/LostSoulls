@@ -14,6 +14,7 @@ namespace Game_Flow.Camera
     public enum ViewMode { FirstPerson, TopDown }
     public class CameraSwitcher : MonoBehaviour
     {
+        private static readonly int Activate = Animator.StringToHash("activate");
         [SerializeField] private CinemachineCamera firstPersonCamera;
         [SerializeField] private CinemachineCamera topDownCamera;
         [SerializeField] private CinemachineCamera paintingCamera;
@@ -25,7 +26,7 @@ namespace Game_Flow.Camera
         [SerializeField] private UnityEngine.ParticleSystem p4;
         [SerializeField] private PlayerController playerController;
         [SerializeField] private ObjectController objectController;
-
+        [SerializeField] private Animator animator;
         private InputSystem_Actions _inputActions;
         
         private bool _isTopDown = false;
@@ -89,6 +90,8 @@ namespace Game_Flow.Camera
         private IEnumerator SwitchToOrtho()
         {
             playerController.IsMovementLocked = true;
+            animator.gameObject.SetActive(true);
+            animator.SetTrigger(Activate);
             yield return new WaitForSeconds(_cinemachineBrain.DefaultBlend.BlendTime * .18f);
             ceiling.gameObject.SetActive(false);
             objectController.ChangeState(new TopDownState());
