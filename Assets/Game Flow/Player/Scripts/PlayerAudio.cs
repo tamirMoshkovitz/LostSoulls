@@ -76,7 +76,7 @@ namespace Game_Flow.Player.Scripts
 
         public void StopFootstepSound()
         {
-            if (_stepsAudioSource.isPlaying)
+            if (_stepsAudioSource != null && _stepsAudioSource.isPlaying)
             {
                 _stepsAudioSource.Stop();
             }

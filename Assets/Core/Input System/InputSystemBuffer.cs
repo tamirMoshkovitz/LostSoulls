@@ -17,6 +17,7 @@ namespace Core.Input_System
         private InputSystemBuffer()
         {
             InputSystem = new InputSystem_Actions();
+            InputSystem.Enable();
         }
         
         public InputSystem_Actions InputSystem { get; private set; }

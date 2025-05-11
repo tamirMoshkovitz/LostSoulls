@@ -78,7 +78,7 @@ namespace Game_Flow.Player.Scripts
         {
             _controller = GetComponent<CharacterController>();
             _inputActions = InputSystemBuffer.Instance.InputSystem;;
-            _inputActions.Enable();
+            
             _inputActions.Player.Disable();
             _inputActions.OpeningScene.Enable();
             Physics.IgnoreLayerCollision(
