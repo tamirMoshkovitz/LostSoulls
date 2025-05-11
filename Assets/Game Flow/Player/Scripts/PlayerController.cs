@@ -225,7 +225,8 @@ namespace Game_Flow.Player.Scripts
         {
             Debug.DrawRay(gameObject.GetComponentInChildren<CinemachineCamera>().transform.position, gameObject.GetComponentInChildren<CinemachineCamera>().transform.forward, Color.red);
             Ray ray = new Ray(gameObject.GetComponentInChildren<CinemachineCamera>().transform.position, gameObject.GetComponentInChildren<CinemachineCamera>().transform.forward);
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, 2f, LayerMask.GetMask("AnimationObject", "CollectableObject")))
+            if ((Physics.Raycast(ray, out RaycastHit hitInfo, 2f, LayerMask.GetMask("AnimationObject")) && (_interactableObjectsHandler.InHighlightZone || _interactableObjectsHandler.InLetterZone))
+            || (Physics.Raycast(ray, out hitInfo, 2f, LayerMask.GetMask("CollectableObject"))))
             {
                 if (_lastInteractableHit != null && _lastInteractableHit.Equals(hitInfo.collider.gameObject)) return;
                 EventManager.StartRumble(rumbleDuration, lowFrequency, highFrequency);

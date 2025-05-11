@@ -32014,6 +32014,26 @@ PrefabInstance:
       propertyPath: 'renderers.Array.data[1]'
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1997616711349418718, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: m_Size.x
+      value: 0.058249313
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997616711349418718, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: m_Size.y
+      value: 0.026465038
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997616711349418718, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: m_Center.x
+      value: 0.014791493
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997616711349418718, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: m_Center.y
+      value: 0.012870188
+      objectReference: {fileID: 0}
+    - target: {fileID: 1997616711349418718, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: m_Center.z
+      value: -0.0008367517
+      objectReference: {fileID: 0}
     - target: {fileID: 2179065726985273528, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: scale
       value: 1
@@ -32114,6 +32134,26 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 2e35f287b053d4014b702dee523d21e9, type: 2}
+    - target: {fileID: 2821152244529519745, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: m_Size.x
+      value: 0.022587081
+      objectReference: {fileID: 0}
+    - target: {fileID: 2821152244529519745, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: m_Size.y
+      value: 0.026509618
+      objectReference: {fileID: 0}
+    - target: {fileID: 2821152244529519745, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: m_Center.x
+      value: 0.0028269712
+      objectReference: {fileID: 0}
+    - target: {fileID: 2821152244529519745, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: m_Center.y
+      value: 0.01446039
+      objectReference: {fileID: 0}
+    - target: {fileID: 2821152244529519745, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: m_Center.z
+      value: -0.00053238287
+      objectReference: {fileID: 0}
     - target: {fileID: 3348972187084746300, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.478
@@ -32234,6 +32274,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -177.117
       objectReference: {fileID: 0}
+    - target: {fileID: 5255472128722948539, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: m_Size.y
+      value: 0.026705496
+      objectReference: {fileID: 0}
+    - target: {fileID: 5255472128722948539, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: m_Center.x
+      value: 0.009363099
+      objectReference: {fileID: 0}
+    - target: {fileID: 5255472128722948539, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: m_Center.y
+      value: 0.014738086
+      objectReference: {fileID: 0}
+    - target: {fileID: 5255472128722948539, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: m_Center.z
+      value: 0.0000000017569137
+      objectReference: {fileID: 0}
     - target: {fileID: 5304710970934222597, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -32349,6 +32405,22 @@ PrefabInstance:
     - target: {fileID: 6740831351110513942, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: m_Name
       value: Dresser
+      objectReference: {fileID: 0}
+    - target: {fileID: 7322396335898374314, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: m_Size.y
+      value: 0.022518404
+      objectReference: {fileID: 0}
+    - target: {fileID: 7322396335898374314, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: m_Center.x
+      value: 0.0055479514
+      objectReference: {fileID: 0}
+    - target: {fileID: 7322396335898374314, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: m_Center.y
+      value: 0.016268447
+      objectReference: {fileID: 0}
+    - target: {fileID: 7322396335898374314, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
+      propertyPath: m_Center.z
+      value: 0.000000001939347
       objectReference: {fileID: 0}
     - target: {fileID: 7693200102726085508, guid: 097aed8dbd6ab435cbe111235df1326e, type: 3}
       propertyPath: m_LocalPosition.x
