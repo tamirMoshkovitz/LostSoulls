@@ -32,6 +32,7 @@ namespace Game_Flow.OpeningScene
             _inputSystem = InputSystemBuffer.Instance.InputSystem;
             _inputSystem.OpeningScene.Enable();
             _inputSystem.OpeningScene.All.performed += FadeIn;
+            _inputSystem.OpeningScene.Open.performed += OnOpenDoor;
         }
 
 
@@ -39,8 +40,10 @@ namespace Game_Flow.OpeningScene
         {
             EventManager.EnterRoom -= DisableCanvas;
             _inputSystem.OpeningScene.All.performed -= FadeIn;
+            _inputSystem.OpeningScene.Open.performed -= OnOpenDoor;
             _inputSystem.OpeningScene.Disable();
         }
+
         private void FadeIn(InputAction.CallbackContext context)
         {
             if (!_viewed)
@@ -48,6 +51,11 @@ namespace Game_Flow.OpeningScene
                 _viewed = true;
                 StartCoroutine(FadeInSequence());
             }
+        }
+
+        private void OnOpenDoor(InputAction.CallbackContext context)
+        {
+            _viewed = true;
         }
 
         private IEnumerator FadeInSequence()
