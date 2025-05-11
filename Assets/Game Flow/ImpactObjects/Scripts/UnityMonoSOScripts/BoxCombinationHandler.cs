@@ -100,7 +100,6 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             seq.Join(otherPart.transform.DOMove(targetB, combineDuration).SetEase(combineEase));
             seq.OnComplete(() =>
             {
-                //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
                 sceneFader.FadeToScene("Ending Scene");
             });
         }
