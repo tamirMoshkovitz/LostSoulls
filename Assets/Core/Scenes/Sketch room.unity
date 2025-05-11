@@ -14413,7 +14413,7 @@ MonoBehaviour:
   scale: 0
   otherLetter: {fileID: 0}
   objectAudioSource: {fileID: 1149575780}
-  audioClip: {fileID: 8300000, guid: 6af0db3c64b340db86f64d58a8b68914, type: 3}
+  audioClip: {fileID: 8300000, guid: 2253a2112e16a7a4696d72bcfe777c34, type: 3}
 --- !u!65 &1149575783
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16650,7 +16650,7 @@ MonoBehaviour:
   scale: 0
   otherLetter: {fileID: 0}
   objectAudioSource: {fileID: 1389441382}
-  audioClip: {fileID: 8300000, guid: 6af0db3c64b340db86f64d58a8b68914, type: 3}
+  audioClip: {fileID: 8300000, guid: 2253a2112e16a7a4696d72bcfe777c34, type: 3}
 --- !u!65 &1389441385
 BoxCollider:
   m_ObjectHideFlags: 0
