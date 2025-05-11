@@ -267,6 +267,7 @@ namespace Game_Flow.Player.Scripts
                     if (openable.IsLocked)
                     {
                         openable.PlayLockedAnimation();
+                        LockedRumble();
                         Debug.Log("Object is locked");
                         return;
                     }
@@ -274,12 +275,14 @@ namespace Game_Flow.Player.Scripts
                     {
                         Debug.Log("Closing");
                         openable.CloseImpactObject();
+                        EventManager.StartRumble(rumbleDuration * 2f, lowFrequency, highFrequency);
                     }
                     else
                     {
                         Debug.Log("Opening");
                         itemsUpdater.RemoveItem(2);
                         openable.OpenImpactObject();
+                        EventManager.StartRumble(rumbleDuration * 2f, lowFrequency, highFrequency);
                     }
                 }
             }
@@ -309,6 +312,11 @@ namespace Game_Flow.Player.Scripts
                 {
                     collectableManDoll.OnCollect(OnDollPlaced);
                     _putDoll = true;
+                    EventManager.StartRumble(rumbleDuration * 2f, lowFrequency, highFrequency);
+                }
+                else
+                {
+                    EventManager.StartRumble(.5f, 0.3f, .5f);
                 }
                 
             }
@@ -327,6 +335,11 @@ namespace Game_Flow.Player.Scripts
         private void OnTopDown()
         {
             _isTopDown = true;
+        }
+
+        private void LockedRumble()
+        { 
+            EventManager.StartRumble(.5f, 0.3f, .5f);
         }
     }
 }

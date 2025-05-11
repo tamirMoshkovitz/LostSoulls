@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using Core.Audio;
+using Core.Managers;
 using Game_Flow.ImpactObjects.Scripts.Audio;
 using Game_Flow.ImpactObjects.Scripts.Types;
 using Game_Flow.UI;
@@ -47,7 +48,11 @@ namespace Game_Flow.CollectableObjects
 
         public void OnCollect()
         {
-            if (!lightSwitch.gameObject.activeSelf || !IsLetterOpen) { return; }
+            if (!lightSwitch.gameObject.activeSelf || !IsLetterOpen)
+            {
+                EventManager.StartRumble(.5f, 0.2f, .5f);
+                return;
+            }
 
             showcaseDoor1.IsLocked = false;
             showcaseDoor2.IsLocked = false;

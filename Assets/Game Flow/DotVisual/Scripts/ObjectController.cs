@@ -102,6 +102,7 @@ namespace Game_Flow.DotVisual.Scripts
             {
                 _target.Activate();
                 IsLocked = true;
+                EventManager.StartRumble(.2f, .05f, .1f);
             }
         }
         
