@@ -1,4 +1,5 @@
 ﻿using Core.Input_System;
+using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -30,6 +31,11 @@ namespace Core.Managers
         {
             Debug.Log("Restarting Game");
             _inputActions.EndingScene.Disable();
+            var musicObject = FindObjectOfType<EndSceneMusic>();
+            if (musicObject != null)
+            {
+                musicObject.StopMusic();
+            }
             SceneManager.LoadScene("Sketch room");
         }
     }

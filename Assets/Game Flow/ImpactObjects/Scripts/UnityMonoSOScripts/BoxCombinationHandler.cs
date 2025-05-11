@@ -26,8 +26,8 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         [SerializeField] private float leftBoxPoint;
         
         [SerializeField] private SceneFader sceneFader;
-        [SerializeField] private AudioSource audioSource;
-        [SerializeField] private AudioClip audioClip;
+        [SerializeField] private EndSceneMusic endSceneMusic;
+        
         public bool GameFinished { get; private set; }
 
         private bool _combining;
@@ -63,8 +63,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             if (GameFinished) return;
             if(!thisPart.IsMoving && !otherPart.IsMoving)
             {
-                ObjectAudio objectAudio = new MoovingObjectAudio(audioSource, audioClip);
-                objectAudio.PlaySound();
+                endSceneMusic.PlayMusic();
                 GameFinished = true;
 
                 // Play any activation particles
@@ -81,12 +80,12 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
 
                 // Start combine animation
                 
-                AnimateCombine(objectAudio);
+                AnimateCombine();
             }
             
         }
 
-        private void AnimateCombine(ObjectAudio objectAudio)
+        private void AnimateCombine()
         {
             _combining = true;
 
