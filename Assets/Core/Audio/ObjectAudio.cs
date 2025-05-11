@@ -28,5 +28,10 @@ namespace Core.Audio
                 ObjectAudioSource.Stop();
             }
         }
+        
+        public void SetClip(AudioClip sound)
+        {
+            ObjectAudioSource.clip = sound;
+        }
     }
 }

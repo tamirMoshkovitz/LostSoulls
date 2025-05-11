@@ -1,4 +1,5 @@
-﻿using DG.Tweening;
+﻿using System.Collections;
+using DG.Tweening;
 using Game_Flow.ImpactObjects.Scripts.Audio;
 using Game_Flow.ImpactObjects.Scripts.Decorator_Interface;
 using Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts;
@@ -23,6 +24,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
         [Header("Audio")]
         [SerializeField] private AudioSource objectAudioSource;
         [SerializeField] private AudioClip audioClip;
+        [SerializeField] private AudioClip lockedAudioClip;
         
         private bool _isOpen;
         private Animator _animator;
@@ -38,19 +40,23 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
         {
             _isOpen = false;
             _animator = gameObject.GetComponent<Animator>();
+            
+            if (objectAudioSource != null && audioClip != null)
+            {
+                _objectAudio = new OpenCloseObjectAudio(objectAudioSource, audioClip);
+            }
+            
             if (isShowcase)
             {
                 IsLocked = true;
+                _objectAudio.SetClip(lockedAudioClip);
+                _objectAudio.SetVolume(0.1f);
             }
             else
             {
                 IsLocked = false;
             }
             
-            if (objectAudioSource != null && audioClip != null)
-            {
-                _objectAudio = new OpenCloseObjectAudio(objectAudioSource, audioClip);
-            }
             foreach (var renderer in renderers)
             {
                 if (renderer == null) continue;
@@ -64,6 +70,11 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
             if (_animator == null) _animator = gameObject.GetComponent<Animator>();
             _animator.SetTrigger("IsOpen");
             Debug.Log("OpenImpactObject");
+            if (isShowcase)
+            {
+                _objectAudio.SetClip(audioClip);
+                _objectAudio.SetVolume(1f);
+            }
             _objectAudio?.PlaySound();
             if (isLetter && otherLetter != null)
             {
@@ -88,6 +99,14 @@ namespace Game_Flow.ImpactObjects.Scripts.Types
         public void PlayLockedAnimation()
         {
             transform.DOShakePosition(duration, strength, vibrato, 90, false, true);
+            StartCoroutine(PlayLockedSound());
+        }
+        
+        private IEnumerator PlayLockedSound()
+        {
+            _objectAudio?.PlaySound();
+            yield return new WaitForSeconds(0.5f);
+            _objectAudio?.StopSound();
         }
 
         public void HighlightObject()

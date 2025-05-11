@@ -1205,6 +1205,7 @@ MonoBehaviour:
   otherLetter: {fileID: 0}
   objectAudioSource: {fileID: 115148642}
   audioClip: {fileID: 8300000, guid: db7394fbd0af14345945c3980abd62ce, type: 3}
+  lockedAudioClip: {fileID: 0}
 --- !u!23 &115148646
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -4687,6 +4688,7 @@ MonoBehaviour:
   otherLetter: {fileID: 0}
   objectAudioSource: {fileID: 402962168}
   audioClip: {fileID: 8300000, guid: db7394fbd0af14345945c3980abd62ce, type: 3}
+  lockedAudioClip: {fileID: 0}
   letterTop: {fileID: 459861038}
   letterBottom: {fileID: 439574692}
   letterContent: {fileID: 1011185044}
@@ -5865,6 +5867,7 @@ MonoBehaviour:
   otherLetter: {fileID: 0}
   objectAudioSource: {fileID: 0}
   audioClip: {fileID: 0}
+  lockedAudioClip: {fileID: 0}
 --- !u!95 &439574693
 Animator:
   serializedVersion: 7
@@ -6034,6 +6037,7 @@ MonoBehaviour:
   otherLetter: {fileID: 0}
   objectAudioSource: {fileID: 439574697}
   audioClip: {fileID: 8300000, guid: 51bc794f84acb44d892a79590a71cc89, type: 3}
+  lockedAudioClip: {fileID: 0}
   letterMain: {fileID: 402962166}
 --- !u!1 &459861025 stripped
 GameObject:
@@ -6209,6 +6213,7 @@ MonoBehaviour:
   otherLetter: {fileID: 439574692}
   objectAudioSource: {fileID: 459861034}
   audioClip: {fileID: 8300000, guid: 51bc794f84acb44d892a79590a71cc89, type: 3}
+  lockedAudioClip: {fileID: 0}
   letterMain: {fileID: 402962166}
 --- !u!1001 &464143598
 PrefabInstance:
@@ -16039,6 +16044,7 @@ MonoBehaviour:
   otherLetter: {fileID: 0}
   objectAudioSource: {fileID: 1065283504}
   audioClip: {fileID: 8300000, guid: 51bc794f84acb44d892a79590a71cc89, type: 3}
+  lockedAudioClip: {fileID: 0}
 --- !u!23 &1065283508
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -17220,6 +17226,7 @@ MonoBehaviour:
   otherLetter: {fileID: 0}
   objectAudioSource: {fileID: 1149575780}
   audioClip: {fileID: 8300000, guid: 2253a2112e16a7a4696d72bcfe777c34, type: 3}
+  lockedAudioClip: {fileID: 0}
 --- !u!65 &1149575783
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -20008,6 +20015,7 @@ MonoBehaviour:
   otherLetter: {fileID: 0}
   objectAudioSource: {fileID: 1389441382}
   audioClip: {fileID: 8300000, guid: 2253a2112e16a7a4696d72bcfe777c34, type: 3}
+  lockedAudioClip: {fileID: 0}
 --- !u!65 &1389441385
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30467,6 +30475,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8300000, guid: 6af0db3c64b340db86f64d58a8b68914, type: 3}
     - target: {fileID: 1002509706882985159, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
+      propertyPath: lockedAudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 1c7bac516a70848bd84c64d5a24b5e61, type: 3}
+    - target: {fileID: 1002509706882985159, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
       propertyPath: highlightColor.a
       value: 1
       objectReference: {fileID: 0}
@@ -30506,6 +30518,10 @@ PrefabInstance:
       propertyPath: audioClip
       value: 
       objectReference: {fileID: 8300000, guid: 6af0db3c64b340db86f64d58a8b68914, type: 3}
+    - target: {fileID: 1435450761021633499, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
+      propertyPath: lockedAudioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 1c7bac516a70848bd84c64d5a24b5e61, type: 3}
     - target: {fileID: 1435450761021633499, guid: c7ebe5065ba934720ae7d48036faaec5, type: 3}
       propertyPath: highlightColor.a
       value: 1
