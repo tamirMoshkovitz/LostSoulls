@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Linq;
 using Core.Managers;
+using Game_Flow.CollectableObjects;
 using Game_Flow.ImpactObjects.Scripts.Types;
 using NUnit.Framework;
 using UnityEngine;
@@ -18,6 +19,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
         [SerializeField] private GameObject letterContent;
         [SerializeField] private Animator pictureAnimator;
         [SerializeField] private GameObject letterSubtitles;
+        [SerializeField] private SwitchObject lightSwitch;
         
         private Image _image;
 
@@ -53,7 +55,9 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
         
         public IEnumerator PlayPaintingAnimation()
         {
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(2f);
+            lightSwitch.TurnLightsOn();
+            yield return new WaitForSeconds(1.5f);
             pictureAnimator.SetTrigger(Play);
         }
         

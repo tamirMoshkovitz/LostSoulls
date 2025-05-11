@@ -3466,6 +3466,7 @@ MonoBehaviour:
   letterContent: {fileID: 1011185044}
   pictureAnimator: {fileID: 843172153}
   letterSubtitles: {fileID: 1089582706}
+  lightSwitch: {fileID: 1498226368}
 --- !u!65 &402962167
 BoxCollider:
   m_ObjectHideFlags: 0

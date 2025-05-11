@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using Core.Audio;
 using Core.Managers;
 using Game_Flow.ImpactObjects.Scripts.Audio;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -22,14 +24,18 @@ namespace Game_Flow.CollectableObjects
         {
             _objectAudio = new OpenCloseObjectAudio(audioSource, clip);
             _objectAudio.SetVolume(0.3f);
-            EventManager.OnDollPlaced += turnOnLightsInTopDownState;
             foreach (var renderer in renderers)
             {
                 renderer.enabled = false;
             }
         }
-        
-        private void OnDestroy()
+
+        private void OnEnable()
+        {
+            EventManager.OnDollPlaced += turnOnLightsInTopDownState;
+        }
+
+        private void OnDisable()
         {
             EventManager.OnDollPlaced -= turnOnLightsInTopDownState;
         }
@@ -81,6 +87,12 @@ namespace Game_Flow.CollectableObjects
                 if (rend == null) continue;
                 rend.enabled = false;
             }
+        }
+
+        public void TurnLightsOn()
+        {
+            if (objectToSwitch.activeSelf) { return; }
+            ControlLights();
         }
     }
 }
