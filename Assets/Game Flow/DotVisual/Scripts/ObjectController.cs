@@ -97,14 +97,22 @@ namespace Game_Flow.DotVisual.Scripts
 
         private void OnLock(InputAction.CallbackContext context)
         {
-            if(_target != null) _target.Activate();
-            IsLocked = true;
+           
+            if (_target != null)
+            {
+                _target.Activate();
+                IsLocked = true;
+            }
         }
         
         private void OnUnlock(InputAction.CallbackContext context)
         {
-            if(_target != null) _target.DeActivate();
-            IsLocked = false;
+            
+            if (_target != null)
+            {
+                _target.DeActivate();
+                IsLocked = false;
+            }
         }
         
         private void OnMovePerformed(InputAction.CallbackContext context)
