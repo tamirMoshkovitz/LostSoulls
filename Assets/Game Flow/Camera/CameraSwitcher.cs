@@ -52,7 +52,6 @@ namespace Game_Flow.Camera
             EventManager.OnDollPlaced -= ToggleViewByDoll;
             EventManager.OnShowPainting -= SwitchToPaintingCamera;
             EventManager.OnExitPainting -= ExitPaintingCamera;
-            _inputActions.Player.Disable();
         }
 
         private void ToggleViewByDoll()
