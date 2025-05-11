@@ -17,12 +17,13 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
         [SerializeField] private OpenCloseImpactObject letterBottom;
         [SerializeField] private GameObject letterContent;
         [SerializeField] private Animator pictureAnimator;
+        [SerializeField] private GameObject letterSubtitles;
         
-        private Image image;
-        
+        private Image _image;
+
         private void Awake()
         {
-            image = letterContent.GetComponent<Image>();
+            _image = letterContent.GetComponent<Image>();
         }
         
         
@@ -50,8 +51,9 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
             letterBottom.OpenImpactObject();
         }
         
-        public void PlayPaintingAnimation()
+        public IEnumerator PlayPaintingAnimation()
         {
+            yield return new WaitForSeconds(1f);
             pictureAnimator.SetTrigger(Play);
         }
         
@@ -78,9 +80,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
             {
                 yield return null;
             }
-
-            yield return new WaitForSeconds(2f);
-
+            
             letterContent.SetActive(false);
             EventManager.ExitPainting();
         }
@@ -100,32 +100,29 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
 
         public IEnumerator HideLetterContent(float readingDuration)
         {
-            var clips = pictureAnimator.runtimeAnimatorController.animationClips;
-            var paintingClip = clips.FirstOrDefault(c => c.name == "Picture Sprite Animation");
-            float pictureAnimationLength = paintingClip != null ? paintingClip.length : 0f;
-            yield return new WaitForSeconds(readingDuration - pictureAnimationLength);
+            yield return new WaitForSeconds(readingDuration + 2f);
+            letterSubtitles.gameObject.SetActive(false);
             StartCoroutine(FadeCanvasImage(0f, 1f));
-            PlayPaintingAnimation();
+            StartCoroutine(PlayPaintingAnimation());
             StartCoroutine(ExitLetterState());
         }
 
         private IEnumerator FadeCanvasImage(float targetAlpha, float duration)
         {
-            float startAlpha = image.color.a;
+            float startAlpha = _image.color.a;
             float time = 0f;
 
-            Color startColor = image.color;
+            Color startColor = _image.color;
             Color endColor = new Color(startColor.r, startColor.g, startColor.b, targetAlpha);
 
             while (time < duration)
             {
                 time += Time.deltaTime;
                 float t = Mathf.Clamp01(time / duration);
-                image.color = Color.Lerp(startColor, endColor, t);
+                _image.color = Color.Lerp(startColor, endColor, t);
                 yield return null;
             }
-
-            image.color = endColor; // Ensure exact target at end
+            _image.color = endColor; // Ensure exact target at end
         }
     }
 }
