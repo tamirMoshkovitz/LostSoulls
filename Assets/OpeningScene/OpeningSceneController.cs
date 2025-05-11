@@ -28,6 +28,7 @@ namespace OpeningScene
         
         private IEnumerator OpeningSequence()
         {
+            EventManager.OnEnterRoom();
             doorAnimator.SetTrigger(Open);
             yield return new WaitForSeconds(1.5f);
             float elapsed = 0f;

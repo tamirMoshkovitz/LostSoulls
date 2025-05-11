@@ -76,5 +76,12 @@ namespace Core.Managers
         {
             FinishGame?.Invoke();
         }
+        
+        public static event Action EnterRoom;
+        
+        public static void OnEnterRoom()
+        {
+            EnterRoom?.Invoke();
+        }
     }
 }
