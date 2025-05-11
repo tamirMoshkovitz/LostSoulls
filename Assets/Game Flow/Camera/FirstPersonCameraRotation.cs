@@ -1,4 +1,5 @@
 using Core.Input_System;
+using Game_Flow.Player.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,6 +13,7 @@ namespace Camera
         private InputSystem_Actions _inputActions;
         private Vector2 _lookInput;
         private float _xRotation = 0f;
+        [SerializeField] private PlayerController player;
         
         public InputSystem_Actions InputActions => _inputActions;
 
@@ -49,7 +51,8 @@ namespace Camera
         
         private void OnLookPerformed(InputAction.CallbackContext context)
         {
-            _lookInput = context.ReadValue<Vector2>();
+            if(!player.IsMovementLocked) _lookInput = context.ReadValue<Vector2>();
+            else _lookInput = Vector2.zero;
         }
 
         private void OnLookCanceled(InputAction.CallbackContext context)
