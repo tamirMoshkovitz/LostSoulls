@@ -1,6 +1,7 @@
 
 using System;
 using System.Collections.Generic;
+using Core.Managers;
 using DG.Tweening;
 
 using Unity.VisualScripting;
@@ -22,6 +23,8 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         
         [SerializeField] private float rightBoxPoint;
         [SerializeField] private float leftBoxPoint;
+        
+        [SerializeField] private SceneFader sceneFader;
         public bool GameFinished { get; private set; }
 
         private bool _combining;
@@ -97,7 +100,8 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             seq.Join(otherPart.transform.DOMove(targetB, combineDuration).SetEase(combineEase));
             seq.OnComplete(() =>
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+                sceneFader.FadeToScene("Ending Scene");
             });
         }
     }
