@@ -22,7 +22,7 @@ namespace Game_Flow.Camera
 		
 		void Awake()
 		{
-			_inputActions = InputSystemBuffer.Instance.InputSystem;;
+			_inputActions = InputSystemBuffer.Instance.InputSystem;
 		}
 
 		void OnEnable()
