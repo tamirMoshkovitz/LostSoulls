@@ -106,7 +106,6 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             seq.Join(otherPart.transform.DOMove(targetB, combineDuration).SetEase(combineEase));
             seq.OnComplete(() =>
             {
-                objectAudio.StopSound();
                 sceneFader.FadeToScene("Ending Scene");
             });
         }
