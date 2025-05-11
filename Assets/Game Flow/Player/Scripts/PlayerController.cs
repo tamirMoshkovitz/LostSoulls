@@ -1,3 +1,4 @@
+using System.Collections;
 using Core.Input_System;
 using Core.Managers;
 using Game_Flow.CollectableObjects;
@@ -107,8 +108,6 @@ namespace Game_Flow.Player.Scripts
                 woodFloorSound, woodStairsSound);
             _playerAudio.PlayWhiteNoise();
             EventManager.OnDollPlaced += OnTopDown;
-            
-
         }
 
         void OnDisable()
@@ -297,7 +296,7 @@ namespace Game_Flow.Player.Scripts
                     _collectedDoll = true;
                 }
                 var collectableManDoll = hitInfo.collider.GetComponentInChildren<CollectableManDollObject>();
-                if (collectableManDoll != null && _collectedDoll)
+                if (collectableManDoll != null && _collectedDoll && !_putDoll)
                 {
                     collectableManDoll.OnCollect(OnDollPlaced);
                     _putDoll = true;

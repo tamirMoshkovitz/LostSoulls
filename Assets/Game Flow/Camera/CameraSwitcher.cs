@@ -35,13 +35,11 @@ namespace Game_Flow.Camera
 
         private void Awake()
         {
-            _inputActions = new InputSystem_Actions();
             _cinemachineBrain = mainCamera.GetComponent<CinemachineBrain>();
         }
 
         private void OnEnable()
         {
-            _inputActions.Player.Enable();
             EventManager.OnDollPlaced += ToggleViewByDoll;
             EventManager.OnPlayerZoneChanged += HandleZoneChange;
             EventManager.OnShowPainting += SwitchToPaintingCamera;
@@ -55,12 +53,6 @@ namespace Game_Flow.Camera
             EventManager.OnShowPainting -= SwitchToPaintingCamera;
             EventManager.OnExitPainting -= ExitPaintingCamera;
             _inputActions.Player.Disable();
-        }
-
-        private void ToggleView(InputAction.CallbackContext ctx)
-        {
-            if (!_canSwitchView || _cinemachineBrain.IsBlending) return;
-            StartCoroutine(DelayedToggleView());
         }
 
         private void ToggleViewByDoll()
