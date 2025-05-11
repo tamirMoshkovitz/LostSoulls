@@ -1,6 +1,7 @@
 using System.Collections;
 using Core.Input_System;
 using Core.Managers;
+using DG.Tweening;
 using Game_Flow.CollectableObjects;
 using Game_Flow.DotVisual.Scripts;
 using Game_Flow.DotVisual.Scripts.States;
@@ -104,8 +105,11 @@ namespace Game_Flow.Player.Scripts
             _inputActions.Player.Move.performed += OnMovePerformed;
             _inputActions.Player.Move.canceled += OnMoveCanceled;
             _inputActions.Player.Jump.performed += OnJumpPerformed;
-            _inputActions.Player.Open.performed += OnOpenPerformed;
-            _inputActions.OpeningScene.Open.performed += OnOpenPerformed;
+            DOVirtual.DelayedCall(0.5f, () =>
+            {
+                _inputActions.Player.Open.performed += OnOpenPerformed;
+                _inputActions.OpeningScene.Open.performed += OnOpenPerformed;
+            });
             EventManager.OnLockStateChanged += HandleLockStateChanged;
             EventManager.OnDollPlaced += OnTopDown;
         }
@@ -115,8 +119,11 @@ namespace Game_Flow.Player.Scripts
             _inputActions.Player.Move.performed -= OnMovePerformed;
             _inputActions.Player.Move.canceled -= OnMoveCanceled;
             _inputActions.Player.Jump.performed -= OnJumpPerformed;
+            
             _inputActions.Player.Open.performed -= OnOpenPerformed;
+
             _inputActions.OpeningScene.Open.performed -= OnOpenPerformed;
+            
             _inputActions.Player.Disable();
             EventManager.OnLockStateChanged -= HandleLockStateChanged;
             EventManager.OnDollPlaced -= OnTopDown;
