@@ -28,6 +28,11 @@ namespace Game_Flow.CollectableObjects
                 renderer.enabled = false;
             }
         }
+        
+        private void OnDestroy()
+        {
+            EventManager.OnDollPlaced -= turnOnLightsInTopDownState;
+        }
 
         public void turnOnLightsInTopDownState()
         {
