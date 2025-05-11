@@ -122,6 +122,7 @@ namespace Game_Flow.Player.Scripts
             EventManager.OnDollPlaced -= OnTopDown;
             _inputActions.Player.Disable();
             _inputActions.OpeningScene.Disable(); 
+            _playerAudio.Cleanup();
         }
 
         void OnDestroy()
