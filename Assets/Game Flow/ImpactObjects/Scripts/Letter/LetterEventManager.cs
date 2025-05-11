@@ -22,6 +22,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
         [SerializeField] private Animator pictureAnimator;
         [SerializeField] private GameObject letterSubtitles;
         [SerializeField] private SwitchObject lightSwitch;
+        [SerializeField] private CollectableKeyObject key;
         
         private Image _image;
         private InputSystem_Actions _inputSystem;
@@ -36,7 +37,7 @@ namespace Game_Flow.ImpactObjects.Scripts.Letter
         public override void OpenImpactObject()
         {
             _inputSystem.Player.Disable();
-            
+            key.IsLetterOpen = true;
             // turn off the collider
             GetComponent<BoxCollider>().enabled = false;
             

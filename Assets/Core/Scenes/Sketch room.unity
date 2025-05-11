@@ -3652,6 +3652,7 @@ MonoBehaviour:
   pictureAnimator: {fileID: 843172153}
   letterSubtitles: {fileID: 1089582706}
   lightSwitch: {fileID: 1498226368}
+  key: {fileID: 1610800487}
 --- !u!65 &402962167
 BoxCollider:
   m_ObjectHideFlags: 0

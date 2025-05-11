@@ -27,6 +27,12 @@ namespace Game_Flow.CollectableObjects
         [SerializeField] private AudioSource bellSource;
         
         private OpenCloseObjectAudio _objectAudio;
+        private bool _isLetterOpen = false;
+        public bool IsLetterOpen
+        {
+            get => _isLetterOpen;
+            set => _isLetterOpen = value;
+        }
 
         private void Start()
         {
@@ -41,7 +47,7 @@ namespace Game_Flow.CollectableObjects
 
         public void OnCollect()
         {
-            if (!lightSwitch.gameObject.activeSelf) { return; }
+            if (!lightSwitch.gameObject.activeSelf || !IsLetterOpen) { return; }
 
             showcaseDoor1.IsLocked = false;
             showcaseDoor2.IsLocked = false;
