@@ -14,6 +14,7 @@ namespace Game_Flow.CollectableObjects
         [SerializeField] private OpenCloseImpactObject showcaseDoor1;
         [SerializeField] private OpenCloseImpactObject showcaseDoor2;
         [SerializeField] private ItemsUpdater itemsUpdater;
+        [SerializeField] private GameObject lightSwitch;
         
         [Header("Outline")]
         [SerializeField] private Renderer[] renderers;
@@ -40,6 +41,8 @@ namespace Game_Flow.CollectableObjects
 
         public void OnCollect()
         {
+            if (!lightSwitch.gameObject.activeSelf) { return; }
+
             showcaseDoor1.IsLocked = false;
             showcaseDoor2.IsLocked = false;
             itemsUpdater.AddItem(2);
