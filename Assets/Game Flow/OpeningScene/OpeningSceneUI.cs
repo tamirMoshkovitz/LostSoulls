@@ -71,7 +71,7 @@ namespace Game_Flow.OpeningScene
             yield return StartCoroutine(FadeCanvasGroup(childCanvasGroup, childCanvasGroup.alpha, 0f, fadeOutDuration));
             yield return new WaitForSeconds(delayBetweenFades);
             yield return StartCoroutine(FadeCanvasGroup(parentCanvasGroup, parentCanvasGroup.alpha, 0f, fadeOutDuration));
-            parentCanvasGroup.gameObject.SetActive(false);
+            // parentCanvasGroup.gameObject.SetActive(false);
         }
 
         private IEnumerator FadeCanvasGroup(CanvasGroup cg, float from, float to, float duration)
