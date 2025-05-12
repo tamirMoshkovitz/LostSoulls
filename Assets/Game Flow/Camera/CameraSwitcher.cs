@@ -30,7 +30,8 @@ namespace Game_Flow.Camera
         [SerializeField] private Animator animator;
         [Header("Audio")]
         [SerializeField] private AudioSource audioSource;
-        [SerializeField] private AudioClip audioClip;
+        [SerializeField] private AudioClip cameraSwitchAudioClip;
+        [SerializeField] private AudioClip dollPlacedAudioClip;
         
         private OpenCloseObjectAudio _objectAudio;
         
@@ -44,7 +45,7 @@ namespace Game_Flow.Camera
         private void Awake()
         {
             _cinemachineBrain = mainCamera.GetComponent<CinemachineBrain>();
-            _objectAudio = new OpenCloseObjectAudio(audioSource, audioClip);
+            _objectAudio = new OpenCloseObjectAudio(audioSource, dollPlacedAudioClip);
             _objectAudio.SetVolume(0.35f);
         }
 
@@ -72,7 +73,9 @@ namespace Game_Flow.Camera
 
         private IEnumerator DelayedToggleView()
         {
-            yield return new WaitForSeconds(2f);
+            _objectAudio.PlaySound();
+            yield return new WaitForSeconds(3f);
+            _objectAudio.SetClip(cameraSwitchAudioClip);
             _isTopDown = !_isTopDown;
             firstPersonCamera.gameObject.SetActive(!_isTopDown);
             topDownCamera.gameObject.SetActive(_isTopDown);
