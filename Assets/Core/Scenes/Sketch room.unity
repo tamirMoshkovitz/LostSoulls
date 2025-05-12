@@ -25274,6 +25274,8 @@ MonoBehaviour:
   playerController: {fileID: 1355722161}
   objectController: {fileID: 623489544}
   animator: {fileID: 765389679}
+  audioSource: {fileID: 623489545}
+  audioClip: {fileID: 8300000, guid: 8e0a482a3f43843909af638939d25737, type: 3}
 --- !u!4 &1712215436
 Transform:
   m_ObjectHideFlags: 0

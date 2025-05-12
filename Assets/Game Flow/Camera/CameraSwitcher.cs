@@ -5,6 +5,7 @@ using Unity.Cinemachine;
 using System.Collections;
 using Game_Flow.DotVisual.Scripts;
 using Game_Flow.DotVisual.Scripts.States;
+using Game_Flow.ImpactObjects.Scripts.Audio;
 using Game_Flow.ParticleSystem;
 using Game_Flow.Player.Scripts;
 using WaitForSeconds = UnityEngine.WaitForSeconds;
@@ -27,6 +28,12 @@ namespace Game_Flow.Camera
         [SerializeField] private PlayerController playerController;
         [SerializeField] private ObjectController objectController;
         [SerializeField] private Animator animator;
+        [Header("Audio")]
+        [SerializeField] private AudioSource audioSource;
+        [SerializeField] private AudioClip audioClip;
+        
+        private OpenCloseObjectAudio _objectAudio;
+        
         private InputSystem_Actions _inputActions;
         
         private bool _isTopDown = false;
@@ -37,6 +44,8 @@ namespace Game_Flow.Camera
         private void Awake()
         {
             _cinemachineBrain = mainCamera.GetComponent<CinemachineBrain>();
+            _objectAudio = new OpenCloseObjectAudio(audioSource, audioClip);
+            _objectAudio.SetVolume(0.35f);
         }
 
         private void OnEnable()
@@ -63,9 +72,6 @@ namespace Game_Flow.Camera
 
         private IEnumerator DelayedToggleView()
         {
-            // ChangeColorToRed();
-            // ChangeParticleSize();
-            // ChangeParticleVelocity();
             yield return new WaitForSeconds(2f);
             _isTopDown = !_isTopDown;
             firstPersonCamera.gameObject.SetActive(!_isTopDown);
@@ -80,6 +86,7 @@ namespace Game_Flow.Camera
             {
                 _currentViewMode = ViewMode.TopDown;
                 StartCoroutine(SwitchToOrtho());
+                _objectAudio.PlaySound();
             }
             else
             {
@@ -115,66 +122,6 @@ namespace Game_Flow.Camera
         {
             paintingCamera.gameObject.SetActive(false);
         }
-        
-        // public void ChangeColorToRed()
-        // {
-        //     Debug.Log("Change Color to Red");
-        //     var colorOverLifetime = dollParticles.colorOverLifetime;
-        //     colorOverLifetime.enabled = true;
-        //
-        //     Gradient gradient = new Gradient();
-        //     gradient.SetKeys(
-        //         new GradientColorKey[] {
-        //             new GradientColorKey(Color.white, 0.0f),
-        //             new GradientColorKey(Color.red, 1.0f)
-        //         },
-        //         new GradientAlphaKey[] {
-        //             new GradientAlphaKey(1.0f, 0.0f),
-        //             new GradientAlphaKey(1.0f, 1.0f)
-        //         }
-        //     );
-        //
-        //     colorOverLifetime.color = new ParticleSystem.MinMaxGradient(gradient);
-        // }
-        //
-        // public void ChangeParticleSize()
-        // {
-        //     Debug.Log("Change Particle Size");
-        //     var sizeOverLifetime = dollParticles.sizeOverLifetime;
-        //     sizeOverLifetime.enabled = true;
-        //
-        //     AnimationCurve curve = new AnimationCurve();
-        //     curve.AddKey(0.0f, 0.5f);     // Start at half size
-        //     curve.AddKey(0.1f, 0.8f);     // Quick initial growth
-        //     curve.AddKey(0.2f, 1.2f);     // Continue growing
-        //     curve.AddKey(0.3f, 2.0f);     // Accelerate growth
-        //     curve.AddKey(0.4f, 3.0f);     // Keep growing
-        //     curve.AddKey(0.5f, 4.0f);     // Half way point
-        //     curve.AddKey(1.0f, 5.0f);    // End at 5x size
-        //
-        //     // Make the curve smoother
-        //     for (int i = 0; i < curve.length; i++)
-        //     {
-        //         curve.SmoothTangents(i, 0.5f);
-        //     }
-        //
-        //     sizeOverLifetime.size = new ParticleSystem.MinMaxCurve(1.0f, curve);
-        // }
-        //
-        // public void ChangeParticleVelocity()
-        // {
-        //     Debug.Log("Change Particle Velocity");
-        //     var velocityOverLifetime = dollParticles.velocityOverLifetime;
-        //     velocityOverLifetime.enabled = true;
-        //
-        //     // Set constant velocities
-        //     velocityOverLifetime.x = 0.02f;
-        //     velocityOverLifetime.y = 8.02f;
-        //     velocityOverLifetime.z = 0.09f;
-        //
-        //     // Set the simulation space if needed
-        //     velocityOverLifetime.space = ParticleSystemSimulationSpace.World;
-        // }
         
         private void HandleZoneChange(bool canSwitch)
         {
