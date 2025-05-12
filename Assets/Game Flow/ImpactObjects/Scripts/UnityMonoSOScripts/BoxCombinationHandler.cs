@@ -63,7 +63,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             if (GameFinished) return;
             if(!thisPart.IsMoving && !otherPart.IsMoving)
             {
-                EventManager.StartRumble(20f, .05f, .1f);
+                EventManager.StartRumble(8f, .05f, .1f);
                 endSceneMusic.PlayMusic();
                 GameFinished = true;
 

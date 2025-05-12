@@ -4719,8 +4719,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.2757508, y: 1.2880462, z: 2.3094397}
-  m_Center: {x: -0.030648045, y: -0.013135188, z: 0.022493428}
+  m_Size: {x: 0.2757508, y: 2.781106, z: 3.6046999}
+  m_Center: {x: -0.03064809, y: 0.05011149, z: -0.13149978}
 --- !u!82 &402962168
 AudioSource:
   m_ObjectHideFlags: 0
@@ -27443,9 +27443,9 @@ MonoBehaviour:
   moveDuration: 2
   firstPersonCameraRotation: {fileID: 1580220280}
   playerController: {fileID: 1355722161}
-  objectAudioSource: {fileID: 1862257230}
-  openSound: {fileID: 8300000, guid: f097695ea2ecaa34ead3cef7b7b277a0, type: 3}
-  closeSound: {fileID: 8300000, guid: 6dcec771576508a45abace601452c343, type: 3}
+  objectAudioSource: {fileID: 0}
+  openSound: {fileID: 0}
+  closeSound: {fileID: 0}
 --- !u!4 &1862257229 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -1950733119399844177, guid: f5c2fbe699b604c998c9433f3883e6aa, type: 3}
