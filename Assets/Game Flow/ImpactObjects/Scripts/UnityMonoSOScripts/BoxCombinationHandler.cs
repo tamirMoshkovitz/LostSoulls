@@ -25,7 +25,6 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         [SerializeField] private float rightBoxPoint;
         [SerializeField] private float leftBoxPoint;
         
-        [SerializeField] private SceneFader sceneFader;
         
         public bool GameFinished { get; private set; }
 
@@ -105,7 +104,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             seq.Join(otherPart.transform.DOMove(targetB, combineDuration).SetEase(combineEase));
             seq.OnComplete(() =>
             {
-                sceneFader.FadeToScene("Ending Scene");
+                SceneFader.Instance.FadeToScene("Ending Scene");
             });
         }
     }

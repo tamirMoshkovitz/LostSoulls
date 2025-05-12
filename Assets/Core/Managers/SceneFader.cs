@@ -1,18 +1,16 @@
 ﻿using System.Collections;
+using Core.Managers.Core.Managers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Core.Managers
 {
-    public class SceneFader : MonoBehaviour
+    public class SceneFader : MonoSingleton<SceneFader>
     {
         [SerializeField] private CanvasGroup canvasGroup;
         [SerializeField] private float fadeDuration = 1f;
 
-        private void Awake()
-        {
-            DontDestroyOnLoad(gameObject); // Optional: if you want it to persist between scenes
-        }
+        
 
         public void FadeToScene(string sceneName)
         {
