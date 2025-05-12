@@ -15,7 +15,7 @@
 
 **Lost Souls** is a short first-person escape room experience set in the eerie basement of an old Japanese apartment. Guided by the subtle presence of a *kami* — a spiritual being from Shinto mythology — you must explore forgotten objects, solve environmental puzzles, and uncover what has been lost to time.
 
-This project was created as part of the **Game Lab** course in the **HUJI × Bezalel Game Jam program**, focusing on mythology and wandering as core themes.
+This project was created as part of the **Game Lab** course in the **HUJI × Bezalel Game Lab course**, focusing on mythology and wandering as core themes.
 
 ---
 
