@@ -31,11 +31,7 @@ namespace Core.Managers
         {
             Debug.Log("Restarting Game");
             _inputActions.EndingScene.Disable();
-            var musicObject = FindObjectOfType<EndSceneMusic>();
-            if (musicObject != null)
-            {
-                musicObject.StopMusic();
-            }
+            EndSceneMusic.Instance.StopMusic();
             SceneManager.LoadScene("Sketch room");
         }
     }

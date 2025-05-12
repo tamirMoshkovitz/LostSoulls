@@ -78,6 +78,7 @@ namespace Game_Flow.Player.Scripts
         void Awake()
         {
             _controller = GetComponent<CharacterController>();
+            EndSceneMusic.Instance.StopMusic();
             _inputActions = InputSystemBuffer.Instance.InputSystem;;
             
             _inputActions.Player.Disable();

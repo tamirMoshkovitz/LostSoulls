@@ -1,19 +1,22 @@
 using Core.Audio;
+using Core.Managers;
+using Core.Managers.Core.Managers;
 using Game_Flow.ImpactObjects.Scripts.Audio;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
 {
-    public class EndSceneMusic: MonoBehaviour
+    public class EndSceneMusic: MonoSingleton<EndSceneMusic>
     {
         [SerializeField] private AudioSource audioSource;
         [SerializeField] private AudioClip audioClip;
         private MoovingObjectAudio _objectAudio;
 
-        void Awake()
+        protected override void Awake()
         {
-            DontDestroyOnLoad(gameObject);
-            _objectAudio =  new MoovingObjectAudio(audioSource, audioClip);
+            base.Awake(); 
+            _objectAudio = new MoovingObjectAudio(audioSource, audioClip);
         }
 
 
@@ -24,7 +27,10 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
 
         public void StopMusic()
         {
-            _objectAudio.StopSound();
+            if (_objectAudio != null)
+            {
+                _objectAudio.StopSound();
+            }
         }
         
     }

@@ -26,7 +26,6 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
         [SerializeField] private float leftBoxPoint;
         
         [SerializeField] private SceneFader sceneFader;
-        [SerializeField] private EndSceneMusic endSceneMusic;
         
         public bool GameFinished { get; private set; }
 
@@ -64,7 +63,7 @@ namespace Game_Flow.ImpactObjects.Scripts.UnityMonoSOScripts
             if(!thisPart.IsMoving && !otherPart.IsMoving)
             {
                 EventManager.StartRumble(8f, .05f, .1f);
-                endSceneMusic.PlayMusic();
+                EndSceneMusic.Instance.PlayMusic();
                 GameFinished = true;
 
                 // Play any activation particles

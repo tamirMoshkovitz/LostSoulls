@@ -1,48 +1,68 @@
-using UnityEngine;
 
 namespace Core.Managers
 {
-    /// <summary>
-    /// A generic Singleton class for MonoBehaviours.
-    /// Example usage: public class GameManager : MonoSingleton<GameManager>
-    /// </summary>
-    public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
+    using UnityEngine;
+    
+
+    namespace Core.Managers
     {
-        private static T _instance;
-
-        public static T Instance
+        public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
         {
-            get
-            {
-                if (_instance != null)
-                    return _instance;
+            private static T _instance;
+            private static bool _isInitialized;
 
-                _instance = FindFirstObjectByType<T>();
+            public static T Instance
+            {
+                get
+                {
+                    if (_instance != null)
+                        return _instance;
+
+                    // Try to find existing instance in the scene
+                    _instance = FindFirstObjectByType<T>();
+                    if (_instance != null && !_isInitialized)
+                    {
+                        // We found a scene object but it hasn't gone through Awake yet.
+                        // Force initialization
+                        (_instance as MonoSingleton<T>)?.ForceInitialize();
+                    }
+
+                    // If still not found, create a new one
+                    if (_instance == null)
+                    {
+                        var singletonObject = new GameObject(typeof(T).Name);
+                        _instance = singletonObject.AddComponent<T>();
+                        DontDestroyOnLoad(singletonObject);
+                        _isInitialized = true;
+                    }
+
+                    return _instance;
+                }
+            }
+
+            private void ForceInitialize()
+            {
+                if (!_isInitialized)
+                {
+                    DontDestroyOnLoad(gameObject);
+                    _isInitialized = true;
+                }
+            }
+
+            protected virtual void Awake()
+            {
                 if (_instance == null)
                 {
-                    var singletonObject = new GameObject(typeof(T).Name);
-                    _instance = singletonObject.AddComponent<T>();
-                    DontDestroyOnLoad(singletonObject);            }
-
-                return _instance;
-            }
-        }
-
-        // Ensure no other instances can be created by having the constructor as protected
-        protected MonoSingleton() { }
-        protected virtual void Awake()
-        {
-            if (!_instance)
-            {
-                _instance = this as T;
-                DontDestroyOnLoad(gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
+                    _instance = this as T;
+                    DontDestroyOnLoad(gameObject);
+                    _isInitialized = true;
+                }
+                else if (_instance != this)
+                {
+                    Destroy(gameObject); // Duplicate
+                }
             }
         }
     }
-
 
 }
